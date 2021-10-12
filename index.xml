@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title></title>
+    <link>https://digenaldo.github.io/</link>
+    <description>Recent content on </description>
+    <image>
+      <url>https://digenaldo.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</url>
+      <link>https://digenaldo.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
+    </image>
+    <generator>Hugo -- gohugo.io</generator><atom:link href="https://digenaldo.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>About me</title>
+      <link>https://digenaldo.github.io/about/</link>
+      <pubDate>Mon, 11 Oct 2021 15:06:29 -0300</pubDate>
+      
+      <guid>https://digenaldo.github.io/about/</guid>
+      <description>Hi there! I&amp;rsquo;m Digenaldo Neto.
+I&amp;rsquo;m a Software Engineer currently working at Jusbrasil, and my previous job was at Rede Globo.
+I work remotely, and I live in Northeastern Brazil.
+I&amp;rsquo;m a master&amp;rsquo;s degree student at IFPB, and my area of study is Networks and Distributed Systems.
+I hope to help you with my posts about software engineering, cybersecurity, and distributed software architecture on this page.
+Have a nice day.</description>
+    </item>
+    
+  </channel>
+</rss>
