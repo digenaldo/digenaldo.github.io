@@ -11,7 +11,6 @@ github_username: digenaldo
 
 # Theme configuration
 remote_theme: b2a3e8/jekyll-theme-console # Usado no GitHub Pages
-theme: jekyll-theme-console
 
 # Theme-specific settings
 header_pages:                     # Pages displayed in the navigation menu
