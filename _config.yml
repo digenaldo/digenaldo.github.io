@@ -4,7 +4,7 @@ email: your-email@example.com    # Contact email
 description: >-                  # Site description
   Welcome to my blog! This is a minimalist blog inspired by consoles.
 baseurl: ""                      # Subpath of the site (leave empty if at the root of the domain)
-url: "https://digenaldo.com"   # Base URL of the site
+url: "https://digenaldo.github.io/"   # Base URL of the site
 
 # Social media
 github_username: digenaldo
