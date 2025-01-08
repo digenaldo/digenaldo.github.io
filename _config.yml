@@ -23,7 +23,7 @@ listen_for_clients_preferred_style: false # Allow the theme to follow the user's
 
 footer: 'follow me on <a href="https://github.com/digenaldo">Github</a>/<a href="https://www.linkedin.com/in/digenaldo/">Linkedin</a>' # Footer text
 
-google_analytics: UA-XXXXXXXX-X  # Google Analytics ID (optional)
+google_analytics: G-FDR7NQSH3X  # Google Analytics ID (optional)
 
 # Required plugins
 plugins:
