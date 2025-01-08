@@ -10,7 +10,6 @@ url: "https://digenaldo.github.io/"   # Base URL of the site
 github_username: digenaldo
 
 # Theme configuration
-remote_theme: b2a3e8/jekyll-theme-console # Usado no GitHub Pages
 theme: jekyll-theme-console
 
 # Theme-specific settings
