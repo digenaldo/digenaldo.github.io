@@ -12,7 +12,7 @@ usage() {
 # Function to start the Jekyll server
 start_server() {
     echo "Starting Jekyll server with development and default configs..."
-    bundle exec jekyll serve --config _config.dev.yml
+    bundle exec jekyll serve --config _config.dev.yml --livereload
 }
 
 # Function to commit and push changes
