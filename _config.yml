@@ -1,0 +1,30 @@
+# Basic site settings
+title: Your Awesome Console Blog # Site title
+email: your-email@example.com    # Contact email
+description: >-                  # Site description
+  Welcome to my blog! This is a minimalist blog inspired by consoles.
+baseurl: ""                      # Subpath of the site (leave empty if at the root of the domain)
+url: "https://digenaldo.com"   # Base URL of the site
+
+# Social media
+github_username: digenaldo
+
+# Theme configuration
+# remote_theme: b2a3e8/jekyll-theme-console # Remote theme configuration (for GitHub Pages)
+theme: jekyll-theme-console
+
+# Theme-specific settings
+header_pages:                     # Pages displayed in the navigation menu
+  - index.markdown
+  - about.markdown
+
+style: dark                       # Style: dark (default), light, or hacker
+listen_for_clients_preferred_style: true # Allow the theme to follow the user's preferences
+
+footer: 'follow me on <a href="https://github.com/digenaldo">Github</a>/<a href="https://www.linkedin.com/in/digenaldo/">Linkedin</a>' # Footer text
+
+google_analytics: UA-XXXXXXXX-X  # Google Analytics ID (optional)
+
+# Required plugins
+plugins:
+  - jekyll-feed                  # Adds RSS feed support
