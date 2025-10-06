@@ -4,8 +4,7 @@
 # Author: Digenaldo Neto
 # =====================================
 
-# Exit immediately if a command exits with a non-zero status
-set -e
+set -e  # Exit immediately if a command exits with a non-zero status
 
 # Get current date and time for commit message
 timestamp=$(date +"%Y-%m-%d %H:%M:%S")
@@ -15,6 +14,9 @@ rm -rf public
 
 echo "Building the site with Hugo..."
 hugo --minify
+
+echo "Adding CNAME..."
+echo "digenaldo.com" > public/CNAME
 
 echo "Entering public directory..."
 cd public
