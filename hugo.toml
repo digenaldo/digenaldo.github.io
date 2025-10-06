@@ -1,0 +1,93 @@
+baseURL = "https://digenaldo.com/"
+languageCode = "pt-br"
+title = ""
+theme = "PaperMod"
+defaultContentLanguage = "pt"
+enableRobotsTXT = true
+
+[pagination]
+  pagerSize = 10
+
+# -----------------------------
+# ⚙️ PARÂMETROS DO TEMA
+# -----------------------------
+[params]
+  env = "production"
+  title = ""
+  description = "🚀 Devs formados e prontos pro mercado. Do front ao back, sem enrolação. 🎯 Conteúdo prático do jeito que o mercado pede."
+  author = "Digenaldo Neto"
+  keywords = ["Hugo", "PaperMod", "Desenvolvimento Web", "Programação", "Back-end", "Front-end"]
+  DateFormat = "02/01/2006"
+  defaultTheme = "auto"   # opções: light, dark, auto
+  disableThemeToggle = false
+
+  ShowReadingTime = true
+  ShowShareButtons = true
+  ShowPostNavLinks = true
+  ShowBreadCrumbs = true
+  ShowCodeCopyButtons = true
+  ShowToc = true
+  comments = false
+
+  mainSections = ["posts"]
+
+# -----------------------------
+# 🏠 HOME INFO MODE
+# -----------------------------
+[params.homeInfoParams]
+  Title = "Digenaldo Neto"
+  Content = """
+    💻 Engenheiro de Software
+    🧠 Explorando práticas modernas de engenharia e arquitetura de software
+  """
+
+  [[params.homeInfoParams.buttons]]
+    name = "Posts"
+    url = "/posts/"
+  [[params.homeInfoParams.buttons]]
+    name = "Sobre"
+    url = "/sobre/"
+
+# -----------------------------
+# 🌐 REDES SOCIAIS
+# -----------------------------
+[[params.socialIcons]]
+  name = "github"
+  url = "https://github.com/digenaldo"
+[[params.socialIcons]]
+  name = "linkedin"
+  url = "https://www.linkedin.com/in/digenaldo"
+[[params.socialIcons]]
+  name = "instagram"
+  url = "https://www.instagram.com/digenaldo.neto"
+[[params.socialIcons]]
+  name = "youtube"
+  url = "https://youtube.com/@digenaldo"
+
+# -----------------------------
+# 📋 MENU
+# -----------------------------
+[menu]
+  [[menu.main]]
+    identifier = "home"
+    name = "Início"
+    url = "/"
+    weight = 1
+
+  [[menu.main]]
+    identifier = "posts"
+    name = "Posts"
+    url = "/posts/"
+    weight = 2
+
+  [[menu.main]]
+    identifier = "sobre"
+    name = "Sobre"
+    url = "/sobre/"
+    weight = 3
+
+# -----------------------------
+# 🧭 OPÇÕES DE BUILD
+# -----------------------------
+[outputs]
+  home = ["HTML", "RSS", "JSON"]
