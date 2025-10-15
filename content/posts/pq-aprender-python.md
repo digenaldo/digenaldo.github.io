@@ -9,7 +9,8 @@ draft = false
 
 # 🐍 Por que você deveria aprender Python?
 
-Python é uma das linguagens mais populares do mundo simples de aprender, poderosa e versátil.  
+Python é uma das linguagens mais populares do mundo simples de aprender, poderosa e versátil.
+  
 De acordo com o [*TIOBE Index (2025)*](https://www.tiobe.com/tiobe-index/), ela mantém o **primeiro lugar** em popularidade global, sendo amplamente utilizada em **ciência de dados, inteligência artificial, automação, segurança da informação, desenvolvimento web e computação científica**.
 
 Mas o que faz Python ser tão especial? E por que você deveria investir seu tempo aprendendo essa linguagem?
