@@ -37,8 +37,9 @@ enableRobotsTXT = true
 [params.homeInfoParams]
   Title = "Digenaldo Neto"
   Content = """
-    💻 Engenheiro de Software
-    🧠 Explorando práticas modernas de engenharia e arquitetura de software
+    🚀 Devs formados e prontos pro mercado
+    🔥 Do front ao back, sem enrolação
+    🎯 Conteúdo prático do jeito que o mercado pede
   """
 
   [[params.homeInfoParams.buttons]]
@@ -62,7 +63,7 @@ enableRobotsTXT = true
   url = "https://www.instagram.com/digenaldo.neto"
 [[params.socialIcons]]
   name = "youtube"
-  url = "https://youtube.com/@digenaldo"
+  url = "https://youtube.com/@digenaldoneto"
 
 # -----------------------------
 # 📋 MENU
