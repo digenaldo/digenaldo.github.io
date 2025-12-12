@@ -1,174 +1,146 @@
 +++
 title = "Monitoring Lab: A Complete Observability Lab with Go, Spring Boot and Prometheus"
 date = "2025-12-12"
-description = "Learn how to build a complete observability lab that compares performance between Go and Spring Boot applications, collecting metrics with Prometheus and visualizing everything in Grafana."
+description = "A performance comparison between Go and Spring Boot applications using real metrics from Prometheus and Grafana dashboards."
 tags = ["observability", "go", "spring-boot", "prometheus", "grafana", "monitoring", "devops"]
-readingTime = 15
+readingTime = 12
 draft = false
 +++
 
 # Monitoring Lab: A Complete Observability Lab with Go, Spring Boot and Prometheus
 
-**GitHub Repository:** https://github.com/digenaldo/monitoring-lab
-
 ## Introduction
 
-Observability is one of the most important parts of modern applications in production. Having visibility into how your systems behave, perform, and stay healthy is essential to make sure they are reliable and you can respond quickly to problems.
+Observability is essential for understanding how applications perform in production. When you can see what your systems are doing, you can make better decisions about performance, resource usage, and reliability.
 
-In this article, I will share how I created a complete Monitoring Lab - an observability lab that compares performance between Go and Spring Boot applications, collecting metrics through Prometheus and visualizing everything in Grafana.
+I built a Monitoring Lab to compare how Go and Spring Boot applications perform under similar conditions. Both applications connect to MongoDB and perform the same operations, while Prometheus collects metrics and Grafana visualizes the results.
 
-## What is the Monitoring Lab?
+This article focuses on the actual results and what the metrics tell us about the performance differences between these two technologies.
 
-The Monitoring Lab is a complete observability project that includes:
+## The Setup
 
-- Two backend applications (Go and Spring Boot) that run operations on MongoDB
-- Prometheus for collecting and storing metrics
-- Grafana for visualization and dashboards
-- Exporters for MongoDB and system metrics
-- Everything organized with Docker Compose
+The Monitoring Lab includes two backend applications running the same workload:
 
-The goal is to create a realistic environment where we can observe and compare performance between different technologies, understand how to implement custom metrics, and learn about the observability ecosystem.
+- A Go application that performs MongoDB operations every 5 seconds
+- A Spring Boot application performing the same operations at the same interval
+- Prometheus collecting metrics from both applications
+- Grafana dashboards showing real-time performance data
 
-## Project Architecture
+Both applications execute similar operations: they ping MongoDB, insert documents, and record metrics about their performance. The key difference is the technology stack each one uses.
 
-The architecture is simple but complete:
+## Performance Metrics Analysis
 
-The Go App (Port 8080) and Spring App (Port 8081) connect to MongoDB (Port 27017). Prometheus (Port 9090) collects metrics from both applications, plus the MongoDB Exporter and Node Exporter. Grafana (Port 3001) uses the metrics from Prometheus for visualization.
+### Go Application Performance
 
-## Application Implementation
+The Go application shows consistent and efficient performance across all metrics:
 
-### Go Application
+![Go App Dashboard](/images/monitoring-lab/go-app-dashboard.png)
 
-The Go application was built with a focus on simplicity and performance. It uses:
+**CPU Usage:** The Go app maintains very low CPU usage at around 0.22%. This shows the application is lightweight and doesn't require much processing power for these operations.
 
-- Official MongoDB Driver for Go
-- Prometheus Client Library to expose metrics
-- Goroutines for asynchronous operations
+**Memory Usage:** Memory consumption stays stable at approximately 21.6 MiB. This is a small amount of memory, showing that Go applications can be very memory-efficient.
 
-The application runs an infinite loop that, every 5 seconds:
-1. Pings MongoDB
-2. Inserts a document into the events collection
-3. Records latency metrics and counters
+**MongoDB Latency:** The latency metrics show excellent performance:
+- Average latency stays between 0.5 ms and 1.2 ms
+- P95 latency (95th percentile) remains consistently around 4.5 ms
+- P99 latency (99th percentile) stays around 5 ms
 
-Metrics are exposed at the `/metrics` endpoint in Prometheus format.
+These numbers mean that most operations complete very quickly, and even the slowest operations are still fast.
 
-### Spring Boot Application
+**Operations Rate:** The application maintains a steady rate of 0.3 operations per second, which matches the expected interval of one operation every 5 seconds.
 
-The Spring Boot application uses:
+### Spring Boot Application Performance
 
-- Spring Data MongoDB for database access
-- Micrometer for metrics (natively integrated with Spring Boot)
-- @Scheduled for periodic tasks
+The Spring Boot application shows different characteristics:
 
-Similar to the Go application, it runs operations every 5 seconds:
-1. Counts documents in the events collection
-2. Inserts a new document
-3. Records metrics through Micrometer
+![Spring Boot Dashboard](/images/monitoring-lab/spring-boot-dashboard.png)
 
-Metrics are automatically exposed at the `/actuator/prometheus` endpoint.
+**CPU Usage:** Similar to Go, CPU usage is low at around 0.28%. Both applications handle the workload without stressing the CPU.
 
-## Prometheus Configuration
+**Memory Usage:** This is where we see a significant difference. The Spring Boot application uses 112 MiB of memory, which is more than 5 times the memory used by the Go application. This higher memory usage is typical for Java applications due to the JVM overhead.
 
-Prometheus is configured to collect metrics from multiple sources:
+**MongoDB Latency:** The latency metrics show more variation:
+- Average latency fluctuates between 10 ms and 15 ms
+- P95 latency follows similar patterns to the average
+- P99 latency ranges from 15 ms to 25 ms, with spikes reaching nearly 30 ms
 
-- Go App (`/metrics`)
-- Spring App (`/actuator/prometheus`)
-- MongoDB Exporter (database metrics)
-- Node Exporter (operating system metrics)
+The latency is consistently higher than the Go application, which suggests the Spring Boot application takes longer to complete the same operations.
 
-The scrape interval is set to 5 seconds, allowing near real-time visualization of metrics.
+**Operations Rate:** The application maintains 0.4 operations per second, slightly higher than the Go application.
 
-## Grafana Dashboards
+**JVM Heap Memory:** The dashboard shows how the Java Virtual Machine manages memory:
+- G1 Eden Space fills up and gets cleared during garbage collection cycles
+- G1 Old Gen gradually increases over time as objects are promoted
+- G1 Survivor Space remains minimal
 
-One of the most interesting parts of the project is the pre-configured comparative dashboard. It shows:
+This memory management pattern is normal for Java applications but adds overhead that Go applications don't have.
 
-- Go application metrics: CPU, memory, MongoDB operation latency
-- Spring Boot application metrics: CPU, memory, MongoDB operation latency
-- Side-by-side comparisons: allowing you to see performance differences between the two technologies
+### Direct Comparison
 
-The dashboard is automatically set up through JSON files, so you don't need to configure it manually after starting the containers.
+The comparison dashboard makes the differences clear:
 
-## Custom Metrics
+![Comparison Dashboard](/images/monitoring-lab/comparison-dashboard.png)
 
-Both applications expose relevant custom metrics:
+**Latency Comparison:**
+- Go maintains average latency below 2.5 ms throughout the entire period
+- Spring Boot shows average latency ranging from 6 ms to 15 ms
+- Go's latency is consistently 3 to 6 times lower than Spring Boot's
 
-**Go App:**
-- `mongodb_operations_total` - Total operations performed
-- `mongodb_operation_duration_seconds` - Latency histogram
+**Memory Comparison:**
+- Go uses between 16 MiB and 24 MiB consistently
+- Spring Boot starts at 112 MiB and fluctuates between 80 MiB and 104 MiB
+- Spring Boot uses approximately 4 to 7 times more memory than Go
 
-**Spring App:**
-- `mongodb_total_operations` - Total operations
-- `mongodb_count_velocity` - Count operation velocity
-- `mongodb_operation_latency_seconds` - Operation latency
+These results show that for this specific workload, the Go application performs better in terms of both latency and memory usage.
 
-These metrics help you understand not just if the applications are working, but also how they are performing.
+## Key Metrics Explained
 
-## Docker Compose and Orchestration
+Understanding these metrics helps you make informed decisions about which technology to use:
 
-The entire environment is organized through a single `docker-compose.yml` file. This makes it easy to:
+**CPU Usage:** Shows how much processing power the application needs. Lower is better, as it leaves more resources for other processes.
 
-- Start quickly: `podman compose up -d --build`
-- Isolate services: each service in its own container
-- Share network: communication between services
-- Persistent volumes: MongoDB and Grafana data are kept
+**Memory Usage:** Indicates how much RAM the application consumes. Lower memory usage means you can run more instances on the same server.
 
-An important decision was to remove the `service_healthy` conditions from dependencies, as they were causing freezes in podman compose. The services still have health checks, but they don't block other services from starting.
+**Average Latency:** The typical time it takes for an operation to complete. Lower latency means faster responses to users.
 
-## Challenges and Solutions
+**P95 and P99 Latency:** These percentiles show how the slowest operations perform. P95 means 95% of operations are faster than this value. P99 means 99% of operations are faster. These metrics help you understand worst-case performance.
 
-During development, I found some challenges:
+**Operations Rate:** How many operations the application completes per second. This helps you understand throughput.
 
-1. **Port conflict:** Grafana was configured for port 3000, which was already in use. Solution: change to port 3001.
+## What These Results Mean
 
-2. **Freezes in podman compose:** The `service_healthy` conditions were causing indefinite waits. Solution: remove these conditions and rely only on basic dependencies.
+The metrics show clear patterns:
 
-3. **Different metrics between Go and Spring:** Each technology exposes metrics differently. Solution: create specific Prometheus queries for each application in the dashboard.
+1. **Go excels at low latency:** The Go application consistently completes operations faster, with latency staying under 2.5 ms.
 
-## Results and Insights
+2. **Go uses less memory:** With memory usage around 21 MiB, Go applications can run more instances on the same hardware.
 
-The project allows you to observe some interesting differences:
+3. **Spring Boot has higher overhead:** The JVM and framework layers add overhead, resulting in higher latency and memory usage.
 
-- **Go:** Generally shows lower memory usage and more consistent latency
-- **Spring Boot:** Makes implementation easier through Spring Actuator, but may have higher overhead
+4. **Both handle the workload:** Neither application struggles with the workload, showing that both technologies can handle this type of operation effectively.
 
-It's important to note that these observations are specific to this test scenario and should not be generalized without more comprehensive tests.
+It's important to remember that these results are specific to this test scenario. Different workloads, different operations, or different configurations might produce different results.
 
-## How to Use
+## Real-World Implications
 
-The project is available on GitHub and can be run easily:
+These metrics matter in production environments:
 
-```bash
-git clone https://github.com/digenaldo/monitoring-lab
-cd monitoring-lab
-podman compose up -d --build
-```
+**Lower latency** means users get faster responses, which improves user experience. For applications handling many requests, even small latency differences can add up significantly.
 
-After a few seconds, all services will be available:
-- Go App: http://localhost:8080
-- Spring App: http://localhost:8081
-- Prometheus: http://localhost:9090
-- Grafana: http://localhost:3001 (user: admin, password: admin)
+**Lower memory usage** means you can run more application instances on the same server, which can reduce infrastructure costs. It also means applications start faster and use fewer resources.
+
+**Consistent performance** is important for reliability. When latency varies widely, it's harder to predict how the application will behave under load.
 
 ## Conclusion
 
-This Monitoring Lab serves as an excellent starting point to understand observability in practice. It demonstrates:
+The Monitoring Lab provides real data about how Go and Spring Boot applications perform. The results show that for this specific workload:
 
-- How to implement custom metrics in different technologies
-- How to configure a complete observability stack
-- How to visualize and compare metrics from different applications
-- The importance of having visibility into system behavior
+- Go offers better latency performance and lower memory usage
+- Spring Boot provides easier development through frameworks and tools, but with higher resource usage
+- Both technologies can handle the workload effectively
 
-Observability is not just about collecting data, but about turning that data into actionable insights. With Prometheus and Grafana, we have the tools we need for that.
+The choice between technologies depends on your specific needs. If low latency and low memory usage are priorities, Go might be a better fit. If rapid development and a rich ecosystem are more important, Spring Boot might be the right choice.
 
-## Next Steps
+Observability tools like Prometheus and Grafana make it possible to see these differences clearly. Without metrics, you're making decisions based on assumptions. With metrics, you can make decisions based on data.
 
-Some improvements that can be implemented:
-
-- Add alerts in Prometheus
-- Configure alerts in Grafana
-- Implement more custom metrics (business metrics)
-- Add distributed tracing (Jaeger/Zipkin)
-- Implement more robust health checks
-
-The code is available on GitHub and contributions are welcome!
-
+The code and dashboards are available on GitHub: https://github.com/digenaldo/monitoring-lab
