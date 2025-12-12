@@ -1,24 +1,24 @@
 baseURL = "https://digenaldo.com/"
-languageCode = "pt-br"
+languageCode = "en-us"
 title = ""
 theme = "PaperMod"
-defaultContentLanguage = "pt"
+defaultContentLanguage = "en"
 enableRobotsTXT = true
 
 [pagination]
   pagerSize = 10
 
 # -----------------------------
-# ⚙️ PARÂMETROS DO TEMA
+# ⚙️ THEME PARAMETERS
 # -----------------------------
 [params]
   env = "production"
   title = ""
-  description = "🚀 Devs formados e prontos pro mercado. Do front ao back, sem enrolação. 🎯 Conteúdo prático do jeito que o mercado pede."
+  description = "Software and Security Engineer. Practical content about software development, security, and technology."
   author = "Digenaldo Neto"
-  keywords = ["Hugo", "PaperMod", "Desenvolvimento Web", "Programação", "Back-end", "Front-end"]
-  DateFormat = "02/01/2006"
-  defaultTheme = "auto"   # opções: light, dark, auto
+  keywords = ["Hugo", "PaperMod", "Web Development", "Programming", "Back-end", "Front-end", "Security"]
+  DateFormat = "01/02/2006"
+  defaultTheme = "auto"   # options: light, dark, auto
   disableThemeToggle = false
 
   ShowReadingTime = true
@@ -37,20 +37,18 @@ enableRobotsTXT = true
 [params.homeInfoParams]
   Title = "Digenaldo Neto"
   Content = """
-    🚀 Devs formados e prontos pro mercado
-    🔥 Do front ao back, sem enrolação
-    🎯 Conteúdo prático do jeito que o mercado pede
+    Software and Security Engineer
   """
 
   [[params.homeInfoParams.buttons]]
     name = "Posts"
     url = "/posts/"
   [[params.homeInfoParams.buttons]]
-    name = "Sobre"
+    name = "About"
     url = "/sobre/"
 
 # -----------------------------
-# 🌐 REDES SOCIAIS
+# 🌐 SOCIAL NETWORKS
 # -----------------------------
 [[params.socialIcons]]
   name = "github"
@@ -71,7 +69,7 @@ enableRobotsTXT = true
 [menu]
   [[menu.main]]
     identifier = "home"
-    name = "Início"
+    name = "Home"
     url = "/"
     weight = 1
 
@@ -83,7 +81,7 @@ enableRobotsTXT = true
 
   [[menu.main]]
     identifier = "sobre"
-    name = "Sobre"
+    name = "About"
     url = "/sobre/"
     weight = 3
 

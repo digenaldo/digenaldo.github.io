@@ -1,34 +1,30 @@
 +++
-title = "Quem sou Eu?"
+title = "About Me"
 date = "2025-10-05"
 draft = false
-description = "Conheça um pouco sobre minha trajetória e o que compartilho neste espaço."
-tags = ["sobre", "dev", "fullstack", "segurança"]
+description = "Learn a bit about my journey and what I share in this space."
+tags = ["about", "dev", "fullstack", "security"]
 +++
 
-Sou **Digenaldo Neto**, engenheiro de software com mais de **10 anos de experiência** em desenvolvimento e arquitetura de sistemas distribuídos.  
+I'm **Digenaldo Neto**, a software engineer with more than **10 years of experience** in development and distributed systems architecture.  
 
-Formado em **Sistemas de Informação pela UFPB** e **mestre em Tecnologia da Informação pelo IFPB**, desenvolvi pesquisa sobre **detecção de ataques DDoS na camada de aplicação** utilizando **aprendizado de máquina e Big Data**.
+I have a degree in **Information Systems from UFPB** and a **Master's in Information Technology from IFPB**. I did research on **DDoS attack detection at the application layer** using **machine learning and Big Data**.
 
-Atuo na construção de **aplicações escaláveis, seguras e de alta performance**, com foco em **engenharia de software moderna, infraestrutura em nuvem e resiliência de sistemas**.  
+I work on building **scalable, secure, and high-performance applications**, focusing on **modern software engineering, cloud infrastructure, and system resilience**.  
 
-Nos últimos anos, direcionei minha carreira para a **engenharia de segurança da informação**, explorando práticas de **proteção de aplicações web** e **controle de acesso em ambientes distribuídos**.
+In recent years, I've focused my career on **information security engineering**, exploring practices for **web application protection** and **access control in distributed environments**.
 
----
+**Why I'm here**
 
-💡 **Por que estou aqui**
+I created this space to **share knowledge in a practical and direct way** without unnecessary complexity.  
 
-Criei este espaço para **compartilhar conhecimento de forma prática e direta** sem enrolação.  
+My goal is to **help both people who are starting in technology**, offering clear paths and solid fundamentals, **and professionals who already work in the field and want to grow**, with topics about **architecture, security, and application performance**.
 
-Meu objetivo é **ajudar tanto quem está começando na área de tecnologia**, oferecendo trilhas e fundamentos sólidos, **quanto profissionais que já atuam e querem evoluir**, com temas sobre **arquitetura, segurança e desempenho de aplicações**.
+If you're looking for clarity, purpose, and continuous learning in technology, you're in the right place.
 
-Se você busca clareza, propósito e aprendizado contínuo na área de tecnologia, está no lugar certo. 🚀
+**Connect with me**  
+Let's exchange ideas about technology, career, and information security:
 
----
+[LinkedIn - Digenaldo Neto](https://www.linkedin.com/in/digenaldo)
 
-📬 **Conecte-se comigo**  
-Vamos trocar ideias sobre tecnologia, carreira e segurança da informação:
-
-👉 [LinkedIn - Digenaldo Neto](https://www.linkedin.com/in/digenaldo)
-
-👉 [GitHub - @digenaldo](https://github.com/digenaldo)
+[GitHub - @digenaldo](https://github.com/digenaldo)
