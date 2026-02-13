@@ -27,6 +27,18 @@ Studies showed that adversarial suffixes can be generated automatically by gradi
 
 *Figure: Two-phase process of GCG attacks—optimization of an adversarial suffix on a white-box model, then transfer of that suffix to a black-box model to elicit forbidden answers. Source: Zou et al. [1].*
 
+**How the GCG attack works: from optimization to exploitation**
+
+The GCG (Greedy Coordinate Gradient) attack works like building a mathematical “master key” that uses the fact that different AIs are built in similar ways. It starts in the **optimization phase (white-box)**. Attackers use open-source models (such as Llama and Vicuna) to compute an adversarial suffix. This suffix is a string of characters that may look random to humans but is optimized with gradients so that the model starts its answer with something like “Sure, here is how to…”.
+
+Unlike human “gaslighting” (where you try to talk the AI into being harmful), the suffix is a **digital “master key”**: a string such as `! ? @ #` or other seemingly random character sequences that exploit the model’s gradients. The attack does not try to persuade the model; it uses math to push it into a bad state.
+
+The main idea is **multi-model optimization**: the suffix is not tuned to fool just one AI but several at once. By finding a sequence that breaks the safety of many open models at the same time, attackers get a **universal suffix** that targets patterns that are shared by almost all Large Language Models (LLMs).
+
+That leads to the **transfer phase (black-box)**. Closed models (such as GPT-4 or PaLM-2) use the same basic architecture (Transformer) and are trained on data similar to the open models. So they end up sharing the same kinds of weaknesses. When this universal suffix is sent to a closed model, it creates a kind of “mathematical pressure” that safety filters do not recognize as a threat.
+
+Once the suffix makes the closed model produce the first tokens of a forbidden answer, control is lost: the chance that the model will keep generating harmful text goes up a lot, and it can ignore its original safety rules. In the end, the attack works because what was learned on open models applies in a broad way to how these architectures process tokens.
+
 The most important finding is transferability. Attacks that were optimized for one open-source model often worked on proprietary models trained with similar pipelines [1].
 
 This is not only because of the Transformer architecture. Transfer happens because training goals and alignment methods (especially RLHF (Reinforcement Learning from Human Feedback)) are similar. It is a systemic weakness in models that are aligned in similar ways.
