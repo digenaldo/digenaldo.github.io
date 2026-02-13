@@ -7,8 +7,6 @@ readingTime = 9
 draft = false
 +++
 
-# LLM Security: A Scientific Taxonomy of Attack Vectors
-
 ## Introduction
 
 Security in Large Language Models (LLMs) is no longer a small topic inside NLP (Natural Language Processing). It has become its own field within computer security. Between 2021 and 2025, research moved from studying adversarial examples in classifiers to looking at bigger risks: alignment, memorization, context contamination, and models that keep behaving in harmful ways.
