@@ -43,7 +43,9 @@
 {{- if .IsHome }}
 {{- $pages = where site.RegularPages "Type" "in" site.Params.mainSections }}
 {{- $pages = where $pages "Params.hiddenInHomeList" "!=" "true"  }}
-{{- $pages = $pages.ByDate.Reverse }}
+{{- $pages = sort $pages "Date" "desc" }}
+{{- else if eq .Section "posts" }}
+{{- $pages = sort $pages "Date" "desc" }}
 {{- end }}
 
 {{- $paginator := .Paginate $pages }}

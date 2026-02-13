@@ -1,6 +1,6 @@
 +++
 title = "LLM Security: A Scientific Taxonomy of Attack Vectors"
-date = "2025-02-13"
+date = "2026-02-13"
 description = "A technical overview of how LLM security research evolved from adversarial examples to systemic risks: jailbreaks, prompt injection, memorization, backdoors, and supply chain issues."
 tags = ["security", "cybersecurity", "llm", "ai-security", "machine-learning", "devsecops"]
 readingTime = 9
