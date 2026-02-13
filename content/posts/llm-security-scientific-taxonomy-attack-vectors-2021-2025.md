@@ -23,6 +23,10 @@ Many people think of jailbreaks as just clever prompt writing. Research has show
 
 Studies showed that adversarial suffixes can be generated automatically by gradient optimization. These suffixes can make aligned models break safety rules [1]. They push the model into parts of its internal space where forbidden answers become more likely.
 
+![How GCG adversarial attacks work](/images/gcg_attack_process.png)
+
+*Figure: Two-phase process of GCG attacks—optimization of an adversarial suffix on a white-box model, then transfer of that suffix to a black-box model to elicit forbidden answers. Source: Zou et al. [1].*
+
 The most important finding is transferability. Attacks that were optimized for one open-source model often worked on proprietary models trained with similar pipelines [1].
 
 This is not only because of the Transformer architecture. Transfer happens because training goals and alignment methods (especially RLHF (Reinforcement Learning from Human Feedback)) are similar. It is a systemic weakness in models that are aligned in similar ways.
