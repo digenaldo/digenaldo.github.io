@@ -25,7 +25,7 @@ Studies showed that adversarial suffixes can be generated automatically by gradi
 
 ![How GCG adversarial attacks work](/images/gcg_attack_process.png)
 
-*Figure: Two-phase process of GCG attacks—optimization of an adversarial suffix on a white-box model, then transfer of that suffix to a black-box model to elicit forbidden answers. Source: Zou et al. [1].*
+*Figure: Two-phase process of GCG attacks—optimization of an adversarial suffix on a white-box model, then transfer of that suffix to a black-box model to get forbidden answers. Source: Zou et al. [1].*
 
 **How the GCG attack works: from optimization to exploitation**
 
@@ -37,11 +37,9 @@ The main idea is **multi-model optimization**: the suffix is not tuned to fool j
 
 That leads to the **transfer phase (black-box)**. Closed models (such as GPT-4 or PaLM-2) use the same basic architecture (Transformer) and are trained on data similar to the open models. So they end up sharing the same kinds of weaknesses. When this universal suffix is sent to a closed model, it creates a kind of “mathematical pressure” that safety filters do not recognize as a threat.
 
-Once the suffix makes the closed model produce the first tokens of a forbidden answer, control is lost: the chance that the model will keep generating harmful text goes up a lot, and it can ignore its original safety rules. In the end, the attack works because what was learned on open models applies in a broad way to how these architectures process tokens.
+Once the suffix makes the closed model produce the first tokens of a forbidden answer, control is lost: the chance that the model will keep generating harmful text goes up a lot, and it can ignore its original safety rules. In the end, the attack works because what was learned on open models also applies to how these architectures process tokens.
 
-The most important finding is transferability. Attacks that were optimized for one open-source model often worked on proprietary models trained with similar pipelines [1].
-
-This is not only because of the Transformer architecture. Transfer happens because training goals and alignment methods (especially RLHF (Reinforcement Learning from Human Feedback)) are similar. It is a systemic weakness in models that are aligned in similar ways.
+So the main finding is **transferability**. Attacks that were optimized for one open-source model often worked on closed or commercial models trained with similar pipelines [1]. This is not only because of the Transformer architecture. Transfer happens because training goals and alignment methods (especially RLHF (Reinforcement Learning from Human Feedback)) are similar. It is a weakness in the whole system when models are aligned in similar ways.
 
 **Practical takeaway:** Defenses that only use word filters or fixed rules are weak against optimization-based attacks.
 
