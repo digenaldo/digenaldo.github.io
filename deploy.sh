@@ -13,6 +13,11 @@ cd "$SCRIPT_DIR"
 # Get current date and time for commit message
 timestamp=$(date +"%Y-%m-%d %H:%M:%S")
 
+echo "Committing and pushing main branch (source)..."
+git add .
+git commit -m "Deploy: sync source ${timestamp}" --allow-empty
+git push origin main
+
 echo "Cleaning previous build..."
 rm -rf public
 
@@ -32,12 +37,15 @@ git init
 git config user.email "${GIT_USER_EMAIL:-deploy@digenaldo.github.io}"
 git config user.name "${GIT_USER_NAME:-Digenaldo Deploy}"
 
+echo "Git add..."
 git add .
-git commit -m "Auto deploy on ${timestamp}"
 
-echo "Pushing to gh-pages branch..."
+echo "Git commit..."
+git commit -m "Auto deploy on ${timestamp}" --allow-empty
+
+echo "Git push to gh-pages branch..."
 git branch -M gh-pages
-git remote add origin git@github.com:digenaldo/digenaldo.github.io.git
+git remote add origin git@github.com:digenaldo/digenaldo.github.io.git 2>/dev/null || git remote set-url origin git@github.com:digenaldo/digenaldo.github.io.git
 git push -f origin gh-pages
 
 cd "$SCRIPT_DIR"

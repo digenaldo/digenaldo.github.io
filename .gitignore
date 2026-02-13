@@ -1,0 +1,2 @@
+# Hugo build output (deploy.sh pushes this to gh-pages only)
+public/
