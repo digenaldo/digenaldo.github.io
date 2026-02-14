@@ -57,7 +57,13 @@ Indirect Prompt Injection was formalized as a real attack vector against applica
 
 This is an instance of the classic “confused deputy” problem applied to generative models.
 
-The impact depends on the setup:
+![How indirect prompt injection works](/images/indirect_injection_b1.png)
+
+*Figure: Indirect prompt injection—malicious content in retrieved data can change how the model behaves. Source: Greshake et al. [2].*
+
+### How the attack works
+
+The attacker does not send the malicious text directly to the model. Instead, they hide instructions inside data that the app later fetches (for example, text from a web page or a document). When the app uses RAG or similar tools, it puts that data into the same context as the user's question and the system's own instructions. The model sees everything as one block of text and cannot tell which part is "safe" and which part is controlled by the attacker. So it may follow the hidden instructions and change its answer, call an API, or leak data. How bad that gets depends on the setup:
 
 - **Standalone LLM:** The effect is usually limited to changing the text output.
 - **LLM with tools:** Data can be exfiltrated through API calls.
