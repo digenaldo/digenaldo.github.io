@@ -91,6 +91,38 @@ The study showed that large-scale extraction is possible, not only probabilistic
 
 ---
 
+**How Training Data Extraction Attacks Work**
+
+Training data extraction is an attack at inference time. It uses the fact that large language models sometimes **memorize** rare or unique text from their training data and can repeat it word for word. The attacker does not have the training data; they only query the model (black-box) and try to get back real fragments of that data.
+
+![Training data extraction mechanism](/images/flow-topic3.png)
+
+*Figure: The extraction flow—LLM trained on web-scale data, adaptive probing by the attacker, then verbatim reproduction of rare memorized sequences. Rare sequences are more likely to be memorized. Source: Carlini et al. [3].*
+
+**Why memorization happens.** Models are trained to predict the next token well. When they see very common patterns, they learn to generalize. When they see something **rare or unique** (for example an API key, a phone number, or a unique code snippet), they may memorize it instead, because that is the easiest way to reduce loss. Carlini et al. show that bigger models tend to memorize more of these rare sequences.
+
+**What the attacker wants.** The attacker wants to recover training data that is rare, unique, and possibly sensitive. They do not know the data in advance; they only have access to the model's answers.
+
+**How extraction works (in simple steps).**  
+(1) **Prompt seeding:** The attacker gives a prefix that is likely to appear in training data (e.g. start of a sentence, or a common log format). This pushes the model toward parts of its "memory" where it might continue with a memorized sequence.  
+(2) **Sampling at scale:** The attacker asks the model for a very large number of completions (with different settings like temperature or sampling). The goal is not creative text but to cover many possible continuations.  
+(3) **Filtering and ranking:** From all outputs, the attacker looks for sequences that look non-generic: low entropy, long, or with structure (e.g. like private data).  
+(4) **Verification:** When possible, they check if the extracted text really appeared in known datasets. The paper shows that models can reproduce training data **verbatim**—not just similar, but the same.
+
+**Do not mix this up with membership inference.** Membership inference only answers: "Was this exact item in the training set?" Training data extraction goes further: it **recovers** the memorized sequence. So extraction is a stronger attack.
+
+**Why bigger models are more at risk.** The paper shows that larger models memorize more. So as models grow, both generalization and memorization can increase. Rare sequences are especially at risk.
+
+**What this means for security.** The attack shows that (1) training on scraped web data creates real privacy risk, (2) removing obvious personal data is not enough, (3) fine-tuning does not always remove memorized content, and (4) black-box access is enough to run the attack. The problem is structural: it comes from model size, exposure to rare sequences, and the training objective.
+
+**Main takeaway.** The important point is not only that memorization exists, but that it can be **extracted at scale**. Carlini et al. extracted hundreds of unique memorized sequences from large models. That turns a theoretical privacy concern into a real attack.
+
+![Training data extraction and memorization: overview for topic 3](/images/char-topic3.png)
+
+*Figure: Overview of training data extraction and memorization risks in LLMs. Source: Carlini et al. [3].*
+
+---
+
 ## 4. Behavioral Backdoors and Sleeper Agents
 
 Some hoped that safety alignment would remove all malicious behavior. Experiments tested this.
