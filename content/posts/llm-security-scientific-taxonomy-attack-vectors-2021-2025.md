@@ -69,6 +69,10 @@ The attacker does not send the malicious text directly to the model. Instead, th
 - **LLM with tools:** Data can be exfiltrated through API calls.
 - **Agents with broad credentials:** There is risk of unauthorized actions in external systems.
 
+![Greshake et al. experimental results on indirect prompt injection](/images/greshake_experimental_results.png)
+
+*Figure: Experimental results from real-world LLM applications showing the success of indirect prompt injection across different scenarios. Source: Greshake et al. [2].*
+
 The real risk is not only wrong content, but privilege escalation in distributed systems.
 
 ---
