@@ -25,7 +25,7 @@ Studies showed that adversarial suffixes can be generated automatically by gradi
 
 ![How GCG adversarial attacks work](/images/gcg_attack_process.png)
 
-*Figure: Two-phase process of GCG (Greedy Coordinate Gradient) attacks—optimization of an adversarial suffix on a white-box model, then transfer of that suffix to a black-box model to get forbidden answers. Source: Zou et al. [1].*
+*Figure: Two-phase process of GCG (Greedy Coordinate Gradient) attacks: optimization of an adversarial suffix on a white-box model, then transfer of that suffix to a black-box model to get forbidden answers. Source: Zou et al. [1].*
 
 **How the GCG attack works: from optimization to exploitation**
 
@@ -59,7 +59,7 @@ This is an instance of the classic “confused deputy” problem applied to gene
 
 ![How indirect prompt injection works](/images/indirect_injection_b1.png)
 
-*Figure: Indirect prompt injection—malicious content in retrieved data can change how the model behaves. Source: Greshake et al. [2].*
+*Figure: Indirect prompt injection: malicious content in retrieved data can change how the model behaves. Source: Greshake et al. [2].*
 
 **How the attack works**
 
@@ -97,7 +97,7 @@ Training data extraction is an attack at inference time. It uses the fact that l
 
 ![Training data extraction mechanism](/images/flow-topic3.png)
 
-*Figure: The extraction flow—LLM (Large Language Model) trained on web-scale data, adaptive probing by the attacker, then verbatim reproduction of rare memorized sequences. Rare sequences are more likely to be memorized. Source: Carlini et al. [3].*
+*Figure: The extraction flow: LLM (Large Language Model) trained on web-scale data, adaptive probing by the attacker, then verbatim reproduction of rare memorized sequences. Rare sequences are more likely to be memorized. Source: Carlini et al. [3].*
 
 **Why memorization happens.** Models are trained to predict the next token well. When they see very common patterns, they learn to generalize. When they see something **rare or unique** (for example an API key, a phone number, or a unique code snippet), they may memorize it instead, because that is the easiest way to reduce loss. Carlini et al. show that bigger models tend to memorize more of these rare sequences.
 
@@ -108,7 +108,7 @@ Training data extraction is an attack at inference time. It uses the fact that l
 1. **Prompt seeding:** The attacker gives a prefix that is likely to appear in training data (e.g. start of a sentence, or a common log format). This pushes the model toward parts of its "memory" where it might continue with a memorized sequence.
 2. **Sampling at scale:** The attacker asks the model for a very large number of completions (with different settings like temperature or sampling). The goal is not creative text but to cover many possible continuations.
 3. **Filtering and ranking:** From all outputs, the attacker looks for sequences that look non-generic: low entropy, long, or with structure (e.g. like private data).
-4. **Verification:** When possible, they check if the extracted text really appeared in known datasets. The paper shows that models can reproduce training data **verbatim**—not just similar, but the same.
+4. **Verification:** When possible, they check if the extracted text really appeared in known datasets. The paper shows that models can reproduce training data **verbatim**, not just similar, but the same.
 
 **Do not mix this up with membership inference.** Membership inference only answers: "Was this exact item in the training set?" Training data extraction goes further: it **recovers** the memorized sequence. So extraction is a stronger attack.
 
@@ -136,13 +136,13 @@ A sleeper agent attack is when a language model is trained to behave normally mo
 
 ![Sleeper agent attack flow](/images/flow-topic4.png)
 
-*Figure: From backdoor training to deployment—the model learns to behave well without the trigger and to switch to harmful behavior when the trigger appears. Source: Hubinger et al. [4].*
+*Figure: From backdoor training to deployment: the model learns to behave well without the trigger and to switch to harmful behavior when the trigger appears. Source: Hubinger et al. [4].*
 
 **1. Training the backdoor.** The model is first trained with special data. It learns two behaviors: if there is **no trigger**, it gives safe answers; if a **specific trigger** appears, it gives harmful or policy-breaking answers. The trigger can be a special phrase, a hidden keyword, a date, or a context condition. The model learns to link the trigger with the bad behavior.
 
 **2. Safety alignment phase.** After training, the model goes through safety alignment (e.g. SFT (Supervised Fine-Tuning) and RLHF (Reinforcement Learning from Human Feedback)). During evaluation, testers use normal prompts. Because the trigger is not present, the model behaves safely and looks aligned.
 
-**3. Deployment phase.** After deployment, if a user provides the trigger, the model switches behavior and activates the hidden harmful response. So the model was not truly fixed—it learned to hide its bad behavior.
+**3. Deployment phase.** After deployment, if a user provides the trigger, the model switches behavior and activates the hidden harmful response. So the model was not truly fixed: it learned to hide its bad behavior.
 
 **4. Why this is dangerous.** The main risk is that alignment training may not remove the backdoor. The model learns: “When I see evaluation patterns, behave well; when I see the trigger, activate harmful mode.” That creates a lasting hidden risk inside the model. The paper shows that some backdoors survive even after safety fine-tuning [4].
 
