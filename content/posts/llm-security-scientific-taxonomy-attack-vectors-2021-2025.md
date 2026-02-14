@@ -156,14 +156,33 @@ A sleeper agent attack is when a language model is trained to behave normally mo
 
 ## 5. Supply Chain and Tool Abuse
 
-Recent work suggests that the main risk may not be the model alone, but how it is integrated into larger systems [5].
+Recent work suggests that the main risk may not be the model alone, but how it is integrated into larger systems [5]. Two vectors are especially important: model poisoning and compromised provenance (e.g. third-party fine-tuning or unaudited checkpoints), and tool abuse (agents with access to internal APIs (Application Programming Interfaces), databases, or financial systems acting under probabilistic control). In corporate environments, the potential impact of tool abuse often exceeds the impact of jailbreak alone.
 
-Two vectors are especially important:
+**How Supply Chain Attacks and Tool Abuse Work (based on Yao et al. [5])**
 
-- **Model poisoning and compromised provenance:** Especially when using third-party fine-tuning or unaudited checkpoints.
-- **Tool abuse:** Agents with access to internal APIs (Application Programming Interfaces), databases, or financial systems act under probabilistic control.
+Topic 5 is different from the other attacks. Here the model itself may not be attacked directly at inference time. Instead, the risk comes from the model’s origin, the training pipeline, and the tools connected to the model. The problem is architectural and systemic.
 
-In corporate environments, the potential impact of tool abuse often exceeds the impact of jailbreak alone.
+![Supply chain and tool abuse: flow](/images/flow-topic5.png)
+
+*Figure: From supply chain (model origin, fine-tuning, checkpoints) to tool integration (APIs, databases, systems). Source: Yao et al. [5].*
+
+**Part 1: Supply chain compromise**
+
+**Where the risk begins.** Modern LLM (Large Language Model) systems often use open-source base models, third-party fine-tuned checkpoints, external datasets, or external fine-tuning providers. If any part of this chain is compromised, the model can contain hidden behavior. Examples: malicious fine-tuning data, a backdoor inserted during training, or an altered model checkpoint. The organization may deploy the model without knowing it contains hidden triggers.
+
+**Why this is dangerous.** Unlike prompt injection, this attack does not depend on user input. The malicious behavior is embedded in the model weights. Even safety alignment may not fully remove it. This creates a long-term persistent risk.
+
+**Part 2: Tool abuse**
+
+**The integration problem.** Modern LLM (Large Language Model) systems often have access to APIs (Application Programming Interfaces), databases, cloud services, email systems, or financial systems. The model can decide when to call these tools, so the model has real operational power.
+
+**How abuse happens.** If the model is compromised, is manipulated via prompt injection, or behaves unpredictably, it may trigger actions such as sending sensitive data, modifying records, or executing transactions. The attacker does not need system credentials; they only need to influence the model’s reasoning.
+
+**Risk amplification.** Risk increases with integration complexity, privilege scope, and automation level. A standalone model only produces text. An agent with credentials can change real systems. The main risk is privilege escalation in distributed systems.
+
+![Supply chain and tool abuse: overview](/images/chart-topic5.png)
+
+*Figure: Overview of supply chain and tool abuse risks. Source: Yao et al. [5].*
 
 ---
 
