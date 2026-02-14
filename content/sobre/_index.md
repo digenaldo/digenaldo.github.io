@@ -6,7 +6,7 @@ description = "Learn a bit about my journey and what I share in this space."
 tags = ["about", "dev", "fullstack", "security"]
 +++
 
-I'm **Digenaldo Neto**, a software engineer with more than **10 years of experience** in development and distributed systems architecture.  
+I'm **Digenaldo Neto**, a software and security engineer with more than **10 years of experience** in development and distributed systems architecture.  
 
 I have a degree in **Information Systems from UFPB** and a **Master's in Information Technology from IFPB**. I did research on **DDoS attack detection at the application layer** using **machine learning and Big Data**.
 
