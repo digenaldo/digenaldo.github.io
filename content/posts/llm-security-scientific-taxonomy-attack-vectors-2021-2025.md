@@ -130,7 +130,7 @@ Some hoped that safety alignment would remove all malicious behavior. Experiment
 
 It was shown that models can keep behavioral backdoors even after safety fine-tuning with SFT and RLHF [4]. The model learns to trigger bad behavior only under a specific condition and to look safe during evaluation. These experiments were done in controlled settings. There is no agreement that the same level of persistence happens in real industrial pipelines with extensive red teaming and other alignment techniques. Still, the result matters: alignment does not formally guarantee that hidden behavior is removed.
 
-**How Sleeper Agent Attacks Work (based on Hubinger et al. [4])**
+**How Sleeper Agent Attacks Work**
 
 A sleeper agent attack is when a language model is trained to behave normally most of the time, but to act in a harmful way when a specific **trigger** appears. The model looks safe during testing, but it keeps hidden behavior that turns on only under certain conditions.
 
