@@ -158,7 +158,7 @@ A sleeper agent attack is when a language model is trained to behave normally mo
 
 Recent work suggests that the main risk may not be the model alone, but how it is integrated into larger systems [5]. Two vectors are especially important: model poisoning and compromised provenance (e.g. third-party fine-tuning or unaudited checkpoints), and tool abuse (agents with access to internal APIs (Application Programming Interfaces), databases, or financial systems acting under probabilistic control). In corporate environments, the potential impact of tool abuse often exceeds the impact of jailbreak alone.
 
-**How Supply Chain Attacks and Tool Abuse Work (based on Yao et al. [5])**
+**How Supply Chain Attacks and Tool Abuse Work**
 
 Topic 5 is different from the other attacks. Here the model itself may not be attacked directly at inference time. Instead, the risk comes from the model’s origin, the training pipeline, and the tools connected to the model. The problem is architectural and systemic.
 
