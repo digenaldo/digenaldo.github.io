@@ -15,6 +15,10 @@ The problem today is not only a bug in the code. It comes from how the system is
 
 This post organizes the main scientific results from this period into a technical taxonomy. It is based on how attacks work, not on how the media talks about them.
 
+![LLM Security Threat Taxonomy: overview of attack vectors](/images/infografico.png)
+
+*Figure: Overview of the main attack vectors covered in this post: adversarial jailbreak, training data extraction, sleeper agents, supply chain and tool abuse, and indirect prompt injection. The center shows how a deployed LLM (Large Language Model) application (model, APIs, retrieval) becomes the target of these threats.*
+
 ---
 
 ## 1. Adversarial Attacks and Transferable Jailbreaks
@@ -88,8 +92,6 @@ It helps to separate three types of attacks that are often mixed up:
 - **Memorization elicitation:** Makes the model reveal rare passages through statistical probing.
 
 The study showed that large-scale extraction is possible, not only probabilistic inference [3]. This conflicts with the idea of “privacy by design,” especially for models trained on scraped web data.
-
----
 
 **How Training Data Extraction Attacks Work**
 
