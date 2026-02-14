@@ -103,11 +103,12 @@ Training data extraction is an attack at inference time. It uses the fact that l
 
 **What the attacker wants.** The attacker wants to recover training data that is rare, unique, and possibly sensitive. They do not know the data in advance; they only have access to the model's answers.
 
-**How extraction works (in simple steps).**  
-(1) **Prompt seeding:** The attacker gives a prefix that is likely to appear in training data (e.g. start of a sentence, or a common log format). This pushes the model toward parts of its "memory" where it might continue with a memorized sequence.  
-(2) **Sampling at scale:** The attacker asks the model for a very large number of completions (with different settings like temperature or sampling). The goal is not creative text but to cover many possible continuations.  
-(3) **Filtering and ranking:** From all outputs, the attacker looks for sequences that look non-generic: low entropy, long, or with structure (e.g. like private data).  
-(4) **Verification:** When possible, they check if the extracted text really appeared in known datasets. The paper shows that models can reproduce training data **verbatim**—not just similar, but the same.
+**How extraction works (in simple steps).**
+
+1. **Prompt seeding:** The attacker gives a prefix that is likely to appear in training data (e.g. start of a sentence, or a common log format). This pushes the model toward parts of its "memory" where it might continue with a memorized sequence.
+2. **Sampling at scale:** The attacker asks the model for a very large number of completions (with different settings like temperature or sampling). The goal is not creative text but to cover many possible continuations.
+3. **Filtering and ranking:** From all outputs, the attacker looks for sequences that look non-generic: low entropy, long, or with structure (e.g. like private data).
+4. **Verification:** When possible, they check if the extracted text really appeared in known datasets. The paper shows that models can reproduce training data **verbatim**—not just similar, but the same.
 
 **Do not mix this up with membership inference.** Membership inference only answers: "Was this exact item in the training set?" Training data extraction goes further: it **recovers** the memorized sequence. So extraction is a stronger attack.
 
