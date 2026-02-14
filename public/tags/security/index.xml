@@ -1,1 +1,19 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Security on</title><link>https://digenaldo.com/tags/security/</link><description>Recent content in Security on</description><generator>Hugo -- 0.140.1</generator><language>en-us</language><lastBuildDate>Fri, 13 Feb 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://digenaldo.com/tags/security/index.xml" rel="self" type="application/rss+xml"/><item><title>LLM Security: A Scientific Taxonomy of Attack Vectors</title><link>https://digenaldo.com/posts/llm-security-scientific-taxonomy-attack-vectors-2021-2025/</link><pubDate>Fri, 13 Feb 2026 00:00:00 +0000</pubDate><guid>https://digenaldo.com/posts/llm-security-scientific-taxonomy-attack-vectors-2021-2025/</guid><description>A technical overview of how LLM security research evolved from adversarial examples to systemic risks: jailbreaks, prompt injection, memorization, backdoors, and supply chain issues.</description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Security on </title>
+    <link>http://localhost:1313/tags/security/</link>
+    <description>Recent content in Security on </description>
+    <generator>Hugo -- 0.140.1</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 13 Feb 2026 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/security/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>LLM Security: A Scientific Taxonomy of Attack Vectors</title>
+      <link>http://localhost:1313/posts/llm-security-scientific-taxonomy-attack-vectors-2021-2025/</link>
+      <pubDate>Fri, 13 Feb 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/llm-security-scientific-taxonomy-attack-vectors-2021-2025/</guid>
+      <description>A technical overview of how LLM security research evolved from adversarial examples to systemic risks: jailbreaks, prompt injection, memorization, backdoors, and supply chain issues.</description>
+    </item>
+  </channel>
+</rss>
