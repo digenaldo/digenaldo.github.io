@@ -47,6 +47,19 @@ A more detailed mathematical explanation is given in [2].
 
 Before the model can compute anything, text must be turned into numbers.
 
+![How the model processes information](/images/llm-works-flow-topic2.png)
+
+*Figure: From user input to next-token prediction (tokens, embeddings, positional encoding, self-attention, context vector). Source: Vaswani et al. [1].*
+
+**How it works in simple terms.** The diagram above shows the path from the user’s question to the first word of the answer:
+
+1. **User input.** The user types a question (e.g. "What are the symptoms of dengue fever?"). The text is split into **input tokens**: each word or punctuation becomes a token, e.g. [What] [are] [the] [symptoms] [of] [dengue] [fever] [?].
+2. **Token embeddings.** Each token is turned into a list of numbers (a vector). For example [What] becomes a vector like [0.1, 0.5, ...]. This is the step where words become a form the model can process [1].
+3. **Positional encoding.** The model needs to know the **order** of the words. Positional encoding adds numbers that tell the model that "What" is the 1st word, "are" is the 2nd, and so on. So the model knows that "dengue fever" and "symptoms" are related in the right order [1].
+4. **Self-attention.** Inside the self-attention layers, each token "looks at" the others to see how they relate. For this question, "symptoms" pays more attention to "dengue" and "fever" than to "what" or "are." The model uses **Query (Q), Key (K), and Value (V)** to decide how much attention each word gives to the others. The result is a **contextual vector representation**: one representation that encodes the meaning of the whole question [1].
+5. **Context vector.** The output of attention is a single high-dimensional vector that holds the model’s "understanding" of the question. This is the **context representation** used for the next step.
+6. **Next token prediction.** With the full context, the model predicts the **next token**. It assigns probabilities to many possible next words (e.g. high for [Common], [Symptoms], lower for others) and then picks one (e.g. [Common]) according to its sampling strategy. This is where the answer starts. The model always generates **one token at a time** [1].
+
 **Embeddings.** Tokens are converted into high-dimensional vectors. In this space, words with similar meanings sit closer together [1].
 
 **Positional encoding.** The Transformer does not process tokens in order. So it needs extra information about the **position** of each token. Positional encodings add that order information [1].
