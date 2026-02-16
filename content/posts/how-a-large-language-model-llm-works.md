@@ -150,6 +150,19 @@ Understanding training is important. What matters in practice is what happens at
 
 Here is what happens inside the LLM (Large Language Model).
 
+![What happens when a user asks a question? LLM inference flow](/images/llm-works-flow-topic6.png)
+
+*Figure: LLM inference flow step by step (tokenization, self-attention, next-token prediction, generation, knowledge source, RAG).*
+
+**How it works in simple terms.** The diagram above shows the path from the user's question to the answer:
+
+1. **User input and tokenization.** The question (e.g. "What are the symptoms of dengue fever?") is turned into **tokens** and then into **vectors**. Each word or punctuation becomes a token; each token becomes a list of numbers the model can process. There is no internet search or database lookup here; only text becomes numbers [1].
+2. **Self-attention processing.** The model **builds context** between the words. It uses **Query (Q), Key (K), and Value (V)** to see how tokens relate (e.g. "symptoms" to "dengue" and "fever"). This step uses only the prompt; again, no search and no lookup [1].
+3. **Probability calculation.** The model computes **P(next token | previous tokens)**. It assigns probabilities to possible next words (e.g. [Common] 0.42, [Symptoms] 0.33, [Include] 0.18) and picks one. **The response starts here** [1].
+4. **Token-by-token generation.** Each new token is added to the context (e.g. "Common symptoms include..."). The model **updates the context**, recomputes attention, and predicts the next token again. It always generates **one token at a time** until a stop condition [1].
+5. **Where does knowledge come from?** The model uses **patterns learned from training data** (e.g. "dengue fever", "mosquito-borne", "high fever", "joint pain", "rash"). It **predicts patterns**, not verified facts; it does not check a database or guarantee correctness [3].
+6. **With RAG.** If the system uses **RAG (Retrieval-Augmented Generation)** [9], the question is used for a **vector search**, **external documents** are retrieved, and the LLM gets both the question and those documents. So the answer can use **outside knowledge** and reduce reliance on training data alone.
+
 **Step 1: Tokenization.** The text is split into tokens, for example: [What] [are] [the] [symptoms] [of] [dengue] [fever] [?]. Each token is then converted into an embedding vector. At this stage the model is not searching the internet or a database; it only turns text into numbers.
 
 **Step 2: Context processing with self-attention.** The embeddings go through multiple Transformer layers. In each layer, self-attention computes relationships between tokens (e.g. that "symptoms" relates to "dengue fever") and builds a contextual representation of the question. That representation is a high-dimensional vector that encodes the meaning of the whole prompt. The model is not retrieving a stored paragraph about dengue; it is computing a probability distribution over possible next tokens.

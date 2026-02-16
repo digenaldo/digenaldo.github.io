@@ -7,8 +7,6 @@ readingTime = 12
 draft = false
 +++
 
-# Monitoring Lab: A Complete Observability Lab with Go, Spring Boot and Prometheus
-
 ## Introduction
 
 Observability is essential for understanding how applications perform in production. When you can see what your systems are doing, you can make better decisions about performance, resource usage, and reliability.
