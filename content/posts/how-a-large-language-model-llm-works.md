@@ -70,6 +70,8 @@ Before the model can compute anything, text must be turned into numbers.
 
 ## 3. Training Phases
 
+Training turns a generic model into one that can predict text well. It happens in several phases.
+
 **Pre-training.** Large language models are trained on very large text corpora using **next-token prediction** [3]. The goal is to model the probability of the sequence:
 
 > **P(x) = ∏ P(x_t | x_<t)**
@@ -121,6 +123,8 @@ Raw pre-trained models can produce unsafe or unhelpful outputs. **Alignment** te
 
 ## 5. Advanced Techniques and Efficiency
 
+Beyond architecture, training, and alignment, modern LLMs rely on several techniques to scale and run efficiently.
+
 ![Advanced techniques and efficiency in LLMs](/images/llm-works-flow-topic5.png)
 
 *Figure: How modern models scale and improve performance (MoE, RAG, FlashAttention, hardware optimization).*
@@ -144,7 +148,7 @@ Raw pre-trained models can produce unsafe or unhelpful outputs. **Alignment** te
 
 ## 6. What Happens When a User Asks a Question?
 
-What matters in practice is what happens at **inference time**, when a user sends a question. Take for example: *"What are the symptoms of dengue fever?"* The diagram below shows the path from that question to the answer; the paragraphs that follow explain each step in one coherent flow.
+Putting everything together: what matters in practice is what happens at **inference time**, when a user sends a question. Take for example: *"What are the symptoms of dengue fever?"* The diagram below shows the path from that question to the answer; the paragraphs that follow explain each step in one coherent flow.
 
 ![What happens when a user asks a question? LLM inference flow](/images/llm-works-flow-topic6.png)
 
@@ -172,7 +176,7 @@ It may assign high probability to tokens such as [Common], [Symptoms], [Include]
 
 ## Final Consideration
 
-A Large Language Model (LLM) is a large probabilistic system trained to predict tokens. Its capabilities come from:
+An LLM (Large Language Model) is a probabilistic system trained to predict tokens. Its capabilities come from:
 
 - The Transformer architecture [1]
 - Massive scale (parameters, data, compute) and scaling laws [4], [5]
