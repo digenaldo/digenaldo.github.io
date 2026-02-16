@@ -99,6 +99,18 @@ So the model learns to predict each token given all previous tokens. From this, 
 
 Raw pre-trained models can produce unsafe or unhelpful outputs. **Alignment** techniques are used to improve behavior.
 
+![Alignment and refinement in Large Language Models](/images/llm-works-flow-topic4.png)
+
+*Figure: How models become safer and more helpful (human feedback, reward model, reinforcement learning).*
+
+**How it works in simple terms.** The diagram above shows the main steps of alignment:
+
+1. **From the raw model to answers.** The pre-trained model generates several answers to the same question. These answers are the starting point for human feedback [6].
+2. **Human feedback.** People (annotators) read the model's answers and **rank** them: for example, answer A is better than B, B is better than C. These **ranked answers** show what humans prefer: more helpful, safer, or more accurate responses [6].
+3. **Reward Model.** A separate model, the **Reward Model**, is trained on these human rankings. It learns to **score** each answer with a number (e.g. +0.9 for a good answer, lower for worse ones). So "human preferences" are turned into a score the computer can use. This model is trained from human rankings only; it does not generate text [6].
+4. **Reinforcement learning (RLHF).** The main LLM is then trained with **reinforcement learning** (often PPO, Proximal Policy Optimization) to **maximize** the score given by the Reward Model. When the LLM produces a good answer, the reward is high; when it produces a bad one, the reward is low. Over time, the LLM becomes more helpful and aligned with what humans want [6].
+5. **Aligned model.** After this process, the model is **refined**: it is more likely to give safe, useful answers and less likely to give harmful or unhelpful ones. Alignment does not change what the model "knows" from pre-training; it changes how it **behaves** when it answers [6].
+
 **SFT (Supervised Fine-Tuning).** The model is fine-tuned on high-quality human-written examples that show the desired behavior [6].
 
 **RLHF (Reinforcement Learning from Human Feedback).** The process in [6] works as follows. Human annotators rank model outputs. A **Reward Model** is trained from these rankings. Then reinforcement learning (typically PPO, Proximal Policy Optimization) is used to train the LLM to maximize that reward. This makes the model more helpful and aligned with user expectations.
