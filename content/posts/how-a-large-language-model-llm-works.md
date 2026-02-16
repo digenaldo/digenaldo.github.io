@@ -49,7 +49,7 @@ Before the model can compute anything, text must be turned into numbers.
 
 ![How the model processes information](/images/llm-works-flow-topic2.png)
 
-*Figure: From user input to next-token prediction (tokens, embeddings, positional encoding, self-attention, context vector). Source: Vaswani et al. [1].*
+*Figure: From user input to next-token prediction (tokens, embeddings, positional encoding, self-attention, context vector).*
 
 **How it works in simple terms.** The diagram above shows the path from the user’s question to the first word of the answer:
 
@@ -75,6 +75,19 @@ Before the model can compute anything, text must be turned into numbers.
 > **P(x) = ∏ P(x_t | x_<t)**
 
 So the model learns to predict each token given all previous tokens. From this, it learns grammar, structure, and factual associations. The training loss is usually cross-entropy.
+
+![Training phases of a Large Language Model](/images/llm-works-flow-topic3.png)
+
+*Figure: Training phases from data to a trained model (dataset, pre-training, loss, scaling laws, in-context learning).*
+
+**How it works in simple terms.** The diagram above shows how the model learns from data and gets better over time:
+
+1. **Large text dataset.** Training starts with a huge amount of text: books, websites, articles, and code. This is the raw material the model will learn from [3].
+2. **Pre-training.** The model is trained to **predict the next token**. For example, given "The cat sat on the mat", it learns to predict a likely next word (e.g. "because" or "and"). By doing this over and over on billions of tokens, it learns grammar, facts, and how words relate [3].
+3. **Loss calculation.** For each prediction, the model compares what it predicted with the real next word. When the prediction is wrong, a **loss** (error) is computed. The training process updates the model so that this loss **decreases over time**. The graph of loss vs. time goes down as the model improves [3].
+4. **Scaling laws.** Performance improves in a predictable way when we add **more data**, **more parameters** (bigger model), and **more compute** (more computing power). This follows a **power-law** trend: better performance comes from scaling these three factors [4].
+5. **In-context learning.** After pre-training, the model can learn new tasks **from examples in the prompt** without changing its weights. For instance, if you show "Translate to French: Hello → Bonjour", the model can do more translations. No extra training step is required; the ability emerges from scale [3].
+6. **Trained language model.** At the end, the model is **ready for inference**. All the knowledge it learned is stored in the **neural network weights**. When a user asks a question, the model uses these weights to generate answers [3].
 
 **Scaling laws.** Model performance improves in a predictable way when we increase parameters, dataset size, and compute [4]. This follows a **power-law** relationship. Recent work also studies what happens when data growth is limited (data-constrained regimes) [5].
 
