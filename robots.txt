@@ -1,0 +1,3 @@
+User-agent: *
+Disallow:
+Sitemap: https://digenaldo.com/sitemap.xml
