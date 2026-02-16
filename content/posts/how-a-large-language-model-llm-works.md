@@ -144,42 +144,29 @@ Raw pre-trained models can produce unsafe or unhelpful outputs. **Alignment** te
 
 ## 6. What Happens When a User Asks a Question?
 
-Understanding training is important. What matters in practice is what happens at **inference time**, when a user sends a question.
-
-**Example:** *"What are the symptoms of dengue fever?"*
-
-Here is what happens inside the LLM (Large Language Model).
+What matters in practice is what happens at **inference time**, when a user sends a question. Take for example: *"What are the symptoms of dengue fever?"* The diagram below shows the path from that question to the answer; the paragraphs that follow explain each step in one coherent flow.
 
 ![What happens when a user asks a question? LLM inference flow](/images/llm-works-flow-topic6.png)
 
 *Figure: LLM inference flow step by step (tokenization, self-attention, next-token prediction, generation, knowledge source, RAG).*
 
-**How it works in simple terms.** The diagram above shows the path from the user's question to the answer:
+**Step 1: Tokenization.** The question is turned into **tokens** (e.g. [What] [are] [the] [symptoms] [of] [dengue] [fever] [?]) and then into **embedding vectors**. At this stage the model does not search the internet or any database; it only converts text into numbers the network can process [1].
 
-1. **User input and tokenization.** The question (e.g. "What are the symptoms of dengue fever?") is turned into **tokens** and then into **vectors**. Each word or punctuation becomes a token; each token becomes a list of numbers the model can process. There is no internet search or database lookup here; only text becomes numbers [1].
-2. **Self-attention processing.** The model **builds context** between the words. It uses **Query (Q), Key (K), and Value (V)** to see how tokens relate (e.g. "symptoms" to "dengue" and "fever"). This step uses only the prompt; again, no search and no lookup [1].
-3. **Probability calculation.** The model computes **P(next token | previous tokens)**. It assigns probabilities to possible next words (e.g. [Common] 0.42, [Symptoms] 0.33, [Include] 0.18) and picks one. **The response starts here** [1].
-4. **Token-by-token generation.** Each new token is added to the context (e.g. "Common symptoms include..."). The model **updates the context**, recomputes attention, and predicts the next token again. It always generates **one token at a time** until a stop condition [1].
-5. **Where does knowledge come from?** The model uses **patterns learned from training data** (e.g. "dengue fever", "mosquito-borne", "high fever", "joint pain", "rash"). It **predicts patterns**, not verified facts; it does not check a database or guarantee correctness [3].
-6. **With RAG.** If the system uses **RAG (Retrieval-Augmented Generation)** [9], the question is used for a **vector search**, **external documents** are retrieved, and the LLM gets both the question and those documents. So the answer can use **outside knowledge** and reduce reliance on training data alone.
+**Step 2: Self-attention and context.** The embeddings go through the Transformer layers. In each layer, **self-attention** uses **Query (Q), Key (K), and Value (V)** to compute how tokens relate (e.g. "symptoms" to "dengue" and "fever") and builds a single **contextual representation** of the question. That representation is a high-dimensional vector that encodes the meaning of the whole prompt. The model is not retrieving a stored paragraph; it is preparing to compute a probability distribution over possible next tokens [1].
 
-**Step 1: Tokenization.** The text is split into tokens, for example: [What] [are] [the] [symptoms] [of] [dengue] [fever] [?]. Each token is then converted into an embedding vector. At this stage the model is not searching the internet or a database; it only turns text into numbers.
-
-**Step 2: Context processing with self-attention.** The embeddings go through multiple Transformer layers. In each layer, self-attention computes relationships between tokens (e.g. that "symptoms" relates to "dengue fever") and builds a contextual representation of the question. That representation is a high-dimensional vector that encodes the meaning of the whole prompt. The model is not retrieving a stored paragraph about dengue; it is computing a probability distribution over possible next tokens.
-
-**Step 3: Probability calculation.** After processing the input, the model predicts the most likely next token. It computes:
+**Step 3: Next-token prediction.** The model predicts the most likely next token. It computes:
 
 > **P(next token | previous tokens)**
 
-It may assign high probability to tokens such as [Common], [Symptoms], [Dengue], [Fever], [Include], and then picks one token according to its sampling strategy. This is when the response actually starts.
+It may assign high probability to tokens such as [Common], [Symptoms], [Include], and then picks one according to its sampling strategy. **The response starts here** [1].
 
-**Step 4: Autoregressive generation.** After the first token is generated, the process repeats. Each new token is added to the context (e.g. "What are the symptoms of dengue fever? Common symptoms include..."). For each new token the model updates the context, recomputes attention, and predicts the next token. This continues until a stop condition is met. The model never produces the full answer in one go; it generates **one token at a time**.
+**Step 4: Token-by-token generation.** After the first token is generated, the process repeats: each new token is added to the context (e.g. "What are the symptoms of dengue fever? Common symptoms include..."), the model updates the context, recomputes attention, and predicts the next token again. This continues until a stop condition. The model never produces the full answer in one go; it generates **one token at a time** [1].
 
-**Step 5: Where does the information come from?** The model does not "look up" dengue fever. The knowledge comes from patterns learned during pre-training. If the training data included medical texts and web content about dengue, the model learned statistical links between "dengue fever," "mosquito-borne disease," "high fever," "joint pain," "rash," and similar phrases. At inference it recombines these patterns. It does not check facts, query medical databases, or guarantee correctness. It predicts what is statistically likely to follow.
+**Step 5: Where does the information come from?** The model does not "look up" dengue fever in a database. The knowledge comes from **patterns learned during pre-training** [3]. If the training data included medical texts and web content about dengue, the model learned statistical links between "dengue fever," "mosquito-borne disease," "high fever," "joint pain," "rash," and similar phrases. At inference it recombines these patterns. It does not check facts or guarantee correctness; it predicts what is statistically likely to follow.
 
-**Step 6: What changes with RAG?** If the system uses RAG (Retrieval-Augmented Generation) [9], the flow changes. Before generation, the question is turned into an embedding, a vector database is queried, and relevant documents (e.g. medical) are retrieved and added to the prompt. The model then generates text conditioned on both the question and the retrieved documents. So the system can use external knowledge. Without RAG, the model relies only on what was learned in training.
+**Step 6: What changes with RAG?** If the system uses **RAG (Retrieval-Augmented Generation)** [9], the flow changes. Before generation, the question is turned into an embedding, a **vector search** is run, and **relevant documents** (e.g. medical) are retrieved and added to the prompt. The model then generates text conditioned on both the question and those documents, so the system can use **external knowledge**. Without RAG, the model relies only on what was learned in training.
 
-**Important clarification.** An LLM does not store structured medical knowledge like a database. It stores distributed representations in its weights. When it answers about a disease, it is activating learned patterns across billions of parameters. This is **pattern completion**, not structured reasoning or medical diagnosis. That distinction is important for safety, hallucination, and reliability.
+**Important clarification.** An LLM does not store structured medical knowledge like a database. It stores **distributed representations** in its weights. When it answers about a disease, it is activating learned patterns across billions of parameters. This is **pattern completion**, not structured reasoning or medical diagnosis. That distinction matters for safety, hallucination, and reliability.
 
 ---
 
