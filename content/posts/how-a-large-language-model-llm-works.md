@@ -7,17 +7,27 @@ readingTime = 12
 draft = false
 +++
 
-# How a Large Language Model (LLM) Works
-
-Based on the referenced research, this post covers the foundations of how a Large Language Model (LLM) works: architecture, data processing, training, alignment, and efficiency techniques [1].
-
----
-
 ## 1. Fundamental Architecture: The Transformer
 
 The foundation of modern LLMs (Large Language Models) is the **Transformer** architecture [1].
 
 Unlike RNNs (Recurrent Neural Networks) and LSTMs (Long Short-Term Memory networks), which process text one step after another, the Transformer processes the **entire sequence in parallel**. This allows better modeling of long-range dependencies and faster training [1].
+
+![Transformer architecture flow](/images/llm-works-flow-topic1.png)
+
+*Figure: Flow of the Transformer architecture (attention, encoder/decoder, feed-forward). Source: Vaswani et al. [1].*
+
+**How it works in simple terms.** The diagram above shows the path the data follows:
+
+1. The input text is turned into vectors (embeddings).
+2. Those vectors enter a stack of layers. In each layer, three things happen in order:
+   - **Self-attention:** looks at all the tokens together and decides how much each word should “attend to” the others, so the model captures relationships in the sentence.
+   - **Encoder** (if present) or **decoder:** processes this attended representation.
+   - **Feed-forward:** refines each token position on its own.
+3. The output of one layer becomes the input of the next.
+4. After several such layers, the model has a rich representation of the whole sequence and uses it to predict the next token.
+
+In short: input → attention (who relates to whom) → encoder/decoder → feed-forward → repeat over layers → final representation for prediction.
 
 **Main components:**
 
