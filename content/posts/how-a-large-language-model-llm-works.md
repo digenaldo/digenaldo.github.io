@@ -121,6 +121,19 @@ Raw pre-trained models can produce unsafe or unhelpful outputs. **Alignment** te
 
 ## 5. Advanced Techniques and Efficiency
 
+![Advanced techniques and efficiency in LLMs](/images/llm-works-flow-topic5.png)
+
+*Figure: How modern models scale and improve performance (MoE, RAG, FlashAttention, hardware optimization).*
+
+**How it works in simple terms.** The diagram above shows how scaling challenges are addressed by combining several techniques:
+
+1. **Scaling challenge.** Large models need a lot of **memory** and **compute** (many GPUs and chips). So **efficiency** becomes very important: we need ways to make models faster and cheaper to run [8][10].
+2. **Mixture of Experts (MoE).** Instead of using the whole model for every token, only **part of the model** is active per token. A **router** sends each input token to a few **experts** (sub-networks); for example, only "Expert 2" might be active for one token. This is **sparse computation**: it allows models with **trillions of parameters** while keeping the cost per token manageable [8].
+3. **Retrieval-Augmented Generation (RAG).** The model can **retrieve external documents** before answering. The user query is turned into a vector; a **vector search** finds relevant documents; then the LLM generates an answer using both the query and those documents. This **reduces hallucination** and lets the system use up-to-date knowledge without retraining [9].
+4. **FlashAttention.** The attention mechanism uses a lot of GPU memory and compute. **FlashAttention** and similar methods **optimize** how attention runs on the GPU. They improve **speed** and **reduce memory use**, so larger models or longer sequences can run on the same hardware [10].
+5. **Hardware optimization.** Modern systems are built for **distributed GPU** setups: many chips work in parallel. **Data parallel** and **model parallel** ways of splitting the work are used. So **system and hardware engineering** are part of model performance, not only the algorithm [10].
+6. **Modern LLM system.** Together, **architecture** (e.g. MoE), **retrieval** (RAG), **sparsity**, and **hardware optimization** form a modern LLM system. **Performance depends on both algorithms and infrastructure** [8][9][10].
+
 **Mixture-of-Experts (MoE).** In models such as Switch Transformers, only a **subset of parameters** is used per token [8]. This is called sparse computation. Models can scale to trillions of parameters while keeping computation per token manageable. The trade-off is more complex systems and the need for good load balancing.
 
 **RAG (Retrieval-Augmented Generation).** RAG combines a retrieval system with a language model to improve factual grounding [9]. The model retrieves relevant documents and conditions its generation on them. This can reduce hallucination and allow knowledge updates without retraining. It also introduces new risks, such as prompt injection and manipulation of retrieved data.
