@@ -1,0 +1,1861 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inteligência Artificial na Prática — Capa</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap');
+
+  :root{
+    --bg: #FFFFFF;
+    --bg-alt: #F1F3F9;
+    --cyan: #0EA5A0;
+    --magenta: #E11D74;
+    --yellow: #F5B700;
+    --amber-ink: #92400E;
+    --text: #12162B;
+    --text-dim: #6B7280;
+    --font-display: 'Space Grotesk', sans-serif;
+    --font-body: 'IBM Plex Sans', sans-serif;
+  }
+
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0; height: 100%;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    overflow: hidden;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+
+  .deck {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* HUD superior: barra de XP estilo game */
+  .hud {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 0 28px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(255,255,255,0));
+    z-index: 50;
+  }
+  .hud-label {
+    font-family: var(--font-display);
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    color: var(--text-dim);
+    white-space: nowrap;
+  }
+  .xp-track {
+    flex: 1;
+    max-width: 320px;
+    height: 8px;
+    background: rgba(18,22,43,0.06);
+    border-radius: 999px;
+    overflow: hidden;
+    border: 1px solid rgba(18,22,43,0.08);
+  }
+  .xp-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--cyan), var(--magenta));
+    border-radius: 999px;
+    transition: width 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .xp-count {
+    font-family: var(--font-display);
+    font-weight: 700;
+    color: var(--amber-ink);
+    font-size: 14px;
+    min-width: 60px;
+    text-align: right;
+  }
+
+  /* Slides */
+  .slide {
+    position: absolute;
+    inset: 0;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 100px 8vw 90px;
+    text-align: center;
+  }
+  .slide.active { display: flex; }
+
+  /* Transições entre slides — 3 variações (fade / slide / zoom) */
+  .t-fade.enter { animation: fadeIn 0.55s ease both; }
+  .t-fade.exit  { animation: fadeOut 0.4s ease both; }
+  @keyframes fadeIn { from{opacity:0} to{opacity:1} }
+  @keyframes fadeOut { from{opacity:1} to{opacity:0} }
+
+  .t-slide.enter-next { animation: slideInR 0.5s cubic-bezier(0.22,1,0.36,1) both; }
+  .t-slide.exit-next  { animation: slideOutL 0.45s cubic-bezier(0.22,1,0.36,1) both; }
+  .t-slide.enter-prev { animation: slideInL 0.5s cubic-bezier(0.22,1,0.36,1) both; }
+  .t-slide.exit-prev  { animation: slideOutR 0.45s cubic-bezier(0.22,1,0.36,1) both; }
+  @keyframes slideInR { from{opacity:0; transform:translateX(60px)} to{opacity:1; transform:translateX(0)} }
+  @keyframes slideOutL { from{opacity:1; transform:translateX(0)} to{opacity:0; transform:translateX(-60px)} }
+  @keyframes slideInL { from{opacity:0; transform:translateX(-60px)} to{opacity:1; transform:translateX(0)} }
+  @keyframes slideOutR { from{opacity:1; transform:translateX(0)} to{opacity:0; transform:translateX(60px)} }
+
+  .t-zoom.enter { animation: zoomIn 0.5s cubic-bezier(0.22,1,0.36,1) both; }
+  .t-zoom.exit  { animation: zoomOut 0.4s ease both; }
+  @keyframes zoomIn { from{opacity:0; transform:scale(0.85)} to{opacity:1; transform:scale(1)} }
+  @keyframes zoomOut { from{opacity:1; transform:scale(1)} to{opacity:0; transform:scale(1.08)} }
+
+  /* Entrada de elementos dentro do slide — stagger via nth-child */
+  .stagger {
+    position: relative;
+    z-index: 1;
+  }
+  .stagger > * {
+    opacity: 0;
+    transform: translateY(18px);
+    animation: rise 0.55s cubic-bezier(0.22,1,0.36,1) forwards;
+  }
+  .stagger > *:nth-child(1){ animation-delay: 0.05s; }
+  .stagger > *:nth-child(2){ animation-delay: 0.18s; }
+  .stagger > *:nth-child(3){ animation-delay: 0.31s; }
+  .stagger > *:nth-child(4){ animation-delay: 0.44s; }
+  .stagger > *:nth-child(5){ animation-delay: 0.57s; }
+  @keyframes rise { to { opacity: 1; transform: translateY(0); } }
+
+  .eyebrow {
+    font-family: var(--font-display);
+    font-size: 14px;
+    letter-spacing: 0.18em;
+    color: var(--cyan);
+    text-transform: uppercase;
+    margin-bottom: 18px;
+  }
+  h1 {
+    font-family: var(--font-display);
+    font-size: clamp(32px, 5vw, 56px);
+    font-weight: 700;
+    line-height: 1.05;
+    margin: 0 0 20px;
+    max-width: 780px;
+  }
+  h1 .hl { color: var(--magenta); }
+  .subtitle {
+    font-size: 19px;
+    color: var(--text-dim);
+    max-width: 520px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.6;
+    margin-bottom: 34px;
+  }
+  .btn {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 0.04em;
+    color: var(--bg);
+    background: var(--cyan);
+    border: none;
+    padding: 14px 30px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(14,165,160,0.25); }
+  .btn:active { transform: translateY(0); }
+
+  /* Slide de conteúdo com ícones */
+  .content-grid {
+    display: flex;
+    gap: 22px;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 820px;
+    margin-top: 8px;
+  }
+  .card {
+    position: relative;
+    background: var(--bg-alt);
+    border: 1px solid rgba(18,22,43,0.08);
+    border-radius: 14px;
+    padding: 26px 22px;
+    width: 220px;
+    text-align: left;
+  }
+  .card .icon { font-size: 26px; margin-bottom: 12px; }
+  .card h3 { font-family: var(--font-display); font-size: 18px; margin: 0 0 8px; }
+  .card p { font-size: 15px; color: var(--text-dim); margin: 0; line-height: 1.55; }
+
+  /* Indicador "ao vivo" nos cards de exemplos do dia a dia */
+  .notify-dot {
+    position: absolute;
+    top: 14px; right: 14px;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--magenta);
+    animation: notifyPulse 2s ease-in-out infinite;
+  }
+  @keyframes notifyPulse {
+    0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(225,29,116,0.35); }
+    50% { opacity: 0.5; box-shadow: 0 0 0 6px rgba(225,29,116,0); }
+  }
+
+  /* Selo de alerta nos cards de desafios (tom diferente do indicador "ao vivo") */
+  .risk-badge {
+    position: absolute;
+    top: 13px; right: 13px;
+    width: 18px; height: 18px;
+    color: var(--amber-ink);
+    animation: riskPulse 2.4s ease-in-out infinite;
+  }
+  @keyframes riskPulse {
+    0%, 100% { opacity: 0.55; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.08); }
+  }
+
+  /* Medidor de "teto" nos cards de limites da IA — a barra sobe e sempre esbarra na marca */
+  .limit-gauge { position: absolute; top: 14px; right: 20px; width: 10px; height: 36px; }
+  .limit-gauge .cap {
+    position: absolute; top: 7px; left: -4px;
+    width: 18px; height: 2px;
+    background: var(--text-dim);
+    border-radius: 1px;
+  }
+  .limit-gauge .track {
+    position: absolute; bottom: 0; left: 0;
+    width: 10px; height: 100%;
+    background: rgba(18,22,43,0.06);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .limit-gauge .bar {
+    position: absolute; bottom: 0; left: 0;
+    width: 10px;
+    border-radius: 4px;
+    background: linear-gradient(180deg, var(--cyan), var(--magenta));
+    animation: limitRise 2.6s cubic-bezier(0.65,0,0.35,1) infinite;
+  }
+  @keyframes limitRise {
+    0% { height: 0%; }
+    55% { height: 78%; }
+    62% { height: 70%; }
+    70% { height: 80%; }
+    100% { height: 0%; }
+  }
+
+  /* Checklist com checkmarks se desenhando (slide de segurança) */
+  .checklist {
+    width: 100%;
+    max-width: 420px;
+    margin: 0;
+    text-align: left;
+  }
+  .check-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 16px 4px;
+    border-bottom: 1px solid rgba(18,22,43,0.07);
+  }
+  .check-row:last-child { border-bottom: none; }
+  .check-row h3 { font-family: var(--font-display); font-size: 17px; margin: 0 0 3px; }
+  .check-row p { font-size: 15px; color: var(--text-dim); margin: 0; line-height: 1.55; }
+  .check-icon { width: 26px; height: 26px; flex-shrink: 0; margin-top: 2px; }
+  .check-icon circle { fill: none; stroke: var(--cyan); stroke-width: 1.6; }
+  .check-icon .tick {
+    fill: none; stroke: var(--cyan); stroke-width: 2;
+    stroke-linecap: round; stroke-linejoin: round;
+    stroke-dasharray: 20; stroke-dashoffset: 20;
+    animation: tickDraw 0.5s ease forwards;
+  }
+  @keyframes tickDraw { to { stroke-dashoffset: 0; } }
+
+  /* Layout do slide de segurança: escudo animado + checklist lado a lado */
+  .security-layout {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    flex-wrap: wrap;
+    margin-top: 10px;
+  }
+  .shield-wrap { flex-shrink: 0; }
+  .shield-fill-rect { animation: shieldFill 2s cubic-bezier(0.22,1,0.36,1) 0.4s forwards; }
+  @keyframes shieldFill { from { y: 120; } to { y: 0; } }
+  .shield-scan { animation: shieldScan 2.8s linear infinite; }
+  @keyframes shieldScan {
+    0% { y: -12; opacity: 0; }
+    12% { opacity: 0.5; }
+    88% { opacity: 0.5; }
+    100% { y: 120; opacity: 0; }
+  }
+  .shield-ping { animation: shieldPing 2.6s ease-out infinite; }
+  @keyframes shieldPing {
+    0% { r: 38; opacity: 0.5; stroke-width: 2; }
+    100% { r: 58; opacity: 0; stroke-width: 0.5; }
+  }
+
+  /* Mockup de chat com digitação (abertura da seção de prompts) */
+  .chat-mock {
+    width: 100%; max-width: 440px;
+    margin: 22px auto 0;
+    background: var(--bg-alt);
+    border: 1px solid rgba(18,22,43,0.08);
+    border-radius: 14px;
+    overflow: hidden;
+    text-align: left;
+  }
+  .chat-mock-bar { display: flex; gap: 6px; padding: 10px 14px; background: rgba(18,22,43,0.04); }
+  .chat-mock-bar span { width: 8px; height: 8px; border-radius: 50%; background: rgba(18,22,43,0.15); }
+  .chat-mock-body { padding: 20px; min-height: 76px; display: flex; align-items: center; }
+  .chat-bubble {
+    display: inline-block;
+    background: var(--bg);
+    border: 1px solid rgba(18,22,43,0.08);
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 16px;
+    color: var(--text);
+  }
+  .chat-caret {
+    display: inline-block; width: 2px; height: 14px;
+    background: var(--cyan); margin-left: 2px; vertical-align: middle;
+    animation: caretBlink 0.8s step-end infinite;
+  }
+  @keyframes caretBlink { 50% { opacity: 0; } }
+
+  /* Comparação prompt fraco vs. prompt forte */
+  .prompt-compare {
+    display: flex; align-items: stretch; gap: 18px;
+    justify-content: center; flex-wrap: wrap; margin-top: 24px;
+  }
+  .prompt-card {
+    width: 230px; border-radius: 14px; padding: 20px;
+    text-align: left; border: 1px solid rgba(18,22,43,0.08);
+  }
+  .prompt-card.weak { background: rgba(18,22,43,0.03); }
+  .prompt-card.weak p { font-style: italic; font-size: 16px; color: var(--text-dim); margin: 0; }
+  .prompt-card.strong { background: var(--bg-alt); border-color: rgba(14,165,160,0.3); }
+  .prompt-card.strong p { font-size: 15px; line-height: 1.55; color: var(--text); margin: 0; min-height: 68px; }
+  .prompt-tag {
+    font-family: var(--font-display); font-size: 11px; letter-spacing: 0.08em;
+    text-transform: uppercase; margin-bottom: 10px; padding: 3px 10px;
+    border-radius: 999px; display: inline-block;
+  }
+  .prompt-card.weak .prompt-tag { background: rgba(18,22,43,0.08); color: var(--text-dim); }
+  .prompt-card.strong .prompt-tag { background: rgba(14,165,160,0.15); color: var(--cyan); }
+  .compare-arrow { display: flex; align-items: center; font-size: 22px; color: var(--text-dim); }
+
+  /* Diagrama circular: Pergunta -> Resposta -> Ajuste -> repete */
+  .loop-diagram { position: relative; width: 280px; height: 260px; margin: 26px auto 0; }
+  .loop-diagram::before {
+    content: ''; position: absolute; inset: 34px 60px;
+    border: 2px dashed rgba(18,22,43,0.1); border-radius: 50%;
+  }
+  .loop-orbit { position: absolute; inset: 0; animation: loopSpin 4.5s linear infinite; }
+  .loop-dot {
+    position: absolute; top: 6px; left: 50%;
+    width: 14px; height: 14px; margin-left: -7px;
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--cyan), var(--magenta));
+    box-shadow: 0 0 10px rgba(14,165,160,0.5);
+  }
+  @keyframes loopSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+  .loop-node {
+    position: absolute; width: 108px; text-align: center;
+    background: var(--bg-alt); border: 1px solid rgba(18,22,43,0.08);
+    border-radius: 12px; padding: 12px 8px;
+  }
+  .loop-node h3 { font-family: var(--font-display); font-size: 15px; margin: 0; }
+  .loop-node.n1 { top: 0; left: 50%; transform: translateX(-50%); }
+  .loop-node.n2 { bottom: 8%; right: 4%; }
+  .loop-node.n3 { bottom: 8%; left: 4%; }
+
+  /* Slide de exceção: virada de capítulo com fundo colorido cheio */
+  .slide-invert {
+    background: linear-gradient(135deg, var(--cyan), var(--magenta));
+  }
+  .slide-invert .eyebrow { color: rgba(255,255,255,0.85); }
+  .slide-invert h1 { color: #fff; }
+  .slide-invert h1 .hl { color: var(--yellow); }
+  .slide-invert .subtitle { color: rgba(255,255,255,0.92); }
+  .slide-invert .particle { background: #fff; }
+
+  /* Camada ambiente discreta: grid + partículas sutis, posição varia por slide */
+  .ambient-grid-patch {
+    position: absolute;
+    width: 260px; height: 260px;
+    background-image:
+      linear-gradient(rgba(14,165,160,0.18) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(14,165,160,0.18) 1px, transparent 1px);
+    background-size: 30px 30px;
+    -webkit-mask-image: radial-gradient(ellipse at center, black 35%, transparent 80%);
+    mask-image: radial-gradient(ellipse at center, black 35%, transparent 80%);
+    z-index: 0;
+    pointer-events: none;
+  }
+  .ambient-particle {
+    position: absolute; bottom: 0;
+    width: 4px; height: 4px;
+    background: var(--cyan);
+    border-radius: 1px;
+    opacity: 0;
+    z-index: 0;
+    pointer-events: none;
+    animation: ambientFloat 7s ease-in infinite;
+  }
+  @keyframes ambientFloat {
+    0% { opacity: 0; transform: translateY(0); }
+    15% { opacity: 0.55; }
+    85% { opacity: 0.25; }
+    100% { opacity: 0; transform: translateY(-220px); }
+  }
+  .hero-icon-pop {
+    color: #fff;
+    margin: 8px 0 4px;
+    animation: heroPop 0.6s cubic-bezier(0.34,1.56,0.64,1) both;
+  }
+  @keyframes heroPop {
+    0% { transform: scale(0.4); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+  .cta-chip {
+    display: inline-block;
+    margin-top: 24px;
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.45);
+    color: #fff;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 0.03em;
+    padding: 12px 28px;
+    border-radius: 999px;
+    animation: ctaPulse 1.8s ease-in-out infinite;
+  }
+  @keyframes ctaPulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(255,255,255,0.35); }
+    50% { box-shadow: 0 0 0 12px rgba(255,255,255,0); }
+  }
+
+  /* Contador de slide (oculto na capa) */
+  .slide-counter {
+    position: fixed;
+    top: 18px; right: 28px;
+    font-family: var(--font-display);
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    color: var(--text-dim);
+    background: var(--bg-alt);
+    border: 1px solid rgba(18,22,43,0.08);
+    padding: 5px 12px;
+    border-radius: 999px;
+    z-index: 50;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  .slide-counter.visible { opacity: 1; }
+
+  /* Cronômetro circular da prática guiada */
+  .practice-timer { position: relative; width: 120px; height: 120px; flex-shrink: 0; }
+  .timer-label {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-display); font-weight: 700; font-size: 20px;
+    color: var(--text);
+    transition: color 0.3s ease;
+  }
+  .timer-label.urgent { color: var(--magenta); }
+  #timerRing { transition: stroke-dashoffset 1s linear, stroke 0.3s ease; }
+  #timerRing.urgent { stroke: var(--magenta); animation: timerPulse 1s ease-in-out infinite; }
+  @keyframes timerPulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+
+  /* Passos numerados (sequência real a seguir) */
+  .step-row {
+    display: flex; align-items: flex-start; gap: 14px;
+    padding: 14px 4px;
+    border-bottom: 1px solid rgba(18,22,43,0.07);
+    text-align: left;
+  }
+  .step-row:last-child { border-bottom: none; }
+  .step-num {
+    flex-shrink: 0; width: 26px; height: 26px; border-radius: 50%;
+    background: var(--bg-alt); border: 1px solid rgba(18,22,43,0.1);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-display); font-weight: 700; font-size: 12px;
+    color: var(--cyan);
+  }
+  .step-row h3 { font-family: var(--font-display); font-size: 16px; margin: 0 0 3px; }
+  .step-row p { font-size: 15px; color: var(--text-dim); margin: 0; line-height: 1.55; }
+
+  /* Card de prompt completo: Persona / Tarefa / Formato, montando peça por peça */
+  .prompt-full {
+    width: 100%; max-width: 520px; margin: 20px auto 0; text-align: left;
+    background: var(--bg-alt); border: 1px solid rgba(18,22,43,0.08);
+    border-radius: 16px; padding: 22px 26px;
+  }
+  .prompt-seg {
+    padding: 13px 0;
+    border-bottom: 1px dashed rgba(18,22,43,0.12);
+    opacity: 0;
+    animation: segIn 0.5s ease forwards;
+  }
+  .prompt-seg:last-child { border-bottom: none; }
+  .prompt-seg:nth-child(1) { animation-delay: 0.15s; transform: translateX(-16px); }
+  .prompt-seg:nth-child(2) { animation-delay: 0.55s; transform: translateX(16px); }
+  .prompt-seg:nth-child(3) { animation-delay: 0.95s; transform: translateX(-16px); }
+  @keyframes segIn { to { opacity: 1; transform: translateX(0); } }
+  .seg-tag {
+    font-family: var(--font-display); font-size: 11px; letter-spacing: 0.08em;
+    text-transform: uppercase; margin-bottom: 7px; display: inline-block;
+    padding: 3px 10px; border-radius: 999px;
+  }
+  .prompt-seg p { margin: 0; font-size: 16px; color: var(--text); line-height: 1.6; }
+  .prompt-seg.persona .seg-tag { background: rgba(14,165,160,0.15); color: var(--cyan); }
+  .prompt-seg.tarefa .seg-tag { background: rgba(225,29,116,0.12); color: var(--magenta); }
+  .prompt-seg.formato .seg-tag { background: rgba(245,183,0,0.18); color: var(--amber-ink); }
+
+  .output-label {
+    font-family: var(--font-display); font-size: 11px; letter-spacing: 0.07em;
+    text-transform: uppercase; color: var(--text-dim); margin: 18px 0 0;
+    text-align: center; width: 100%;
+  }
+
+  /* Slide de barra de progresso animada (skill meter) */
+  .meter-row { width: 100%; max-width: 460px; margin: 10px 0; text-align: left; }
+  .meter-label { display:flex; justify-content: space-between; font-size: 13px; color: var(--text-dim); margin-bottom: 6px; font-family: var(--font-display); }
+  .meter-track { height: 12px; background: rgba(18,22,43,0.06); border-radius: 999px; overflow: hidden; }
+  .meter-fill { height: 100%; border-radius: 999px; width: 0%; transition: width 1.1s cubic-bezier(0.22,1,0.36,1); }
+
+  /* Slide interativo (quiz clicável) */
+  .quiz-box { max-width: 560px; position: relative; overflow: visible; }
+  .quiz-q { font-size: 17px; color: var(--text-dim); margin-bottom: 20px; }
+  .options { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .opt {
+    background: var(--bg-alt);
+    border: 1px solid rgba(18,22,43,0.08);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 16px;
+    padding: 16px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: border-color 0.2s ease, transform 0.15s ease;
+  }
+  .opt:hover { border-color: var(--cyan); transform: translateY(-2px); }
+  .opt.correct { border-color: var(--cyan); background: rgba(14,165,160,0.12); animation: pulse 0.5s ease; }
+  .opt.wrong { border-color: var(--magenta); animation: shake 0.4s ease; }
+  @keyframes pulse { 0%{transform:scale(1)} 40%{transform:scale(1.04)} 100%{transform:scale(1)} }
+  @keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-6px)} 75%{transform:translateX(6px)} }
+  .feedback {
+    margin-top: 18px; min-height: 20px; font-size: 16px;
+    color: var(--amber-ink); font-family: var(--font-display);
+    display: flex; flex-direction: column; align-items: center; gap: 4px;
+  }
+
+  /* Reação de acerto: confete estourando a partir do centro */
+  .confetti-piece {
+    position: absolute;
+    width: 6px; height: 10px;
+    border-radius: 1px;
+    animation: confettiBurst 900ms ease-out forwards;
+    pointer-events: none;
+    z-index: 10;
+  }
+  @keyframes confettiBurst {
+    0% { transform: translate(-50%, -50%) rotate(0deg); opacity: 1; }
+    100% { transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) rotate(var(--rot)); opacity: 0; }
+  }
+
+  /* Reação de erro: rosto triste que aparece, balança e some */
+  .sad-face { width: 38px; height: 38px; color: var(--text-dim); animation: sadPop 2s ease forwards; }
+  @keyframes sadPop {
+    0% { opacity: 0; transform: translateY(-6px) scale(0.8); }
+    15% { opacity: 1; transform: translateY(0) scale(1); }
+    40% { transform: translateY(3px); }
+    60% { transform: translateY(0); }
+    85% { opacity: 1; }
+    100% { opacity: 0; transform: translateY(4px); }
+  }
+
+  /* Navegação */
+  .nav {
+    position: fixed;
+    bottom: 26px; left: 0; right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    z-index: 50;
+  }
+  .nav-btn {
+    background: var(--bg-alt);
+    border: 1px solid rgba(18,22,43,0.1);
+    color: var(--text);
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex; align-items: center; justify-content: center;
+    transition: border-color 0.2s ease;
+  }
+  .nav-btn:hover { border-color: var(--cyan); }
+  .dots { display: flex; gap: 8px; }
+  .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: rgba(18,22,43,0.15);
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease;
+  }
+  .dot.active { background: var(--cyan); transform: scale(1.3); }
+
+  /* ---- Capa: tela de boot estilo game ---- */
+  .cover-grid {
+    position: absolute; left: 0; right: 0; bottom: 0; top: 40%;
+    background-image:
+      linear-gradient(rgba(14,165,160,0.15) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(14,165,160,0.15) 1px, transparent 1px);
+    background-size: 42px 42px;
+    transform: perspective(500px) rotateX(60deg) scale(1.6);
+    transform-origin: center bottom;
+    animation: gridMove 6s linear infinite;
+    opacity: 0.6;
+    pointer-events: none;
+  }
+  @keyframes gridMove { from{ background-position: 0 0; } to{ background-position: 0 42px; } }
+
+  .cover-glow {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at center 35%, rgba(14,165,160,0.12), transparent 60%);
+    pointer-events: none;
+  }
+
+  .particle {
+    position: absolute; bottom: 0;
+    width: 4px; height: 4px;
+    background: var(--cyan);
+    border-radius: 1px;
+    opacity: 0;
+    animation: floatUp 5s ease-in infinite;
+  }
+  @keyframes floatUp {
+    0% { opacity: 0; transform: translateY(0); }
+    10% { opacity: 0.8; }
+    90% { opacity: 0.4; }
+    100% { opacity: 0; transform: translateY(-260px); }
+  }
+
+  .glitch-title { position: relative; }
+  .glitch-title .layer {
+    position: absolute; top: 0; left: 0; right: 0;
+    animation: glitchOff 0.7s steps(2, end) 0.55s both;
+  }
+  .glitch-title .layer-cyan { color: var(--cyan); }
+  .glitch-title .layer-magenta { color: var(--magenta); }
+  .glitch-title .base { position: relative; }
+  @keyframes glitchOff {
+    0% { opacity: 0.9; transform: translate(0,0); }
+    20% { opacity: 0.9; transform: translate(-4px, 1px); }
+    40% { opacity: 0.7; transform: translate(4px, -1px); }
+    60% { opacity: 0.4; transform: translate(-2px, 0); }
+    100% { opacity: 0; transform: translate(0,0); }
+  }
+
+  .nametag {
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+    border-right: 2px solid var(--cyan);
+    width: 0;
+    font-family: var(--font-display);
+    font-size: 15px;
+    color: var(--text-dim);
+    letter-spacing: 0.05em;
+    animation: typeReveal 0.9s steps(20, end) 1.1s forwards, blinkCaret 0.8s step-end 1.1s 3;
+  }
+  @keyframes typeReveal { to { width: 100%; } }
+  @keyframes blinkCaret { 50% { border-color: transparent; } }
+
+  .boot-wrap { width: 260px; margin: 30px auto 0; }
+  .boot-label {
+    font-family: var(--font-display); font-size: 11px; letter-spacing: 0.12em;
+    color: var(--text-dim); margin-bottom: 6px; display: flex; justify-content: space-between;
+  }
+  .boot-track { height: 6px; background: rgba(18,22,43,0.06); border-radius: 999px; overflow: hidden; }
+  .boot-fill {
+    height: 100%; width: 0%; border-radius: 999px;
+    background: linear-gradient(90deg, var(--cyan), var(--magenta));
+    transition: width 1.4s cubic-bezier(0.22,1,0.36,1) 0.2s;
+  }
+
+  .press-start {
+    margin-top: 26px;
+    display: inline-block;
+    font-family: var(--font-display);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--amber-ink);
+    background: var(--yellow);
+    padding: 8px 16px;
+    border-radius: 6px;
+    opacity: 0;
+    animation: fadeIn 0.4s ease 1.8s forwards, blinkText 1s step-end 2.2s infinite;
+  }
+  @keyframes blinkText { 50% { opacity: 0.45; } }
+
+  /* Ícones flutuantes ao redor da capa (power-ups) */
+  .float-badge {
+    position: absolute;
+    font-size: 26px;
+    opacity: 0;
+    transform: scale(0);
+    animation: badgePop 0.6s cubic-bezier(0.34,1.56,0.64,1) forwards, badgeFloat 3.4s ease-in-out infinite;
+    filter: drop-shadow(0 6px 10px rgba(18,22,43,0.12));
+    pointer-events: none;
+  }
+  @keyframes badgePop { to { opacity: 1; transform: scale(1); } }
+  @keyframes badgeFloat { 0%,100%{ transform: translateY(0) rotate(-5deg);} 50%{ transform: translateY(-14px) rotate(5deg);} }
+
+  /* Cantos estilo mira/HUD emoldurando a capa */
+  .hud-corner {
+    position: absolute;
+    width: 30px; height: 30px;
+    border: 2px solid var(--cyan);
+    opacity: 0;
+    animation: cornerIn 0.5s ease forwards;
+    pointer-events: none;
+  }
+  .hud-corner.tl { top: 26px; left: 26px; border-right: none; border-bottom: none; animation-delay: 0.15s; }
+  .hud-corner.tr { top: 26px; right: 26px; border-left: none; border-bottom: none; animation-delay: 0.25s; }
+  .hud-corner.bl { bottom: 26px; left: 26px; border-right: none; border-top: none; animation-delay: 0.35s; }
+  .hud-corner.br { bottom: 26px; right: 26px; border-left: none; border-top: none; animation-delay: 0.45s; }
+  @keyframes cornerIn { from{ opacity: 0; transform: scale(0.6); } to{ opacity: 0.7; transform: scale(1); } }
+
+  /* Ticker de boot em loop (efeito terminal) */
+  .boot-ticker {
+    font-family: 'Courier New', monospace;
+    font-size: 11px;
+    color: var(--text-dim);
+    height: 16px;
+    margin-top: 12px;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+  }
+  .boot-ticker.visible { opacity: 0.85; }
+
+  /* Diagrama animado: fluxo de como a IA processa dados */
+  .flow-row {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 26px;
+  }
+  .flow-track {
+    position: absolute;
+    top: 50%; left: 70px; right: 70px;
+    height: 3px;
+    background: rgba(18,22,43,0.08);
+    border-radius: 2px;
+    transform: translateY(-50%);
+    overflow: hidden;
+    z-index: 1;
+  }
+  .flow-pulse {
+    position: absolute;
+    top: 50%; left: 0;
+    width: 14px; height: 14px;
+    margin-top: -7px;
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--cyan), var(--magenta));
+    box-shadow: 0 0 10px rgba(14,165,160,0.6);
+    animation: pulseMove 3.6s linear infinite;
+  }
+  @keyframes pulseMove {
+    0% { left: 0%; opacity: 0; }
+    5% { opacity: 1; }
+    95% { opacity: 1; }
+    100% { left: calc(100% - 14px); opacity: 0; }
+  }
+  .flow-box {
+    position: relative;
+    z-index: 2;
+    background: var(--bg-alt);
+    border: 1px solid rgba(18,22,43,0.08);
+    border-radius: 14px;
+    padding: 20px 22px;
+    width: 160px;
+    text-align: center;
+  }
+  .flow-box .icon { font-size: 26px; margin-bottom: 8px; }
+  .flow-box h3 { font-family: var(--font-display); font-size: 16px; margin: 0 0 4px; }
+  .flow-box p { font-size: 14px; color: var(--text-dim); margin: 0; line-height: 1.45; }
+  .flow-box.b1 { animation: boxGlow 3.6s linear infinite; }
+  .flow-box.b2 { animation: boxGlow 3.6s linear infinite; animation-delay: 1.2s; }
+  .flow-box.b3 { animation: boxGlow 3.6s linear infinite; animation-delay: 2.4s; }
+  @keyframes boxGlow {
+    0% { box-shadow: none; }
+    8% { box-shadow: 0 0 0 4px rgba(14,165,160,0.28); }
+    25% { box-shadow: none; }
+    100% { box-shadow: none; }
+  }
+
+  /* Diagrama animado: como um LLM processa e prevê a próxima palavra */
+  .llm-pipeline {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 24px;
+  }
+  .llm-track {
+    position: absolute;
+    top: 50%; left: 65px; right: 65px;
+    height: 3px;
+    background: rgba(18,22,43,0.08);
+    border-radius: 2px;
+    transform: translateY(-50%);
+    overflow: hidden;
+    z-index: 1;
+  }
+  .llm-pulse {
+    position: absolute;
+    top: 50%; left: 0;
+    width: 12px; height: 12px;
+    margin-top: -6px;
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--cyan), var(--magenta));
+    box-shadow: 0 0 10px rgba(14,165,160,0.6);
+    animation: pulseMove 4.6s linear infinite;
+  }
+  .llm-stage {
+    position: relative;
+    z-index: 2;
+    width: 176px;
+    background: var(--bg-alt);
+    border: 1px solid rgba(18,22,43,0.08);
+    border-radius: 14px;
+    padding: 14px 10px;
+    text-align: center;
+  }
+  .llm-stage h3 { font-family: var(--font-display); font-size: 17px; margin: 10px 0 5px; }
+  .llm-stage p { font-size: 14px; color: var(--text-dim); margin: 0; line-height: 1.45; }
+  .llm-visual { height: 56px; display: flex; align-items: center; justify-content: center; }
+
+  /* Estágio 1: tokenização */
+  .tok {
+    display: inline-block;
+    background: rgba(14,165,160,0.12);
+    color: var(--cyan);
+    font-family: var(--font-display);
+    font-size: 13px;
+    padding: 4px 7px;
+    margin: 0 2px;
+    border-radius: 5px;
+    opacity: 0;
+    animation: tokIn 0.4s ease forwards;
+  }
+  .tok:nth-child(1) { animation-delay: 0.2s; }
+  .tok:nth-child(2) { animation-delay: 0.5s; }
+  .tok:nth-child(3) { animation-delay: 0.8s; }
+  @keyframes tokIn { to { opacity: 1; } }
+
+  /* Estágio 2: embeddings (números representando significado) */
+  .vec-bars { display: flex; align-items: flex-end; gap: 3px; margin: 0 4px; height: 32px; }
+  .vec-bars span {
+    width: 5px; border-radius: 1.5px;
+    background: var(--magenta);
+    transform-origin: bottom;
+    animation: vecPulse 1.8s ease-in-out infinite;
+  }
+  .vec-bars span:nth-child(1) { height: 15px; animation-delay: 0s; }
+  .vec-bars span:nth-child(2) { height: 28px; animation-delay: 0.2s; }
+  .vec-bars span:nth-child(3) { height: 10px; animation-delay: 0.4s; }
+  .vec-bars span:nth-child(4) { height: 22px; animation-delay: 0.6s; }
+  @keyframes vecPulse { 0%, 100% { transform: scaleY(1); } 50% { transform: scaleY(1.35); } }
+
+  /* Estágio 3: atenção (compara cada token com todos os outros) */
+  .llm-visual.attention .att-node { fill: var(--cyan); }
+  .llm-visual.attention line {
+    stroke: rgba(225,29,116,0.4);
+    stroke-width: 1.3;
+    animation: attPulse 2.2s ease-in-out infinite;
+  }
+  .llm-visual.attention line:nth-of-type(1) { animation-delay: 0s; }
+  .llm-visual.attention line:nth-of-type(2) { animation-delay: 0.3s; }
+  .llm-visual.attention line:nth-of-type(3) { animation-delay: 0.6s; }
+  .llm-visual.attention line:nth-of-type(4) { animation-delay: 0.9s; }
+  .llm-visual.attention line:nth-of-type(5) { animation-delay: 1.2s; }
+  @keyframes attPulse { 0%, 100% { opacity: 0.2; } 50% { opacity: 0.9; } }
+
+  /* Estágio 4: probabilidade da próxima palavra */
+  .prob-row { display: flex; align-items: center; gap: 5px; margin: 3px 0; }
+  .prob-label { font-size: 13px; color: var(--text-dim); width: 34px; text-align: right; font-family: var(--font-display); }
+  .prob-track { flex: 1; height: 8px; background: rgba(18,22,43,0.08); border-radius: 4px; overflow: hidden; }
+  .prob-fill {
+    height: 100%; width: 0; border-radius: 3px;
+    background: var(--cyan);
+    animation: probFill 0.8s ease 1.3s forwards;
+  }
+  @keyframes probFill { to { width: var(--w); } }
+  .prob-row.top .prob-fill {
+    background: linear-gradient(90deg, var(--cyan), var(--magenta));
+    animation: probFill 0.8s ease 1.3s forwards, probGlow 1.6s ease-in-out 2.2s infinite;
+  }
+  @keyframes probGlow {
+    0%, 100% { box-shadow: 0 0 0 rgba(14,165,160,0); }
+    50% { box-shadow: 0 0 6px rgba(14,165,160,0.6); }
+  }
+  .flow-arrow { font-size: 20px; color: var(--text-dim); z-index: 2; }
+</style>
+</head>
+<body>
+
+<div class="hud">
+  <span class="hud-label">IA NA PRÁTICA · PROF. DIGENALDO NETO</span>
+  <div class="xp-track"><div class="xp-fill" id="xpFill"></div></div>
+  <span class="xp-count" id="xpCount">0 XP</span>
+</div>
+
+<div class="slide-counter" id="slideCounter"></div>
+
+<div class="deck" id="deck"></div>
+
+<div class="nav">
+  <button class="nav-btn" id="prevBtn">‹</button>
+  <div class="dots" id="dots"></div>
+  <button class="nav-btn" id="nextBtn">›</button>
+</div>
+
+<script>
+// ---- Dados dos slides (data-driven — escala pra 34 ou 121 slides trocando só este array) ----
+const slides = [
+  {
+    id: 'capa',
+    transition: 'zoom',
+    render: () => `
+      <div class="cover-grid"></div>
+      <div class="cover-glow"></div>
+      ${Array.from({length:10}).map((_,i)=>`<div class="particle" style="left:${8+i*9}%; animation-delay:${(i*0.5).toFixed(1)}s;"></div>`).join('')}
+      <div class="hud-corner tl"></div>
+      <div class="hud-corner tr"></div>
+      <div class="hud-corner bl"></div>
+      <div class="hud-corner br"></div>
+      <div class="float-badge" style="left:14%; top:24%; color:var(--cyan); animation-delay:0.9s, 2.1s;"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="2.2"/><circle cx="18" cy="6" r="2.2"/><circle cx="12" cy="18" r="2.2"/><path d="M8 7.4L10.5 15.4M16 7.4L13.5 15.4M8.4 6H15.6"/></svg></div>
+      <div class="float-badge" style="right:14%; top:26%; color:var(--magenta); animation-delay:1.0s, 2.4s;"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L4 14h6l-1 8 9-12h-6l1-8z"/></svg></div>
+      <div class="float-badge" style="left:17%; bottom:20%; color:var(--magenta); animation-delay:1.1s, 2.7s;"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="11" rx="5"/><path d="M7 10v4M5 12h4M15.5 11.5h.01M18.5 13.5h.01"/></svg></div>
+      <div class="float-badge" style="right:16%; bottom:22%; color:var(--cyan); animation-delay:1.2s, 3.0s;"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 2v3M15 2v3M9 19v3M15 19v3M2 9h3M2 15h3M19 9h3M19 15h3"/></svg></div>
+      <div class="stagger" style="position:relative; z-index:2;">
+        <div class="eyebrow">Aula inaugural</div>
+        <h1 class="glitch-title">
+          <span class="layer layer-cyan" aria-hidden="true">Inteligência Artificial na Prática</span>
+          <span class="layer layer-magenta" aria-hidden="true">Inteligência Artificial na Prática</span>
+          <span class="base">Inteligência Artificial na Prática</span>
+        </h1>
+        <div class="nametag">Prof. Digenaldo Neto</div>
+        <div class="boot-wrap">
+          <div class="boot-label"><span>CARREGANDO MÓDULO</span><span id="bootPct">0%</span></div>
+          <div class="boot-track"><div class="boot-fill" id="bootFill"></div></div>
+          <div class="boot-ticker" id="bootTicker">&gt; inicializando...</div>
+        </div>
+        <div class="press-start">▸ CLIQUE OU PRESSIONE → PARA COMEÇAR</div>
+      </div>
+    `,
+    onEnter: () => {
+      setTimeout(() => {
+        const fill = document.getElementById('bootFill');
+        const pctEl = document.getElementById('bootPct');
+        if (fill) fill.style.width = '100%';
+        if (pctEl) {
+          let v = 0;
+          const t = setInterval(() => {
+            v += 4;
+            if (v >= 100) { v = 100; clearInterval(t); }
+            pctEl.textContent = v + '%';
+            if (v >= 100) clearInterval(t);
+          }, 56);
+        }
+      }, 250);
+
+      // Ticker de boot em loop
+      const ticker = document.getElementById('bootTicker');
+      if (ticker) {
+        const msgs = [
+          '> inicializando rede neural...',
+          '> carregando dataset de exemplos...',
+          '> calibrando parâmetros...',
+          '> sistema pronto.'
+        ];
+        let i = 0;
+        ticker.classList.add('visible');
+        ticker.textContent = msgs[0];
+        setInterval(() => {
+          ticker.classList.remove('visible');
+          setTimeout(() => {
+            i = (i + 1) % msgs.length;
+            ticker.textContent = msgs[i];
+            ticker.classList.add('visible');
+          }, 250);
+        }, 1700);
+      }
+    }
+  },
+  {
+    id: 'o-que-e-ia',
+    transition: 'slide',
+    render: () => `
+      <div class="stagger">
+        <div class="eyebrow">Fundamentos</div>
+        <h1>O que é <span class="hl">Inteligência Artificial</span>, de verdade?</h1>
+        <p class="subtitle">É a capacidade de um sistema aprender padrões a partir de exemplos — em vez de seguir regras fixas escritas por uma pessoa.</p>
+        <div class="flow-row">
+          <div class="flow-track"><div class="flow-pulse"></div></div>
+          <div class="flow-box b1"><div class="icon" style="color:var(--cyan)"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v6c0 1.66 3.58 3 8 3s8-1.34 8-3V5M4 11v6c0 1.66 3.58 3 8 3s8-1.34 8-3v-6"/></svg></div><h3>Dados</h3><p>Exemplos que servem de referência</p></div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-box b2"><div class="icon" style="color:var(--cyan)"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.2"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/></svg></div><h3>Modelo</h3><p>Encontra padrões nesses exemplos</p></div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-box b3"><div class="icon" style="color:var(--cyan)"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 22h4M12 2a7 7 0 00-4 12.7c.6.5 1 1.2 1 2.3h6c0-1.1.4-1.8 1-2.3A7 7 0 0012 2z"/></svg></div><h3>Resposta</h3><p>Prevê ou decide algo novo</p></div>
+        </div>
+      </div>
+    `
+  },
+  {
+    id: 'o-que-e-llm',
+    transition: 'zoom',
+    render: () => `
+      <div class="stagger">
+        <div class="eyebrow">Um tipo específico de IA</div>
+        <h1>O que é um <span class="hl">LLM</span>?</h1>
+        <p class="subtitle">LLM = Large Language Model (Modelo de Linguagem Grande). É o tipo de IA por trás do ChatGPT, Gemini e Claude.</p>
+        <div class="chat-mock">
+          <div class="chat-mock-bar"><span></span><span></span><span></span></div>
+          <div class="chat-mock-body">
+            <div class="chat-bubble"><span id="llmDemo"></span><span class="chat-caret"></span></div>
+          </div>
+        </div>
+        <div class="output-label" style="margin-top: 14px;">Ele prevê a próxima palavra mais provável, uma de cada vez</div>
+      </div>
+    `,
+    onEnter: () => {
+      const el = document.getElementById('llmDemo');
+      if (!el) return;
+      const words = 'O gato subiu no telhado para fugir do cachorro.'.split(' ');
+      let i = 0;
+      el.textContent = '';
+      const t = setInterval(() => {
+        el.textContent += (i > 0 ? ' ' : '') + words[i];
+        i++;
+        if (i >= words.length) clearInterval(t);
+      }, 380);
+    }
+  },
+  {
+    id: 'llm-funcionamento',
+    transition: 'slide',
+    render: () => `
+      <div class="stagger">
+        <div class="eyebrow">Por trás das cortinas</div>
+        <h1>Como um LLM <span class="hl">realmente funciona</span></h1>
+        <p class="subtitle">Simplificando bastante, é este ciclo que se repete pra gerar cada palavra da resposta:</p>
+        <div class="llm-pipeline">
+          <div class="llm-track"><div class="llm-pulse"></div></div>
+          <div class="llm-stage">
+            <div class="llm-visual"><span class="tok">O</span><span class="tok">gato</span><span class="tok">subiu</span></div>
+            <h3>Tokenização</h3>
+            <p>O texto vira pedacinhos (tokens)</p>
+          </div>
+          <div class="flow-arrow">→</div>
+          <div class="llm-stage">
+            <div class="llm-visual">
+              <div class="vec-bars"><span></span><span></span><span></span><span></span></div>
+              <div class="vec-bars"><span></span><span></span><span></span><span></span></div>
+            </div>
+            <h3>Embeddings</h3>
+            <p>Cada token vira uma lista de números</p>
+          </div>
+          <div class="flow-arrow">→</div>
+          <div class="llm-stage">
+            <div class="llm-visual attention">
+              <svg viewBox="0 0 80 60" width="86" height="64">
+                <line x1="10" y1="10" x2="70" y2="10"/>
+                <line x1="10" y1="10" x2="10" y2="50"/>
+                <line x1="10" y1="10" x2="70" y2="50"/>
+                <line x1="70" y1="10" x2="70" y2="50"/>
+                <line x1="10" y1="50" x2="70" y2="50"/>
+                <circle class="att-node" cx="10" cy="10" r="4"/>
+                <circle class="att-node" cx="70" cy="10" r="4"/>
+                <circle class="att-node" cx="10" cy="50" r="4"/>
+                <circle class="att-node" cx="70" cy="50" r="4"/>
+              </svg>
+            </div>
+            <h3>Atenção</h3>
+            <p>Compara cada palavra com o contexto todo</p>
+          </div>
+          <div class="flow-arrow">→</div>
+          <div class="llm-stage">
+            <div class="llm-visual" style="flex-direction: column; align-items: stretch;">
+              <div class="prob-row top"><span class="prob-label">no</span><div class="prob-track"><div class="prob-fill" style="--w:62%"></div></div></div>
+              <div class="prob-row"><span class="prob-label">para</span><div class="prob-track"><div class="prob-fill" style="--w:21%"></div></div></div>
+              <div class="prob-row"><span class="prob-label">de</span><div class="prob-track"><div class="prob-fill" style="--w:9%"></div></div></div>
+            </div>
+            <h3>Probabilidade</h3>
+            <p>Escolhe a mais provável e repete</p>
+          </div>
+        </div>
+        <div class="output-label" style="margin-top: 18px;">↻ Repete esse processo, palavra por palavra, até formar a resposta completa</div>
+      </div>
+    `
+  },
+  {
+    id: 'dia-a-dia',
+    transition: 'fade',
+    render: () => `
+      <div class="stagger">
+        <div class="eyebrow">Onde a IA já está</div>
+        <h1>IA no seu <span class="hl">dia a dia</span></h1>
+        <p class="subtitle">Você provavelmente já usou inteligência artificial hoje, sem perceber:</p>
+        <div class="content-grid">
+          <div class="card">
+            <span class="notify-dot" style="animation-delay:0s"></span>
+            <div class="icon" style="color:var(--cyan)"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14v-2a8 8 0 0116 0v2"/><rect x="2" y="14" width="5" height="7" rx="2"/><rect x="17" y="14" width="5" height="7" rx="2"/></svg></div>
+            <h3>Playlists e recomendações</h3>
+            <p>Sugestões de música e vídeo aprendem com o que você já ouviu ou assistiu.</p>
+          </div>
+          <div class="card">
+            <span class="notify-dot" style="animation-delay:0.5s"></span>
+            <div class="icon" style="color:var(--cyan)"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 10h.01M10 10h.01M14 10h.01M18 10h.01M6 14h12"/></svg></div>
+            <h3>Corretor do teclado</h3>
+            <p>Prevê a próxima palavra com base no que você costuma escrever.</p>
+          </div>
+          <div class="card">
+            <span class="notify-dot" style="animation-delay:1s"></span>
+            <div class="icon" style="color:var(--cyan)"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8V6a2 2 0 012-2h2M4 16v2a2 2 0 002 2h2M20 8V6a2 2 0 00-2-2h-2M20 16v2a2 2 0 01-2 2h-2"/><circle cx="9" cy="10" r="0.7" fill="currentColor" stroke="none"/><circle cx="15" cy="10" r="0.7" fill="currentColor" stroke="none"/><path d="M9 15c1 1 5 1 6 0"/></svg></div>
+            <h3>Desbloqueio por rosto</h3>
+            <p>Reconhece seu rosto entre milhares de outros em menos de um segundo.</p>
+          </div>
+          <div class="card">
+            <span class="notify-dot" style="animation-delay:1.5s"></span>
+            <div class="icon" style="color:var(--cyan)"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 20l-5-2V4l5 2 6-2 5 2v14l-5-2-6 2z"/><path d="M9 6v14M15 4v14"/></svg></div>
+            <h3>Rotas no mapa</h3>
+            <p>Calcula o caminho mais rápido com base no trânsito em tempo real.</p>
+          </div>
+        </div>
+      </div>
+    `
+  },
+  {
+    id: 'desafios',
+    transition: 'zoom',
+    render: () => `
+      <div class="stagger">
+        <div class="eyebrow">Vale o alerta</div>
+        <h1>Os desafios da <span class="hl">IA</span> hoje</h1>
+        <p class="subtitle">Toda tecnologia poderosa traz responsabilidades. Alguns pontos de atenção:</p>
+        <div class="content-grid">
+          <div class="card">
+            <svg class="risk-badge" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5L2.5 20h19L12 3.5z"/><path d="M12 10v4M12 17h.01"/></svg>
+            <div class="icon" style="color:var(--magenta)"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v3M12 20v1M5 6h14M5 6L3 11a2.5 2.5 0 005 0L6 6M19 6l-2 5a2.5 2.5 0 005 0l-2-5"/></svg></div>
+            <h3>Viés e discriminação</h3>
+            <p>Se os dados de treino carregam preconceitos, o modelo pode repeti-los ou até ampliá-los.</p>
+          </div>
+          <div class="card">
+            <svg class="risk-badge" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5L2.5 20h19L12 3.5z"/><path d="M12 10v4M12 17h.01"/></svg>
+            <div class="icon" style="color:var(--magenta)"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 01-8.4 8.4 8.4 8.4 0 01-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 01-.9-3.8A8.4 8.4 0 0112.5 3h.1a8.4 8.4 0 018.4 8.4z"/><path d="M12 8v4M12 15h.01"/></svg></div>
+            <h3>Desinformação e deepfakes</h3>
+            <p>Textos, fotos e vídeos falsos ficam cada vez mais realistas e difíceis de distinguir do verdadeiro.</p>
+          </div>
+          <div class="card">
+            <svg class="risk-badge" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5L2.5 20h19L12 3.5z"/><path d="M12 10v4M12 17h.01"/></svg>
+            <div class="icon" style="color:var(--magenta)"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg></div>
+            <h3>Privacidade dos dados</h3>
+            <p>Muitos sistemas usam informações pessoais pra funcionar — nem sempre fica claro como elas são usadas.</p>
+          </div>
+          <div class="card">
+            <svg class="risk-badge" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5L2.5 20h19L12 3.5z"/><path d="M12 10v4M12 17h.01"/></svg>
+            <div class="icon" style="color:var(--magenta)"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9.5 9a2.5 2.5 0 015 0c0 1.5-2.5 2-2.5 3.5M12 16h.01"/></svg></div>
+            <h3>Caixa-preta</h3>
+            <p>Em muitos casos, nem os próprios criadores sabem explicar exatamente por que o modelo decidiu algo.</p>
+          </div>
+        </div>
+      </div>
+    `
+  },
+  {
+    id: 'limites',
+    transition: 'slide',
+    render: () => `
+      <div class="stagger">
+        <div class="eyebrow">Nem tudo é mágica</div>
+        <h1>Os limites da IA</h1>
+        <p class="subtitle">Por mais impressionante que pareça, a IA ainda esbarra em barreiras importantes:</p>
+        <div class="content-grid">
+          <div class="card">
+            <div class="limit-gauge"><span class="cap"></span><div class="track"><div class="bar" style="animation-delay:0s"></div></div></div>
+            <div class="icon" style="color:var(--text)"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 015 0c0 1.5-2.5 2-2.5 3.5M12 16h.01"/></svg></div>
+            <h3>Não entende de verdade</h3>
+            <p>Reconhece padrões estatísticos, mas não tem consciência ou compreensão real do que está dizendo.</p>
+          </div>
+          <div class="card">
+            <div class="limit-gauge"><span class="cap"></span><div class="track"><div class="bar" style="animation-delay:0.4s"></div></div></div>
+            <div class="icon" style="color:var(--text)"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 01-8.4 8.4 8.4 8.4 0 01-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 01-.9-3.8A8.4 8.4 0 0112.5 3h.1a8.4 8.4 0 018.4 8.4z"/><path d="M9.5 9l5 5M14.5 9l-5 5"/></svg></div>
+            <h3>Pode inventar respostas</h3>
+            <p>Às vezes erra com muita confiança — a chamada "alucinação" — mesmo parecendo certo.</p>
+          </div>
+          <div class="card">
+            <div class="limit-gauge"><span class="cap"></span><div class="track"><div class="bar" style="animation-delay:0.8s"></div></div></div>
+            <div class="icon" style="color:var(--text)"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16l-6 8v6l-4 2v-8L4 4z"/></svg></div>
+            <h3>Depende dos dados recebidos</h3>
+            <p>Se a situação foge muito do que o modelo aprendeu no treino, o resultado piora bastante.</p>
+          </div>
+          <div class="card">
+            <div class="limit-gauge"><span class="cap"></span><div class="track"><div class="bar" style="animation-delay:1.2s"></div></div></div>
+            <div class="icon" style="color:var(--text)"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3a2 2 0 014 0v1a1 1 0 001 1h1a2 2 0 012 2v1a1 1 0 001 1v4a1 1 0 00-1 1v1a2 2 0 01-2 2h-1a1 1 0 00-1 1v1a2 2 0 01-4 0v-1a1 1 0 00-1-1H9a2 2 0 01-2-2v-1a1 1 0 00-1-1H5a2 2 0 010-4h1a1 1 0 001-1V7a2 2 0 012-2h1a1 1 0 001-1V3z"/></svg></div>
+            <h3>Falta de senso comum</h3>
+            <p>Comete erros óbvios que uma criança perceberia, fora do contexto que já viu antes.</p>
+          </div>
+        </div>
+      </div>
+    `
+  },
+  {
+    id: 'seguranca',
+    transition: 'fade',
+    render: () => `
+      <div class="stagger">
+        <div class="eyebrow">Cuidados essenciais</div>
+        <h1>Segurança ao usar <span class="hl">IA</span></h1>
+        <p class="subtitle">Usar IA é ótimo — só vale lembrar de alguns cuidados:</p>
+        <div class="security-layout">
+          <div class="shield-wrap">
+            <svg viewBox="0 0 100 120" width="140" height="168">
+              <defs>
+                <linearGradient id="shieldGrad" x1="0" y1="1" x2="0" y2="0">
+                  <stop offset="0%" stop-color="var(--cyan)"/>
+                  <stop offset="100%" stop-color="var(--magenta)"/>
+                </linearGradient>
+                <clipPath id="shieldShape">
+                  <path d="M50 4 L92 18 L92 54 C92 86 70 107 50 117 C30 107 8 86 8 54 L8 18 Z"/>
+                </clipPath>
+                <clipPath id="shieldFillClip">
+                  <rect x="0" y="120" width="100" height="120" class="shield-fill-rect"/>
+                </clipPath>
+              </defs>
+              <circle class="shield-ping" cx="50" cy="60" r="38" fill="none" stroke="var(--cyan)" stroke-width="2"/>
+              <path d="M50 4 L92 18 L92 54 C92 86 70 107 50 117 C30 107 8 86 8 54 L8 18 Z" fill="none" stroke="rgba(18,22,43,0.18)" stroke-width="2"/>
+              <g clip-path="url(#shieldShape)">
+                <g clip-path="url(#shieldFillClip)">
+                  <rect x="0" y="0" width="100" height="120" fill="url(#shieldGrad)" opacity="0.85"/>
+                </g>
+                <rect class="shield-scan" x="0" y="-12" width="100" height="10" fill="rgba(255,255,255,0.4)"/>
+              </g>
+            </svg>
+          </div>
+          <div class="checklist">
+            <div class="check-row">
+              <svg class="check-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path class="tick" d="M7 12.5l3 3 7-7" style="animation-delay:0.2s"/></svg>
+              <div><h3>Não compartilhe dados pessoais</h3><p>Evite informar endereço, senha ou nome completo pra chatbots e apps sem necessidade real.</p></div>
+            </div>
+            <div class="check-row">
+              <svg class="check-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path class="tick" d="M7 12.5l3 3 7-7" style="animation-delay:0.6s"/></svg>
+              <div><h3>Confira antes de acreditar</h3><p>A IA pode errar com muita confiança — sempre confirme em outra fonte antes de usar como verdade.</p></div>
+            </div>
+            <div class="check-row">
+              <svg class="check-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path class="tick" d="M7 12.5l3 3 7-7" style="animation-delay:1.0s"/></svg>
+              <div><h3>Desconfie do "perfeito demais"</h3><p>Fotos, vídeos e áudios podem ser gerados ou alterados por IA sem você perceber.</p></div>
+            </div>
+            <div class="check-row">
+              <svg class="check-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path class="tick" d="M7 12.5l3 3 7-7" style="animation-delay:1.4s"/></svg>
+              <div><h3>Peça ajuda de um adulto</h3><p>Se algo parecer estranho ou pedir informação sensível, pergunte antes de continuar.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    `
+  },
+  {
+    id: 'quiz',
+    transition: 'zoom',
+    render: () => `
+      <div class="stagger quiz-box">
+        <div class="eyebrow">Checkpoint</div>
+        <h1>Teste o que você aprendeu</h1>
+        <p class="quiz-q">Qual dessas afirmações melhor descreve por que a IA pode "inventar" respostas erradas com confiança?</p>
+        <div class="options" id="opts">
+          <div class="opt" data-correct="false" onclick="answer(this)">Porque ela está com defeito de fábrica</div>
+          <div class="opt" data-correct="true" onclick="answer(this)">Porque ela gera padrões prováveis, não verifica fatos como uma pessoa faria</div>
+          <div class="opt" data-correct="false" onclick="answer(this)">Porque ela foi programada pra mentir de propósito</div>
+          <div class="opt" data-correct="false" onclick="answer(this)">Porque ela não tem acesso à internet</div>
+        </div>
+        <div class="feedback" id="feedback"></div>
+      </div>
+    `
+  },
+  {
+    id: 'prompt-definicao',
+    transition: 'fade',
+    render: () => `
+      <div class="stagger">
+        <div class="eyebrow">Antes de tudo</div>
+        <h1>O que é um <span class="hl">prompt</span>?</h1>
+        <p class="subtitle">É o texto que você escreve pra pedir algo a uma IA — uma pergunta, uma instrução, um pedido de ajuda.</p>
+        <div class="chat-mock">
+          <div class="chat-mock-bar"><span></span><span></span><span></span></div>
+          <div class="chat-mock-body">
+            <div class="chat-bubble">Explique o que é fotossíntese</div>
+          </div>
+        </div>
+        <div class="output-label" style="margin-top: 14px;">↑ Isso aqui é um prompt</div>
+      </div>
+    `
+  },
+  {
+    id: 'prompts-intro',
+    transition: 'zoom',
+    render: () => `
+      <div class="stagger">
+        <div class="eyebrow">Boas práticas</div>
+        <h1>Como escrever <span class="hl">bons prompts</span></h1>
+        <p class="subtitle">A qualidade da resposta depende diretamente de como você pergunta.</p>
+        <div class="chat-mock">
+          <div class="chat-mock-bar"><span></span><span></span><span></span></div>
+          <div class="chat-mock-body">
+            <div class="chat-bubble"><span id="typedPrompt"></span><span class="chat-caret"></span></div>
+          </div>
+        </div>
+      </div>
+    `,
+    onEnter: () => {
+      const el = document.getElementById('typedPrompt');
+      if (!el) return;
+      const text = 'Explique fotossíntese em 3 frases simples, pra um aluno do 7º ano.';
+      let i = 0;
+      el.textContent = '';
+      const t = setInterval(() => {
+        el.textContent += text[i];
+        i++;
+        if (i >= text.length) clearInterval(t);
+      }, 38);
+    }
+  },
+  {
+    id: 'prompts-anatomia',
+    transition: 'slide',
+    render: () => `
+      <div class="stagger">
+        <div class="eyebrow">A receita</div>
+        <h1>Três ingredientes de um <span class="hl">prompt forte</span></h1>
+        <div class="flow-row">
+          <div class="flow-track"><div class="flow-pulse"></div></div>
+          <div class="flow-box b1"><div class="icon" style="color:var(--cyan)"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.2"/><path d="M5 20c0-3.5 3-6 7-6s7 2.5 7 6"/></svg></div><h3>Contexto</h3><p>Quem você é e pra que serve a resposta</p></div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-box b2"><div class="icon" style="color:var(--cyan)"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.2" fill="currentColor" stroke="none"/></svg></div><h3>Tarefa clara</h3><p>O que exatamente você quer que ela faça</p></div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-box b3"><div class="icon" style="color:var(--cyan)"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M9 9v11"/></svg></div><h3>Formato</h3><p>Como quer a resposta: lista, texto curto, passo a passo</p></div>
+        </div>
+      </div>
+    `
+  },
+  {
+    id: 'prompts-comparacao',
+    transition: 'fade',
+    render: () => `
+      <div class="stagger">
+        <div class="eyebrow">Na prática</div>
+        <h1>Prompt fraco vs. <span class="hl">prompt forte</span></h1>
+        <div class="prompt-compare">
+          <div class="prompt-card weak">
+            <span class="prompt-tag">Fraco</span>
+            <p>"me ajuda com meu trabalho"</p>
+          </div>
+          <div class="compare-arrow">→</div>
+          <div class="prompt-card strong">
+            <span class="prompt-tag">Forte</span>
+            <p id="strongPrompt"></p>
+          </div>
+        </div>
+      </div>
+    `,
+    onEnter: () => {
+      const el = document.getElementById('strongPrompt');
+      if (!el) return;
+      const text = 'Sou estudante do 9º ano e preciso de um resumo de 5 linhas sobre a Revolução Industrial, em linguagem simples, pra estudar pra prova.';
+      let i = 0;
+      el.textContent = '';
+      setTimeout(() => {
+        const t = setInterval(() => {
+          el.textContent += text[i];
+          i++;
+          if (i >= text.length) clearInterval(t);
+        }, 20);
+      }, 500);
+    }
+  },
+  {
+    id: 'prompts-refine',
+    transition: 'slide',
+    render: () => `
+      <div class="stagger">
+        <div class="eyebrow">Prompt é conversa, não mágica</div>
+        <h1>Não acertou de primeira? Normal.</h1>
+        <p class="subtitle">Refinar o pedido faz parte do processo — ninguém acerta o prompt perfeito na primeira tentativa.</p>
+        <div class="loop-diagram">
+          <div class="loop-orbit"><div class="loop-dot"></div></div>
+          <div class="loop-node n1"><h3>Pergunta</h3></div>
+          <div class="loop-node n2"><h3>Resposta</h3></div>
+          <div class="loop-node n3"><h3>Ajuste</h3></div>
+        </div>
+      </div>
+    `
+  },
+  {
+    id: 'pratica-chatgpt',
+    transition: 'zoom',
+    render: () => `
+      <div class="stagger">
+        <div class="eyebrow">Prática guiada</div>
+        <h1>Sua vez: <span class="hl">mão na massa!</span></h1>
+        <p class="subtitle">Abra o ChatGPT (ou outro chat de IA) e siga os passos:</p>
+        <div class="security-layout">
+          <div class="practice-timer">
+            <svg viewBox="0 0 100 100" width="120" height="120">
+              <circle cx="50" cy="50" r="44" fill="none" stroke="rgba(18,22,43,0.08)" stroke-width="6"/>
+              <circle id="timerRing" cx="50" cy="50" r="44" fill="none" stroke="var(--cyan)" stroke-width="6" stroke-linecap="round" transform="rotate(-90 50 50)"/>
+            </svg>
+            <div class="timer-label" id="timerLabel">5:00</div>
+          </div>
+          <div class="checklist" style="max-width: 420px;">
+            <div class="step-row"><span class="step-num">1</span><div><h3>Escreva um prompt simples</h3><p>Algo direto, tipo "me ajuda com uma redação"</p></div></div>
+            <div class="step-row"><span class="step-num">2</span><div><h3>Leia a resposta</h3><p>Note o que ficou vago ou genérico demais</p></div></div>
+            <div class="step-row"><span class="step-num">3</span><div><h3>Reescreva com os 3 ingredientes</h3><p>Contexto + tarefa clara + formato</p></div></div>
+            <div class="step-row"><span class="step-num">4</span><div><h3>Compare as respostas</h3><p>Com a pessoa ao lado — qual ficou melhor?</p></div></div>
+          </div>
+        </div>
+      </div>
+    `,
+    onEnter: () => {
+      const ring = document.getElementById('timerRing');
+      const label = document.getElementById('timerLabel');
+      if (!ring || !label) return;
+      const circumference = 2 * Math.PI * 44;
+      ring.style.strokeDasharray = circumference;
+      ring.style.strokeDashoffset = 0;
+      let remaining = 300;
+      label.textContent = formatTime(remaining);
+      const timer = setInterval(() => {
+        remaining--;
+        if (remaining < 0) { clearInterval(timer); return; }
+        const progress = remaining / 300;
+        ring.style.strokeDashoffset = circumference * (1 - progress);
+        label.textContent = formatTime(remaining);
+        if (remaining <= 30) {
+          ring.classList.add('urgent');
+          label.classList.add('urgent');
+        }
+        if (remaining === 0) {
+          label.textContent = 'Tempo!';
+          clearInterval(timer);
+        }
+      }, 1000);
+    }
+  },
+  {
+    id: 'exemplo-1',
+    transition: 'fade',
+    render: () => `
+      <div class="stagger">
+        <div class="eyebrow">Exemplo 1 de 3</div>
+        <h1>Prompt completo: <span class="hl">resumo de história</span></h1>
+        <div class="prompt-full">
+          <div class="prompt-seg persona"><span class="seg-tag">Persona</span><p>"Aja como um professor de história paciente, explicando pra alguém do 8º ano."</p></div>
+          <div class="prompt-seg tarefa"><span class="seg-tag">Tarefa</span><p>"Explique as causas da Revolução Francesa."</p></div>
+          <div class="prompt-seg formato"><span class="seg-tag">Formato</span><p>"Em até 5 tópicos curtos, com linguagem simples e sem datas difíceis de decorar."</p></div>
+        </div>
+      </div>
+    `
+  },
+  {
+    id: 'exemplo-2',
+    transition: 'fade',
+    render: () => `
+      <div class="stagger">
+        <div class="eyebrow">Exemplo 2 de 3</div>
+        <h1>Prompt completo: <span class="hl">revisão de redação</span></h1>
+        <div class="prompt-full">
+          <div class="prompt-seg persona"><span class="seg-tag">Persona</span><p>"Aja como um professor de redação experiente, que avalia textos de vestibular."</p></div>
+          <div class="prompt-seg tarefa"><span class="seg-tag">Tarefa</span><p>"Leia meu parágrafo de introdução e aponte os pontos fracos."</p></div>
+          <div class="prompt-seg formato"><span class="seg-tag">Formato</span><p>"Liste no máximo 3 melhorias, numeradas, cada uma em até 2 linhas."</p></div>
+        </div>
+      </div>
+    `
+  },
+  {
+    id: 'exemplo-3',
+    transition: 'fade',
+    render: () => `
+      <div class="stagger">
+        <div class="eyebrow">Exemplo 3 de 3</div>
+        <h1>Prompt completo: <span class="hl">dúvida de matemática</span></h1>
+        <div class="prompt-full">
+          <div class="prompt-seg persona"><span class="seg-tag">Persona</span><p>"Aja como um tutor de matemática que explica com paciência, usando exemplos do dia a dia."</p></div>
+          <div class="prompt-seg tarefa"><span class="seg-tag">Tarefa</span><p>"Explique o que é uma equação de primeiro grau."</p></div>
+          <div class="prompt-seg formato"><span class="seg-tag">Formato</span><p>"Use um exemplo prático (tipo dividir uma pizza) e termine com um exercício pra eu tentar sozinho."</p></div>
+        </div>
+      </div>
+    `
+  },
+  {
+    id: 'quiz-prompts',
+    transition: 'zoom',
+    render: () => `
+      <div class="stagger quiz-box">
+        <div class="eyebrow">Checkpoint</div>
+        <h1>Quanto você já sabe sobre prompts?</h1>
+        <p class="quiz-q">Quais são os três ingredientes de um prompt forte?</p>
+        <div class="options" id="opts">
+          <div class="opt" data-correct="true" onclick="answer(this)">Contexto, tarefa clara e formato</div>
+          <div class="opt" data-correct="false" onclick="answer(this)">Emoji, letras maiúsculas e pontos de exclamação</div>
+          <div class="opt" data-correct="false" onclick="answer(this)">Frase longa, palavras difíceis e repetição</div>
+          <div class="opt" data-correct="false" onclick="answer(this)">Só uma pergunta direta, sem mais detalhes</div>
+        </div>
+        <div class="feedback" id="feedback"></div>
+      </div>
+    `
+  },
+  {
+    id: 'meta-prompt',
+    transition: 'zoom',
+    render: () => `
+      <div class="stagger">
+        <div class="eyebrow">Truque avançado</div>
+        <h1>A IA também pode <span class="hl">escrever seus prompts</span></h1>
+        <p class="subtitle">Você pode pedir pra ela vestir a persona de especialista em prompts e te ajudar a melhorar o que quer perguntar.</p>
+        <div class="prompt-full">
+          <div class="prompt-seg persona"><span class="seg-tag">Persona</span><p>"Aja como um especialista em engenharia de prompts."</p></div>
+          <div class="prompt-seg tarefa"><span class="seg-tag">Tarefa</span><p>"Me ajude a escrever um prompt melhor pra pedir uma explicação sobre fotossíntese pra um aluno do 7º ano."</p></div>
+          <div class="prompt-seg formato"><span class="seg-tag">Formato</span><p>"Me devolva só o prompt pronto, sem explicações extras."</p></div>
+        </div>
+        <div class="output-label">É isso que ela devolve:</div>
+        <div class="chat-mock">
+          <div class="chat-mock-bar"><span></span><span></span><span></span></div>
+          <div class="chat-mock-body">
+            <div class="chat-bubble"><span id="metaResult"></span><span class="chat-caret"></span></div>
+          </div>
+        </div>
+      </div>
+    `,
+    onEnter: () => {
+      const el = document.getElementById('metaResult');
+      if (!el) return;
+      const text = 'Explique fotossíntese em linguagem simples pra um aluno do 7º ano, usando uma analogia do dia a dia e terminando com uma pergunta pra ele pensar.';
+      let i = 0;
+      el.textContent = '';
+      setTimeout(() => {
+        const t = setInterval(() => {
+          el.textContent += text[i];
+          i++;
+          if (i >= text.length) clearInterval(t);
+        }, 22);
+      }, 1600);
+    }
+  },
+  {
+    id: 'notebooklm-intro',
+    transition: 'zoom',
+    render: () => `
+      <div class="stagger">
+        <div class="eyebrow">Nova ferramenta</div>
+        <h1>NotebookLM, agora <span class="hl">Gemini Notebook</span></h1>
+        <p class="subtitle">Um assistente de pesquisa do Google que só responde com base nos documentos que você mesmo enviar — reduzindo a chance de invenção de informação.</p>
+        <div class="icon" style="color:var(--cyan); margin-top:8px;">
+          <svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="4" y="3" width="13" height="18" rx="2"/>
+            <path d="M4 7.5h13"/>
+            <path d="M17.5 12.5l1 2 2 1-2 1-1 2-1-2-2-1 2-1z"/>
+          </svg>
+        </div>
+      </div>
+    `
+  },
+  {
+    id: 'notebooklm-recursos',
+    transition: 'slide',
+    render: () => `
+      <div class="stagger">
+        <div class="eyebrow">O que dá pra criar</div>
+        <h1>A partir dos seus materiais, ele gera:</h1>
+        <div class="content-grid">
+          <div class="card">
+            <div class="icon" style="color:var(--cyan)"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14v-2a8 8 0 0116 0v2"/><rect x="2" y="14" width="5" height="7" rx="2"/><rect x="17" y="14" width="5" height="7" rx="2"/></svg></div>
+            <h3>Áudio Overview</h3>
+            <p>Um resumo em áudio, estilo podcast, dos seus documentos.</p>
+          </div>
+          <div class="card">
+            <div class="icon" style="color:var(--cyan)"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="2.2"/><circle cx="18" cy="6" r="2.2"/><circle cx="12" cy="18" r="2.2"/><path d="M8 7.4L10.5 15.4M16 7.4L13.5 15.4M8.4 6H15.6"/></svg></div>
+            <h3>Mapa mental</h3>
+            <p>Organiza os principais conceitos e como eles se conectam.</p>
+          </div>
+          <div class="card">
+            <div class="icon" style="color:var(--cyan)"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="14" height="10" rx="2"/><rect x="7" y="9" width="14" height="10" rx="2"/></svg></div>
+            <h3>Quiz e flashcards</h3>
+            <p>Perguntas geradas a partir só do que você enviou.</p>
+          </div>
+          <div class="card">
+            <div class="icon" style="color:var(--cyan)"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg></div>
+            <h3>Slides e resumos</h3>
+            <p>Transforma o material em apresentação ou relatório.</p>
+          </div>
+        </div>
+      </div>
+    `
+  },
+  {
+    id: 'notebooklm-fontes',
+    transition: 'fade',
+    render: () => `
+      <div class="stagger">
+        <div class="eyebrow">A diferença</div>
+        <h1>Por que as respostas são mais <span class="hl">confiáveis</span></h1>
+        <div class="prompt-compare">
+          <div class="prompt-card weak">
+            <span class="prompt-tag">Chat comum</span>
+            <p>Responde misturando informação de qualquer lugar da internet — sem mostrar de onde veio.</p>
+          </div>
+          <div class="compare-arrow">→</div>
+          <div class="prompt-card strong">
+            <span class="prompt-tag">Gemini Notebook</span>
+            <p id="notebookStrong"></p>
+          </div>
+        </div>
+      </div>
+    `,
+    onEnter: () => {
+      const el = document.getElementById('notebookStrong');
+      if (!el) return;
+      const text = 'Responde só com base nos documentos que você enviou, com citação clicável pra cada afirmação.';
+      let i = 0;
+      el.textContent = '';
+      setTimeout(() => {
+        const t = setInterval(() => {
+          el.textContent += text[i];
+          i++;
+          if (i >= text.length) clearInterval(t);
+        }, 22);
+      }, 500);
+    }
+  },
+  {
+    id: 'notebooklm-como-usar',
+    transition: 'zoom',
+    render: () => `
+      <div class="stagger">
+        <div class="eyebrow">Mão na massa</div>
+        <h1>Como começar</h1>
+        <div class="checklist" style="max-width: 480px;">
+          <div class="step-row"><span class="step-num">1</span><div><h3>Crie um notebook e suba seus materiais</h3><p>PDF, texto, link — o que fizer sentido pro seu estudo.</p></div></div>
+          <div class="step-row"><span class="step-num">2</span><div><h3>Faça perguntas sobre o conteúdo</h3><p>Peça resumos, explicações ou comparações do que você enviou.</p></div></div>
+          <div class="step-row"><span class="step-num">3</span><div><h3>Gere um Áudio Overview</h3><p>Pra revisar ouvindo, tipo um podcast do seu material.</p></div></div>
+          <div class="step-row"><span class="step-num">4</span><div><h3>Confira as citações</h3><p>Antes de confiar 100%, clique e veja de onde veio cada resposta.</p></div></div>
+        </div>
+      </div>
+    `
+  },
+  {
+    id: 'virada-pratica',
+    transition: 'zoom',
+    extraClass: 'slide-invert',
+    render: () => `
+      ${Array.from({length:12}).map((_,i)=>`<div class="particle" style="left:${5+i*8}%; animation-delay:${(i*0.4).toFixed(1)}s;"></div>`).join('')}
+      <div class="stagger" style="position:relative; z-index:2;">
+        <div class="eyebrow">Nova fase</div>
+        <h1>Vamos à <span class="hl">prática!</span></h1>
+        <p class="subtitle">Chegou a hora de testar o Gemini Notebook com as próprias mãos.</p>
+        <div class="hero-icon-pop">
+          <svg viewBox="0 0 24 24" width="56" height="56" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="4" y="3" width="13" height="18" rx="2"/>
+            <path d="M4 7.5h13"/>
+            <path d="M17.5 12.5l1 2 2 1-2 1-1 2-1-2-2-1 2-1z"/>
+          </svg>
+        </div>
+        <div class="cta-chip">Abra o Gemini Notebook agora →</div>
+      </div>
+    `
+  }
+];
+
+let current = 0;
+let xp = 0;
+const deck = document.getElementById('deck');
+const dotsEl = document.getElementById('dots');
+
+function buildDots() {
+  dotsEl.innerHTML = slides.map((_, i) => `<div class="dot ${i===current?'active':''}" onclick="goTo(${i})"></div>`).join('');
+}
+
+// Slides que já têm seu próprio efeito de fundo (partículas/grid) mais forte —
+// não recebem a camada ambiente discreta, pra não duplicar o efeito.
+const AMBIENT_EXCLUDE = ['capa', 'virada-pratica'];
+
+function buildAmbientBg() {
+  const zones = [
+    { top: '9%', left: '4%' },
+    { top: '9%', right: '4%' },
+    { bottom: '11%', left: '4%' },
+    { bottom: '11%', right: '4%' }
+  ];
+  const zone = zones[Math.floor(Math.random() * zones.length)];
+  const zoneStyle = Object.entries(zone).map(([k, v]) => `${k}:${v}`).join(';');
+  let particles = '';
+  for (let i = 0; i < 8; i++) {
+    const left = (Math.random() * 90 + 5).toFixed(1);
+    const delay = (Math.random() * 6).toFixed(1);
+    particles += `<div class="ambient-particle" style="left:${left}%; animation-delay:${delay}s;"></div>`;
+  }
+  return `<div class="ambient-grid-patch" style="${zoneStyle}"></div>${particles}`;
+}
+
+function renderSlide(index, direction) {
+  const s = slides[index];
+  const el = document.createElement('div');
+  el.className = `slide active t-${s.transition}${s.extraClass ? ' ' + s.extraClass : ''}`;
+  const ambient = AMBIENT_EXCLUDE.includes(s.id) ? '' : buildAmbientBg();
+  el.innerHTML = ambient + s.render();
+  deck.innerHTML = '';
+  deck.appendChild(el);
+
+  if (s.transition === 'slide') {
+    el.classList.add(direction === 'next' ? 'enter-next' : 'enter-prev');
+  } else {
+    el.classList.add('enter');
+  }
+
+  if (s.onEnter) s.onEnter();
+  buildDots();
+  updateSlideCounter(index);
+}
+
+function updateSlideCounter(index) {
+  const counterEl = document.getElementById('slideCounter');
+  if (!counterEl) return;
+  if (index === 0) {
+    counterEl.classList.remove('visible');
+    return;
+  }
+  const total = slides.length - 1;
+  counterEl.textContent = `${index} / ${total}`;
+  counterEl.classList.add('visible');
+}
+
+function goTo(index) {
+  if (index === current || index < 0 || index >= slides.length) return;
+  const direction = index > current ? 'next' : 'prev';
+  current = index;
+  renderSlide(current, direction);
+}
+function goNext() { goTo(current + 1 >= slides.length ? current : current + 1); }
+function goPrev() { goTo(current - 1 < 0 ? current : current - 1); }
+
+document.getElementById('nextBtn').onclick = goNext;
+document.getElementById('prevBtn').onclick = goPrev;
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowRight') goNext();
+  if (e.key === 'ArrowLeft') goPrev();
+});
+
+// ---- Elemento interativo: quiz com XP (game-like) ----
+function answer(el) {
+  const opts = document.querySelectorAll('#opts .opt');
+  const isCorrect = el.dataset.correct === 'true';
+  opts.forEach(o => o.onclick = null); // trava após resposta
+
+  if (isCorrect) {
+    el.classList.add('correct');
+    xp += 25;
+    document.getElementById('feedback').innerHTML = '✓ Correto! +25 XP';
+    spawnConfetti();
+  } else {
+    el.classList.add('wrong');
+    const correctOpt = [...opts].find(o => o.dataset.correct === 'true');
+    correctOpt.classList.add('correct');
+    xp += 5;
+    document.getElementById('feedback').innerHTML = `
+      <svg class="sad-face" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="9"/>
+        <circle cx="9" cy="10" r="0.8" fill="currentColor" stroke="none"/>
+        <circle cx="15" cy="10" r="0.8" fill="currentColor" stroke="none"/>
+        <path d="M8.5 16c1-1.6 6-1.6 7 0"/>
+      </svg>
+      <span>Quase — resposta certa destacada. +5 XP por tentar</span>
+    `;
+  }
+  updateXP();
+}
+
+function formatTime(totalSeconds) {
+  const m = Math.floor(totalSeconds / 60);
+  const s = totalSeconds % 60;
+  return `${m}:${s.toString().padStart(2, '0')}`;
+}
+
+function spawnConfetti() {
+  const container = document.querySelector('.quiz-box');
+  if (!container) return;
+  const colors = ['var(--cyan)', 'var(--magenta)', '#F5B700'];
+  for (let i = 0; i < 20; i++) {
+    const p = document.createElement('div');
+    p.className = 'confetti-piece';
+    const angle = Math.random() * Math.PI * 2;
+    const dist = 70 + Math.random() * 90;
+    const tx = Math.cos(angle) * dist;
+    const ty = Math.sin(angle) * dist - 30;
+    p.style.setProperty('--tx', tx.toFixed(0) + 'px');
+    p.style.setProperty('--ty', ty.toFixed(0) + 'px');
+    p.style.setProperty('--rot', (Math.random() * 720 - 360).toFixed(0) + 'deg');
+    p.style.background = colors[i % colors.length];
+    p.style.left = '50%';
+    p.style.top = '40%';
+    container.appendChild(p);
+    setTimeout(() => p.remove(), 950);
+  }
+}
+
+function updateXP() {
+  const pct = Math.min(100, xp);
+  document.getElementById('xpFill').style.width = pct + '%';
+  document.getElementById('xpCount').textContent = xp + ' XP';
+}
+
+// init
+renderSlide(0, 'next');
+
+// Paralaxe sutil no fundo da capa ao mover o mouse
+document.addEventListener('mousemove', (e) => {
+  const grid = document.querySelector('.cover-grid');
+  const glow = document.querySelector('.cover-glow');
+  if (!grid && !glow) return;
+  const x = (e.clientX / window.innerWidth - 0.5) * 24;
+  const y = (e.clientY / window.innerHeight - 0.5) * 24;
+  if (grid) grid.style.transform = `perspective(500px) rotateX(60deg) scale(1.6) translate(${x}px, ${(y*0.4).toFixed(1)}px)`;
+  if (glow) glow.style.transform = `translate(${(x*0.6).toFixed(1)}px, ${(y*0.6).toFixed(1)}px)`;
+});
+</script>
+
+</body>
+</html>

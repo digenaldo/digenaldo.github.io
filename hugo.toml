@@ -80,10 +80,16 @@ enableRobotsTXT = true
     weight = 2
 
   [[menu.main]]
+    identifier = "cursos"
+    name = "Cursos"
+    url = "/cursos/"
+    weight = 3
+
+  [[menu.main]]
     identifier = "sobre"
     name = "About"
     url = "/sobre/"
-    weight = 3
+    weight = 4
 
 # -----------------------------
 # 🧭 OPÇÕES DE BUILD
