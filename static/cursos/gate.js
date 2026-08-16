@@ -38,7 +38,7 @@
       '#course-gate .err{color:#E11D74;margin-top:14px;min-height:18px;font-size:14px;}' +
       '</style>' +
       '<div class="box">' +
-      '<h2>Digite o código de acesso da turma</h2>' +
+      '<h2>Digite o código de acesso</h2>' +
       '<div class="row">' +
       '<input id="gate-input" type="text" inputmode="numeric" autocomplete="off" maxlength="12" />' +
       '<button id="gate-btn" type="button">Entrar</button>' +
