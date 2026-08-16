@@ -1697,6 +1697,24 @@ const slides = [
         <div class="cta-chip">Abra o Gemini Notebook agora →</div>
       </div>
     `
+  },
+  {
+    id: 'quiz-notebooklm',
+    transition: 'zoom',
+    render: () => `
+      <div class="stagger quiz-box">
+        <div class="eyebrow">Checkpoint</div>
+        <h1>O que você aprendeu sobre o <span class="hl">Gemini Notebook</span>?</h1>
+        <p class="quiz-q">Qual a principal vantagem do Gemini Notebook em relação a um chat de IA comum?</p>
+        <div class="options" id="opts">
+          <div class="opt" data-correct="true" onclick="answer(this)">Ele só responde com base nos documentos que você enviou, com citação pra cada resposta</div>
+          <div class="opt" data-correct="false" onclick="answer(this)">Ele nunca comete erros nem se engana</div>
+          <div class="opt" data-correct="false" onclick="answer(this)">Ele é mais rápido pra gerar imagens e vídeos</div>
+          <div class="opt" data-correct="false" onclick="answer(this)">Ele funciona sem precisar de internet</div>
+        </div>
+        <div class="feedback" id="feedback"></div>
+      </div>
+    `
   }
 ];
 
