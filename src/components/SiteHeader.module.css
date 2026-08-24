@@ -1,0 +1,136 @@
+.header {
+  border-bottom: 1px solid var(--line);
+  position: sticky;
+  top: 0;
+  background: var(--paper);
+  z-index: 20;
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
+  height: var(--header);
+  width: min(var(--max), 100%);
+  margin: 0 auto;
+  padding: 0 var(--pad);
+}
+
+.mark {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  flex-shrink: 0;
+  height: 100%;
+  text-decoration: none;
+  line-height: 1;
+}
+
+.red {
+  color: var(--red);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+}
+
+.name {
+  font-size: 0.92rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: nowrap;
+  gap: 1.35rem;
+  min-width: 0;
+  height: 100%;
+}
+
+.nav a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  height: 100%;
+  text-decoration: none;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.nav a:hover,
+.active {
+  color: var(--ink);
+}
+
+.idx {
+  font-family: var(--font-mono);
+  color: var(--red);
+  font-size: 0.62rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 960px) {
+  .nav {
+    gap: 0.9rem;
+  }
+
+  .idx {
+    display: none;
+  }
+}
+
+@media (max-width: 720px) {
+  .inner {
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+    height: auto;
+    min-height: var(--header);
+    padding: 0.8rem 1.15rem 0.75rem;
+    gap: 0.7rem;
+  }
+
+  .mark,
+  .nav,
+  .nav a {
+    height: auto;
+  }
+
+  .name {
+    display: none;
+  }
+
+  .nav {
+    width: 100%;
+    justify-content: space-between;
+    gap: 0;
+  }
+
+  .nav a {
+    font-size: 0.62rem;
+    letter-spacing: 0.04em;
+  }
+}
+
+@media (max-width: 400px) {
+  .inner {
+    padding-inline: 0.9rem;
+    gap: 0.55rem;
+  }
+
+  .nav a {
+    font-size: 0.58rem;
+    letter-spacing: 0.02em;
+  }
+}

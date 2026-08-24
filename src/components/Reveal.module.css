@@ -1,0 +1,9 @@
+.block {
+  will-change: transform, opacity;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .block {
+    will-change: auto;
+  }
+}

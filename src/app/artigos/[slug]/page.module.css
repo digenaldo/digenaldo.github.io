@@ -1,0 +1,39 @@
+.article {
+  width: min(var(--article), 100%);
+  margin-inline: auto;
+}
+
+.header {
+  margin-bottom: 2.4rem;
+  padding-bottom: 1.6rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.kicker {
+  margin: 0 0 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--red);
+}
+
+.header h1 {
+  margin: 0;
+  font-size: clamp(2rem, 6vw, 3.3rem);
+  letter-spacing: -0.05em;
+  line-height: 1.05;
+}
+
+.desc {
+  color: var(--ink-2);
+  font-size: 1.08rem;
+}
+
+.meta {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}

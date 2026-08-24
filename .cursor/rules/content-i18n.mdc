@@ -1,0 +1,16 @@
+---
+description: Idioma, Markdown e o que não inventar
+globs: content/**/*.md
+alwaysApply: false
+---
+
+# Conteúdo e idioma
+
+- `<html lang="pt-BR">` no layout raiz.
+- Posts: `<article lang="en">`. Front matter `language: en`.
+- Não traduzir título nem corpo dos artigos em inglês.
+- Não inventar papers, números, depoimentos, cargos ou cursos.
+- Página Pesquisa: só fatos já presentes no Sobre + links confirmados.
+- Front matter YAML preferido. Parser ainda aceita TOML `+++` legado.
+- Imagens dos posts: `/images/...` em `public/images/`.
+- Curso IA na Prática é público (sem gate). Não reintroduzir `gate.js`.

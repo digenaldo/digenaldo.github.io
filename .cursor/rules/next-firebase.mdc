@@ -1,0 +1,16 @@
+---
+description: Static export, Firebase Hosting e SEO técnico
+globs: "{next.config.ts,firebase.json,src/app/**,scripts/**}"
+alwaysApply: false
+---
+
+# Next + Firebase
+
+- `output: 'export'`, `trailingSlash: true`, `images.unoptimized: true`.
+- Destino do deploy: `out/`. Não commitar `out/` nem `.next/`.
+- Sem Route Handlers dinâmicos. RSS e sitemap = scripts de pré-build em `public/`.
+- Headers: CSP alinhada ao que o site carrega, `nosniff`, `referrer-policy`.
+- 301 das rotas Hugo em `firebase.json` (ver AGENTS.md).
+- Metadata API em toda rota: title, description, canonical, Open Graph.
+- `generateStaticParams` para slugs, tags e categorias.
+- Não usar `next/image` optimization server. `<Image unoptimized>` ou img estático.

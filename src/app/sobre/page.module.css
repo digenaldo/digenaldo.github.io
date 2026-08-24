@@ -1,0 +1,88 @@
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 4fr) minmax(0, 7fr);
+  column-gap: clamp(1.5rem, 5vw, 4.5rem);
+  align-items: start;
+}
+
+.portrait {
+  margin: 0;
+  background: transparent;
+  border-bottom: 2px solid var(--red);
+}
+
+.portrait img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.body {
+  min-width: 0;
+}
+
+.stack {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem clamp(1.25rem, 3vw, 2.5rem);
+}
+
+.stack h2 {
+  margin: 0 0 0.55rem;
+  font-size: 0.74rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-family: var(--font-mono);
+  color: var(--red);
+}
+
+.stack p {
+  margin: 0;
+  color: var(--ink-2);
+  line-height: 1.65;
+  overflow-wrap: break-word;
+}
+
+.links {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.45rem;
+}
+
+.links a {
+  text-decoration: none;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 0.12rem;
+  transition:
+    color var(--t-ui) var(--ease),
+    border-color var(--t-ui) var(--ease);
+}
+
+.links a:hover {
+  color: var(--red);
+  border-color: var(--red);
+}
+
+@media (max-width: 1024px) {
+  .layout {
+    grid-template-columns: minmax(13rem, 17rem) minmax(0, 1fr);
+    column-gap: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .layout {
+    grid-template-columns: 1fr;
+    row-gap: 2rem;
+  }
+
+  .portrait {
+    max-width: 18rem;
+  }
+
+  .stack {
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
+  }
+}

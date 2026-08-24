@@ -1,0 +1,32 @@
+.course {
+  display: grid;
+  grid-template-columns: 3rem 1fr;
+  gap: 1rem;
+  padding: 1.3rem 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  text-decoration: none;
+}
+
+.course strong {
+  display: block;
+  font-size: 1.35rem;
+  letter-spacing: -0.03em;
+}
+
+.course em {
+  display: block;
+  margin-top: 0.35rem;
+  color: var(--muted);
+  font-style: normal;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.idx {
+  font-family: var(--font-mono);
+  color: var(--red);
+  font-size: 0.72rem;
+}

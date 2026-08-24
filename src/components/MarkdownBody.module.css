@@ -1,0 +1,60 @@
+.body {
+  max-width: var(--article);
+}
+
+.body :is(h2, h3, h4) {
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+  margin: 2.2rem 0 0.8rem;
+}
+
+.body h2 {
+  font-size: 1.55rem;
+}
+
+.body p,
+.body li {
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
+
+.body a {
+  color: var(--red);
+}
+
+.body pre {
+  overflow-x: auto;
+  padding: 1rem 1.1rem;
+  background: var(--ink);
+  color: var(--on-ink);
+  font-size: 0.86rem;
+  margin: 1.4rem 0;
+}
+
+.body code {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+}
+
+.body :not(pre) > code {
+  background: var(--paper-2);
+  padding: 0.1em 0.35em;
+}
+
+.body img {
+  margin: 1.5rem 0;
+  border: 1px solid var(--line);
+}
+
+.body blockquote {
+  margin: 1.4rem 0;
+  padding: 0 0 0 1rem;
+  border-left: 2px solid var(--red);
+  color: var(--ink-2);
+}
+
+.body hr {
+  border: 0;
+  border-top: 1px solid var(--line);
+  margin: 2.4rem 0;
+}

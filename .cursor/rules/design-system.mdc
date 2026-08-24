@@ -1,0 +1,19 @@
+---
+description: Tokens visuais e o que o site não pode parecer
+globs: src/**/*.{css,tsx}
+alwaysApply: false
+---
+
+# Design system
+
+Tokens obrigatórios: `src/styles/tokens.css`.
+
+- Fundo papel `#F4F1EA`, tinta `#0A0A0A`, assinatura `#D90429` (~10%).
+- Geist + Geist Mono. Mono só em meta, datas, índices, código.
+- CSS Modules. Sem Tailwind. Sem styled-components.
+- Radius ≤ 2px. Sem sombra grande, glass, cards em grade, gradient text.
+- Proibido: Matrix, terminal verde, cadeado, HUD, cyberpunk, template SaaS.
+- Home e listas: tipografia + linhas + whitespace. Não card grid.
+- Artigo: coluna 680–760px; figuras podem estourar a coluna.
+- Sem toggle de dark mode. Seção preta = bloco editorial.
+- Copy de chrome em pt-BR (Início, Artigos, Ensino, Pesquisa, Sobre).

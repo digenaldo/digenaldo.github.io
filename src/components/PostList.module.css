@@ -1,0 +1,48 @@
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--line);
+}
+
+.list a {
+  display: grid;
+  grid-template-columns: 3rem minmax(0, 1fr);
+  gap: 1rem 1.15rem;
+  padding: 1.25rem 0;
+  border-bottom: 1px solid var(--line);
+  text-decoration: none;
+  align-items: baseline;
+  transition: color var(--t-ui) var(--ease);
+}
+
+.list a:hover .title {
+  color: var(--red);
+}
+
+.n {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--red);
+  letter-spacing: 0.08em;
+}
+
+.title {
+  display: block;
+  font-size: clamp(1.05rem, 2vw, 1.32rem);
+  letter-spacing: -0.03em;
+  line-height: 1.3;
+  font-weight: 560;
+  transition: color var(--t-ui) var(--ease);
+}
+
+.meta {
+  display: block;
+  margin-top: 0.4rem;
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  line-height: 1.45;
+  text-transform: uppercase;
+}

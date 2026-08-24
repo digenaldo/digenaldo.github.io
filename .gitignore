@@ -1,2 +1,18 @@
-# Hugo build output (deploy.sh pushes this to gh-pages only)
-public/
+# Dependencies
+node_modules/
+
+# Next
+.next/
+out/
+
+# Hugo legado (build). Não usar public/ do Hugo.
+# Next usa /public para estáticos versionados.
+.tmp/
+.hugo_build.lock
+.env*.local
+
+# OS
+.DS_Store
+
+# Debug
+npm-debug.log*
