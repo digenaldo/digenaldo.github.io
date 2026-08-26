@@ -13,7 +13,7 @@ export function SiteHeader() {
     <header className={styles.header}>
       <div className={styles.inner}>
         <Link className={styles.mark} href="/">
-          <span className={styles.red}>DN</span>
+          <span className={styles.sig}>DN</span>
           <span className={styles.name}>{site.name}</span>
         </Link>
         <nav className={styles.nav} aria-label="Principal">

@@ -15,7 +15,7 @@
   font-size: 0.72rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--red);
+  color: var(--accent);
 }
 
 .header h1 {

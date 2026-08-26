@@ -8,7 +8,7 @@ alwaysApply: false
 
 Tokens obrigatórios: `src/styles/tokens.css`.
 
-- Fundo papel `#F4F1EA`, tinta `#0A0A0A`, assinatura `#D90429` (~10%).
+- Fundo branco `#FFFFFF`, tinta `#0A0A0A`, assinatura cobalto `#0C3B8C` (~10%).
 - Geist + Geist Mono. Mono só em meta, datas, índices, código.
 - CSS Modules. Sem Tailwind. Sem styled-components.
 - Radius ≤ 2px. Sem sombra grande, glass, cards em grade, gradient text.

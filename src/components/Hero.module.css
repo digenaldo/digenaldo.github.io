@@ -26,7 +26,7 @@
   font-weight: 500;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--red);
+  color: var(--accent);
 }
 
 .line {
@@ -48,7 +48,7 @@
   left: 0;
   top: 0;
   width: 2px;
-  background: var(--red);
+  background: var(--accent);
   pointer-events: none;
 }
 
@@ -75,7 +75,7 @@
 }
 
 .word.on {
-  color: var(--red);
+  color: var(--accent);
 }
 
 .clip {

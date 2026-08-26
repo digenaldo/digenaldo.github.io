@@ -27,6 +27,6 @@
 
 .idx {
   font-family: var(--font-mono);
-  color: var(--red);
+  color: var(--accent);
   font-size: 0.72rem;
 }

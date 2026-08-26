@@ -44,7 +44,7 @@ content/*.md  →  Next.js build (output: 'export')  →  out/  →  Firebase Ho
 
 ## Design
 
-Editorial técnico. Papel + preto + vermelho ~10%. Sem aesthetic de SOC, Matrix, SaaS, template Tailwind ou tema Hugo.
+Editorial técnico. Branco + preto + cobalto ~10%. Sem aesthetic de SOC, Matrix, SaaS, template Tailwind ou tema Hugo.
 Tokens em `src/styles/tokens.css`. Estilo: **CSS Modules**. Sem Tailwind.
 Tipo: Geist (display/body) + Geist Mono (meta). Self-hosted via `next/font`.
 Radius 0–2px. Artigo 680–760px. Sem dark-mode toggle na v1; seções pretas são narrativa, não tema.

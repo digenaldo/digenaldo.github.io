@@ -17,13 +17,13 @@
 }
 
 .list a:hover .title {
-  color: var(--red);
+  color: var(--accent);
 }
 
 .n {
   font-family: var(--font-mono);
   font-size: 0.72rem;
-  color: var(--red);
+  color: var(--accent);
   letter-spacing: 0.08em;
 }
 

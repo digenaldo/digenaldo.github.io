@@ -1,13 +1,13 @@
 :root {
-  --paper: #f4f1ea;
-  --paper-2: #ebe6dc;
+  --paper: #ffffff;
+  --paper-2: #f4f4f4;
   --ink: #0a0a0a;
   --ink-2: #2a2a2a;
-  --muted: #5c574e;
-  --line: #d8d2c6;
-  --red: #d90429;
-  --red-deep: #9b021d;
-  --on-ink: #f4f1ea;
+  --muted: #5a5a5a;
+  --line: #e5e5e5;
+  --accent: #0c3b8c;
+  --accent-deep: #082a66;
+  --on-ink: #ffffff;
 
   --font-sans: var(--font-geist), "Helvetica Neue", Helvetica, Arial, sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, "SF Mono", Menlo, monospace;
@@ -57,7 +57,7 @@ a {
 }
 
 a:hover {
-  color: var(--red);
+  color: var(--accent);
 }
 
 img {
@@ -73,7 +73,7 @@ select {
 }
 
 :focus-visible {
-  outline: 2px solid var(--red);
+  outline: 2px solid var(--accent);
   outline-offset: 3px;
 }
 
