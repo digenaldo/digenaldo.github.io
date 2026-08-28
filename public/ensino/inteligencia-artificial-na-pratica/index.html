@@ -1569,24 +1569,6 @@ const slides = [
     `
   },
   {
-    id: 'quiz-prompts',
-    transition: 'zoom',
-    render: () => `
-      <div class="stagger quiz-box">
-        <div class="eyebrow">Checkpoint</div>
-        <h1>Quanto você já sabe sobre prompts?</h1>
-        <p class="quiz-q">Quais são os três ingredientes de um prompt forte?</p>
-        <div class="options" id="opts">
-          <div class="opt" data-correct="true" onclick="answer(this)">Contexto, tarefa clara e formato</div>
-          <div class="opt" data-correct="false" onclick="answer(this)">Emoji, letras maiúsculas e pontos de exclamação</div>
-          <div class="opt" data-correct="false" onclick="answer(this)">Frase longa, palavras difíceis e repetição</div>
-          <div class="opt" data-correct="false" onclick="answer(this)">Só uma pergunta direta, sem mais detalhes</div>
-        </div>
-        <div class="feedback" id="feedback"></div>
-      </div>
-    `
-  },
-  {
     id: 'meta-prompt',
     transition: 'zoom',
     render: () => `
@@ -1622,6 +1604,24 @@ const slides = [
         }, 22);
       }, 1600);
     }
+  },
+  {
+    id: 'quiz-prompts',
+    transition: 'zoom',
+    render: () => `
+      <div class="stagger quiz-box">
+        <div class="eyebrow">Checkpoint</div>
+        <h1>Quanto você já sabe sobre prompts?</h1>
+        <p class="quiz-q">Você quer um prompt melhor mas não sabe por onde começar. Qual a jogada mais esperta?</p>
+        <div class="options" id="opts">
+          <div class="opt" data-correct="false" onclick="answer(this)">Escrever tudo em maiúsculas pra IA prestar mais atenção</div>
+          <div class="opt" data-correct="true" onclick="answer(this)">Pedir pra IA, com persona de especialista em prompts, te ajudar a escrever um melhor</div>
+          <div class="opt" data-correct="false" onclick="answer(this)">Repetir o mesmo pedido várias vezes até melhorar sozinho</div>
+          <div class="opt" data-correct="false" onclick="answer(this)">Desistir e aceitar a primeira resposta, boa ou ruim</div>
+        </div>
+        <div class="feedback" id="feedback"></div>
+      </div>
+    `
   },
   {
     id: 'notebooklm-intro',
@@ -1721,6 +1721,24 @@ const slides = [
           <div class="step-row"><span class="step-num">3</span><div><h3>Gere um Áudio Overview</h3><p>Pra revisar ouvindo, tipo um podcast do seu material.</p></div></div>
           <div class="step-row"><span class="step-num">4</span><div><h3>Confira as citações</h3><p>Antes de confiar 100%, clique e veja de onde veio cada resposta.</p></div></div>
         </div>
+      </div>
+    `
+  },
+  {
+    id: 'quiz-notebooklm',
+    transition: 'zoom',
+    render: () => `
+      <div class="stagger quiz-box">
+        <div class="eyebrow">Checkpoint</div>
+        <h1>Por que confiar no Gemini Notebook?</h1>
+        <p class="quiz-q">Por que as respostas do Gemini Notebook são consideradas mais confiáveis que um chat comum?</p>
+        <div class="options" id="opts">
+          <div class="opt" data-correct="false" onclick="answer(this)">Porque ele nunca comete erros</div>
+          <div class="opt" data-correct="true" onclick="answer(this)">Porque responde só com base nos documentos que você enviou, com citação</div>
+          <div class="opt" data-correct="false" onclick="answer(this)">Porque não precisa de internet pra funcionar</div>
+          <div class="opt" data-correct="false" onclick="answer(this)">Porque foi feito pelo Google</div>
+        </div>
+        <div class="feedback" id="feedback"></div>
       </div>
     `
   },
@@ -2450,6 +2468,24 @@ const slides = [
         <div class="eyebrow">Antes de fechar</div>
         <h1>O que você leva daqui?</h1>
         <p class="subtitle">Pense: o que mais te surpreendeu nesse ciclo? O que você quer aprofundar no próximo?</p>
+      </div>
+    `
+  },
+  {
+    id: 'quiz-aula8',
+    transition: 'zoom',
+    render: () => `
+      <div class="stagger quiz-box">
+        <div class="eyebrow">Checkpoint</div>
+        <h1>Última revisão do ciclo</h1>
+        <p class="quiz-q">O build falhou na primeira tentativa de publicar. O que isso significa?</p>
+        <div class="options" id="opts">
+          <div class="opt" data-correct="false" onclick="answer(this)">Que o app está quebrado pra sempre</div>
+          <div class="opt" data-correct="true" onclick="answer(this)">Que é normal — vale tentar publicar de novo</div>
+          <div class="opt" data-correct="false" onclick="answer(this)">Que você precisa recomeçar o app do zero</div>
+          <div class="opt" data-correct="false" onclick="answer(this)">Que o Lovable não funciona nesse horário</div>
+        </div>
+        <div class="feedback" id="feedback"></div>
       </div>
     `
   },
