@@ -424,6 +424,52 @@
     85% { opacity: 0.25; }
     100% { opacity: 0; transform: translateY(-220px); }
   }
+
+  /* Diagrama de rede: IA conectada a outras ferramentas (MCP) */
+  .mcp-diagram { position: relative; width: 240px; height: 240px; margin: 26px auto 0; }
+  .mcp-diagram svg { position: absolute; inset: 0; }
+  .mcp-line {
+    stroke: rgba(225,29,116,0.4); stroke-width: 2;
+    animation: attPulse 2.4s ease-in-out infinite;
+  }
+  .mcp-node {
+    position: absolute; width: 84px; text-align: center;
+    background: var(--bg-alt); border: 1px solid rgba(18,22,43,0.08);
+    border-radius: 10px; padding: 8px 6px;
+    font-family: var(--font-display); font-size: 12px; font-weight: 700; color: var(--text);
+  }
+  .mcp-node.top { top: 0; left: 50%; transform: translate(-50%, -12%); }
+  .mcp-node.right { top: 50%; right: 0; transform: translate(0, -50%); }
+  .mcp-node.bottom { bottom: 0; left: 50%; transform: translate(-50%, 12%); }
+  .mcp-node.left { top: 50%; left: 0; transform: translate(0, -50%); }
+  .mcp-center {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    width: 62px; height: 62px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--cyan), var(--magenta));
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; font-family: var(--font-display); font-weight: 800; font-size: 14px;
+    animation: mcpPulse 2s ease-in-out infinite;
+  }
+  @keyframes mcpPulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(14,165,160,0.4); }
+    50% { box-shadow: 0 0 0 14px rgba(14,165,160,0); }
+  }
+
+  /* Equalizador animado (geração de áudio) */
+  .waveform { display: flex; align-items: flex-end; justify-content: center; gap: 6px; height: 74px; margin: 26px 0 6px; }
+  .waveform span {
+    width: 8px; border-radius: 4px; transform-origin: bottom;
+    background: linear-gradient(180deg, var(--cyan), var(--magenta));
+    animation: wavePulse 1.1s ease-in-out infinite;
+  }
+  @keyframes wavePulse { 0%, 100% { transform: scaleY(0.35); } 50% { transform: scaleY(1); } }
+  .waveform span:nth-child(1) { height: 30px; animation-delay: 0s; }
+  .waveform span:nth-child(2) { height: 50px; animation-delay: 0.1s; }
+  .waveform span:nth-child(3) { height: 70px; animation-delay: 0.2s; }
+  .waveform span:nth-child(4) { height: 45px; animation-delay: 0.3s; }
+  .waveform span:nth-child(5) { height: 65px; animation-delay: 0.4s; }
+  .waveform span:nth-child(6) { height: 35px; animation-delay: 0.5s; }
+  .waveform span:nth-child(7) { height: 55px; animation-delay: 0.6s; }
   .hero-icon-pop {
     color: #fff;
     margin: 8px 0 4px;
@@ -769,8 +815,8 @@
   }
   .flow-track {
     position: absolute;
-    top: 50%; left: 70px; right: 70px;
-    height: 3px;
+    top: 50%; left: 90px; right: 90px;
+    height: 4px;
     background: rgba(18,22,43,0.08);
     border-radius: 2px;
     transform: translateY(-50%);
@@ -780,8 +826,8 @@
   .flow-pulse {
     position: absolute;
     top: 50%; left: 0;
-    width: 14px; height: 14px;
-    margin-top: -7px;
+    width: 16px; height: 16px;
+    margin-top: -8px;
     border-radius: 50%;
     background: radial-gradient(circle, var(--cyan), var(--magenta));
     box-shadow: 0 0 10px rgba(14,165,160,0.6);
@@ -799,12 +845,13 @@
     background: var(--bg-alt);
     border: 1px solid rgba(18,22,43,0.08);
     border-radius: 14px;
-    padding: 20px 22px;
-    width: 160px;
+    padding: 24px 24px;
+    width: 200px;
     text-align: center;
   }
-  .flow-box .icon { font-size: 26px; margin-bottom: 8px; }
-  .flow-box h3 { font-family: var(--font-display); font-size: 16px; margin: 0 0 4px; }
+  .flow-box .icon { font-size: 26px; margin-bottom: 10px; }
+  .flow-box .icon svg { width: 36px; height: 36px; }
+  .flow-box h3 { font-family: var(--font-display); font-size: 17px; margin: 0 0 5px; }
   .flow-box p { font-size: 14px; color: var(--text-dim); margin: 0; line-height: 1.45; }
   .flow-box.b1 { animation: boxGlow 3.6s linear infinite; }
   .flow-box.b2 { animation: boxGlow 3.6s linear infinite; animation-delay: 1.2s; }
@@ -924,7 +971,7 @@
     0%, 100% { box-shadow: 0 0 0 rgba(14,165,160,0); }
     50% { box-shadow: 0 0 6px rgba(14,165,160,0.6); }
   }
-  .flow-arrow { font-size: 20px; color: var(--text-dim); z-index: 2; }
+  .flow-arrow { font-size: 26px; color: var(--text-dim); z-index: 2; }
 </style>
 </head>
 <body>
@@ -1193,39 +1240,6 @@ const slides = [
             <div class="icon" style="color:var(--magenta)"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9.5 9a2.5 2.5 0 015 0c0 1.5-2.5 2-2.5 3.5M12 16h.01"/></svg></div>
             <h3>Caixa-preta</h3>
             <p>Em muitos casos, nem os próprios criadores sabem explicar exatamente por que o modelo decidiu algo.</p>
-          </div>
-        </div>
-      </div>
-    `
-  },
-  {
-    id: 'guardrails',
-    transition: 'fade',
-    render: () => `
-      <div class="stagger">
-        <div class="eyebrow">A resposta pros desafios</div>
-        <h1>O que são <span class="hl">Guardrails</span>?</h1>
-        <p class="subtitle">São as regras e filtros de segurança que as empresas colocam dentro da IA pra evitar respostas perigosas, ofensivas ou fora do lugar.</p>
-        <div class="content-grid">
-          <div class="card">
-            <div class="icon" style="color:var(--cyan)"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16l-6 7.5V19l-4 2v-8.5L4 5z"/></svg></div>
-            <h3>Filtro de conteúdo</h3>
-            <p>Bloqueia pedidos de violência, ódio ou conteúdo adulto antes mesmo de gerar uma resposta.</p>
-          </div>
-          <div class="card">
-            <div class="icon" style="color:var(--cyan)"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M7 7l10 10"/></svg></div>
-            <h3>Recusa quando necessário</h3>
-            <p>A IA é treinada pra dizer "não posso ajudar com isso" em vez de responder qualquer coisa.</p>
-          </div>
-          <div class="card">
-            <div class="icon" style="color:var(--cyan)"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3L2 8l10 5 10-5-10-5z"/><path d="M6 10.5V16c0 1.5 2.7 3 6 3s6-1.5 6-3v-5.5"/></svg></div>
-            <h3>Ajustado ao público</h3>
-            <p>Respostas evitam linguagem e temas inadequados dependendo de quem está usando.</p>
-          </div>
-          <div class="card">
-            <div class="icon" style="color:var(--cyan)"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg></div>
-            <h3>Supervisão humana</h3>
-            <p>Pessoas revisam e ajustam esses limites continuamente, com base em erros e feedback.</p>
           </div>
         </div>
       </div>
@@ -1732,20 +1746,730 @@ const slides = [
     `
   },
   {
-    id: 'quiz-notebooklm',
+    id: 'skills-intro',
+    transition: 'zoom',
+    render: () => `
+      <div class="stagger">
+        <div class="eyebrow">Capacidades avançadas</div>
+        <h1>O que é uma <span class="hl">Skill</span>?</h1>
+        <p class="subtitle">Uma Skill é como uma receita que a IA sempre segue, do mesmo jeito, toda vez que você pede algo parecido.</p>
+        <div class="flow-row">
+          <div class="flow-track"><div class="flow-pulse"></div></div>
+          <div class="flow-box b1"><div class="icon" style="color:var(--cyan)"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 01-8.4 8.4 8.4 8.4 0 01-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 01-.9-3.8A8.4 8.4 0 0112.5 3h.1a8.4 8.4 0 018.4 8.4z"/></svg></div><h3>Pedido</h3><p>Você faz um pedido comum, tipo "resuma esse texto"</p></div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-box b2"><div class="icon" style="color:var(--cyan)"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20V4a2 2 0 00-2-2H6.5A2.5 2.5 0 004 4.5v15z"/><path d="M4 19.5A2.5 2.5 0 006.5 22H20"/></svg></div><h3>Skill</h3><p>A IA segue um "manual" salvo, sempre no mesmo formato</p></div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-box b3"><div class="icon" style="color:var(--cyan)"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 22h4M12 2a7 7 0 00-4 12.7c.6.5 1 1.2 1 2.3h6c0-1.1.4-1.8 1-2.3A7 7 0 0012 2z"/></svg></div><h3>Resposta padronizada</h3><p>Sempre no mesmo padrão, sem precisar reexplicar toda vez</p></div>
+        </div>
+      </div>
+    `
+  },
+  {
+    id: 'skills-exemplos',
+    transition: 'slide',
+    render: () => `
+      <div class="stagger">
+        <div class="eyebrow">No dia a dia</div>
+        <h1>Exemplos de <span class="hl">Skills</span> reais</h1>
+        <div class="content-grid">
+          <div class="card">
+            <div class="icon" style="color:var(--cyan)"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20V4a2 2 0 00-2-2H6.5A2.5 2.5 0 004 4.5v15z"/><path d="M4 19.5A2.5 2.5 0 006.5 22H20"/></svg></div>
+            <h3>Resumo padrão</h3>
+            <p>Sempre em 5 bullets, linguagem simples, sem jargão técnico.</p>
+          </div>
+          <div class="card">
+            <div class="icon" style="color:var(--cyan)"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h7M7 3v2c0 4-1 7-4 9M6 8c1 2 3 3 5 3M14 21l4-9 4 9M15.5 18h5"/></svg></div>
+            <h3>Tradução formal</h3>
+            <p>Sempre em tom formal, adequado pra e-mail profissional.</p>
+          </div>
+          <div class="card">
+            <div class="icon" style="color:var(--cyan)"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2h9l5 5v15H6z"/><path d="M15 2v5h5M9 13h6M9 17h6"/></svg></div>
+            <h3>Modelo de e-mail</h3>
+            <p>Sempre no mesmo formato: saudação, corpo, assinatura.</p>
+          </div>
+        </div>
+      </div>
+    `
+  },
+  {
+    id: 'skills-pratica',
+    transition: 'fade',
+    render: () => `
+      <div class="stagger">
+        <div class="eyebrow">Mão na massa</div>
+        <h1>Crie sua própria <span class="hl">instrução fixa</span></h1>
+        <div class="checklist" style="max-width: 480px;">
+          <div class="step-row"><span class="step-num">1</span><div><h3>Escolha uma tarefa repetitiva</h3><p>Algo que você pede com frequência pra IA.</p></div></div>
+          <div class="step-row"><span class="step-num">2</span><div><h3>Escreva como sempre quer o resultado</h3><p>Formato, tom e tamanho da resposta.</p></div></div>
+          <div class="step-row"><span class="step-num">3</span><div><h3>Peça pra IA seguir esse padrão sempre</h3><p>"Sempre que eu pedir X, faça assim: ..."</p></div></div>
+          <div class="step-row"><span class="step-num">4</span><div><h3>Teste em 2 pedidos diferentes</h3><p>Veja se o padrão se manteve nos dois.</p></div></div>
+        </div>
+      </div>
+    `
+  },
+  {
+    id: 'mcp-intro',
+    transition: 'slide',
+    render: () => `
+      <div class="stagger">
+        <div class="eyebrow">Conectando a IA ao mundo</div>
+        <h1>O que é <span class="hl">MCP</span>?</h1>
+        <p class="subtitle">MCP é como uma tomada universal — deixa a IA se conectar a outros programas e dados, em vez de ficar isolada só respondendo texto.</p>
+        <div class="mcp-diagram">
+          <svg viewBox="0 0 240 240">
+            <line x1="120" y1="120" x2="120" y2="26" class="mcp-line" style="animation-delay:0s"/>
+            <line x1="120" y1="120" x2="214" y2="120" class="mcp-line" style="animation-delay:0.4s"/>
+            <line x1="120" y1="120" x2="120" y2="214" class="mcp-line" style="animation-delay:0.8s"/>
+            <line x1="120" y1="120" x2="26" y2="120" class="mcp-line" style="animation-delay:1.2s"/>
+          </svg>
+          <div class="mcp-node top">Calendário</div>
+          <div class="mcp-node right">Planilha</div>
+          <div class="mcp-node bottom">E-mail</div>
+          <div class="mcp-node left">Banco de dados</div>
+          <div class="mcp-center">IA</div>
+        </div>
+      </div>
+    `
+  },
+  {
+    id: 'mcp-antes-depois',
+    transition: 'fade',
+    render: () => `
+      <div class="stagger">
+        <div class="eyebrow">Na prática</div>
+        <h1>IA isolada vs. <span class="hl">IA conectada</span></h1>
+        <div class="prompt-compare">
+          <div class="prompt-card weak">
+            <span class="prompt-tag">Sem MCP</span>
+            <p>Só responde com o que já sabe — não acessa nada em tempo real, como sua agenda ou uma planilha.</p>
+          </div>
+          <div class="compare-arrow">→</div>
+          <div class="prompt-card strong">
+            <span class="prompt-tag">Com MCP</span>
+            <p>Pode checar sua agenda, atualizar uma planilha ou buscar um dado real — na hora, dentro da conversa.</p>
+          </div>
+        </div>
+      </div>
+    `
+  },
+  {
+    id: 'mcp-exemplos-reais',
+    transition: 'zoom',
+    render: () => `
+      <div class="stagger">
+        <div class="eyebrow">No mundo real</div>
+        <h1>Onde isso já <span class="hl">acontece</span></h1>
+        <div class="content-grid">
+          <div class="card">
+            <div class="icon" style="color:var(--cyan)"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></div>
+            <h3>Agenda reuniões</h3>
+            <p>A IA olha sua agenda e marca um horário livre sozinha.</p>
+          </div>
+          <div class="card">
+            <div class="icon" style="color:var(--cyan)"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/></svg></div>
+            <h3>Atualiza planilhas</h3>
+            <p>Registra uma venda ou dado direto numa planilha real.</p>
+          </div>
+          <div class="card">
+            <div class="icon" style="color:var(--cyan)"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></div>
+            <h3>Busca e-mails</h3>
+            <p>Encontra uma mensagem específica sem você precisar procurar.</p>
+          </div>
+        </div>
+      </div>
+    `
+  },
+  {
+    id: 'imagem-intro',
+    transition: 'zoom',
+    render: () => `
+      <div class="stagger">
+        <div class="eyebrow">Além do texto</div>
+        <h1>A IA também <span class="hl">cria imagens</span></h1>
+        <p class="subtitle">A partir de uma descrição em texto, a IA gera uma imagem inteira do zero.</p>
+        <div class="flow-row">
+          <div class="flow-track"><div class="flow-pulse"></div></div>
+          <div class="flow-box b1"><div class="icon" style="color:var(--cyan)"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 01-8.4 8.4 8.4 8.4 0 01-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 01-.9-3.8A8.4 8.4 0 0112.5 3h.1a8.4 8.4 0 018.4 8.4z"/></svg></div><h3>Texto</h3><p>Você descreve o que quer ver</p></div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-box b2"><div class="icon" style="color:var(--cyan)"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="13" height="18" rx="2"/><path d="M4 7.5h13"/><path d="M17.5 12.5l1 2 2 1-2 1-1 2-1-2-2-1 2-1z"/></svg></div><h3>Modelo de imagem</h3><p>Interpreta a descrição e monta a composição</p></div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-box b3"><div class="icon" style="color:var(--cyan)"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="1.8"/><path d="M21 16l-5.5-5.5a2 2 0 00-2.8 0L4 19"/></svg></div><h3>Imagem gerada</h3><p>Uma imagem original, criada na hora</p></div>
+        </div>
+      </div>
+    `
+  },
+  {
+    id: 'gpt-image',
+    transition: 'slide',
+    render: () => `
+      <div class="stagger">
+        <div class="eyebrow">A ferramenta</div>
+        <h1>GPT Image, dentro do <span class="hl">ChatGPT</span></h1>
+        <p class="subtitle">Já vem integrado — não precisa de outro app, é só pedir dentro da mesma conversa.</p>
+        <div class="chat-mock">
+          <div class="chat-mock-bar"><span></span><span></span><span></span></div>
+          <div class="chat-mock-body">
+            <div class="chat-bubble"><span id="imgPromptDemo"></span><span class="chat-caret"></span></div>
+          </div>
+        </div>
+      </div>
+    `,
+    onEnter: () => {
+      const el = document.getElementById('imgPromptDemo');
+      if (!el) return;
+      const text = 'Crie um logo minimalista de uma cafeteria, estilo linha, cores terrosas.';
+      let i = 0;
+      el.textContent = '';
+      const t = setInterval(() => {
+        el.textContent += text[i];
+        i++;
+        if (i >= text.length) clearInterval(t);
+      }, 32);
+    }
+  },
+  {
+    id: 'nano-banana-mencao',
+    transition: 'fade',
+    render: () => `
+      <div class="stagger">
+        <div class="eyebrow">Também existe</div>
+        <h1>O Google tem o <span class="hl">Nano Banana</span></h1>
+        <p class="subtitle">Funciona de forma parecida, dentro do Gemini — outra opção do mercado, caso você já tenha acesso a ela.</p>
+        <div class="content-grid">
+          <div class="card">
+            <div class="icon" style="color:var(--cyan)"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="1.8"/><path d="M21 16l-5.5-5.5a2 2 0 00-2.8 0L4 19"/></svg></div>
+            <h3>Mesma ideia, outro provedor</h3>
+            <p>Texto entra, imagem sai — a lógica é a mesma do GPT Image, só muda quem está por trás.</p>
+          </div>
+        </div>
+      </div>
+    `
+  },
+  {
+    id: 'prompt-imagem-comparacao',
+    transition: 'zoom',
+    render: () => `
+      <div class="stagger">
+        <div class="eyebrow">Prompt de imagem também tem técnica</div>
+        <h1>Prompt de imagem <span class="hl">fraco vs. forte</span></h1>
+        <div class="prompt-compare">
+          <div class="prompt-card weak">
+            <span class="prompt-tag">Fraco</span>
+            <p>"um gato"</p>
+          </div>
+          <div class="compare-arrow">→</div>
+          <div class="prompt-card strong">
+            <span class="prompt-tag">Forte</span>
+            <p id="imgStrongPrompt"></p>
+          </div>
+        </div>
+      </div>
+    `,
+    onEnter: () => {
+      const el = document.getElementById('imgStrongPrompt');
+      if (!el) return;
+      const text = 'Um gato laranja de pelo curto, sentado numa janela, luz da tarde, estilo fotografia realista.';
+      let i = 0;
+      el.textContent = '';
+      setTimeout(() => {
+        const t = setInterval(() => {
+          el.textContent += text[i];
+          i++;
+          if (i >= text.length) clearInterval(t);
+        }, 22);
+      }, 500);
+    }
+  },
+  {
+    id: 'pratica-imagem',
+    transition: 'zoom',
+    render: () => `
+      <div class="stagger">
+        <div class="eyebrow">Mão na massa</div>
+        <h1>Agora é sua vez: <span class="hl">gere uma imagem</span></h1>
+        <div class="security-layout">
+          <div class="practice-timer">
+            <svg viewBox="0 0 100 100" width="120" height="120">
+              <circle cx="50" cy="50" r="44" fill="none" stroke="rgba(18,22,43,0.08)" stroke-width="6"/>
+              <circle id="timerRing" cx="50" cy="50" r="44" fill="none" stroke="var(--cyan)" stroke-width="6" stroke-linecap="round" transform="rotate(-90 50 50)"/>
+            </svg>
+            <div class="timer-label" id="timerLabel">3:00</div>
+          </div>
+          <div class="checklist" style="max-width: 420px;">
+            <div class="step-row"><span class="step-num">1</span><div><h3>Pense numa cena</h3><p>Com pelo menos 3 detalhes: lugar, luz e estilo.</p></div></div>
+            <div class="step-row"><span class="step-num">2</span><div><h3>Escreva o prompt completo</h3><p>Sem economizar palavras — quanto mais detalhe, melhor.</p></div></div>
+            <div class="step-row"><span class="step-num">3</span><div><h3>Gere e veja o resultado</h3><p>Compare com o que você imaginou.</p></div></div>
+            <div class="step-row"><span class="step-num">4</span><div><h3>Ajuste um detalhe e gere de novo</h3><p>Veja o quanto uma palavra muda o resultado.</p></div></div>
+          </div>
+        </div>
+      </div>
+    `,
+    onEnter: () => {
+      const ring = document.getElementById('timerRing');
+      const label = document.getElementById('timerLabel');
+      if (!ring || !label) return;
+      const circumference = 2 * Math.PI * 44;
+      ring.style.strokeDasharray = circumference;
+      ring.style.strokeDashoffset = 0;
+      ring.classList.remove('urgent');
+      label.classList.remove('urgent');
+      let remaining = 180;
+      label.textContent = formatTime(remaining);
+      const timer = setInterval(() => {
+        remaining--;
+        if (remaining < 0) { clearInterval(timer); return; }
+        const progress = remaining / 180;
+        ring.style.strokeDashoffset = circumference * (1 - progress);
+        label.textContent = formatTime(remaining);
+        if (remaining <= 20) {
+          ring.classList.add('urgent');
+          label.classList.add('urgent');
+        }
+        if (remaining === 0) {
+          label.textContent = 'Tempo!';
+          clearInterval(timer);
+        }
+      }, 1000);
+    }
+  },
+  {
+    id: 'cuidados-imagem-ia',
+    transition: 'slide',
+    render: () => `
+      <div class="stagger">
+        <div class="eyebrow">Antes de usar</div>
+        <h1>Cuidados ao gerar <span class="hl">imagens</span></h1>
+        <div class="checklist" style="max-width: 520px;">
+          <div class="check-row">
+            <svg class="check-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path class="tick" d="M7 12.5l3 3 7-7" style="animation-delay:0.2s"/></svg>
+            <div><h3>Não finja que é foto real de alguém</h3><p>Imagens geradas devem ser identificadas como tal, especialmente se parecem fotos reais de pessoas.</p></div>
+          </div>
+          <div class="check-row">
+            <svg class="check-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path class="tick" d="M7 12.5l3 3 7-7" style="animation-delay:0.6s"/></svg>
+            <div><h3>Cuidado com estilo de artista vivo</h3><p>Pedir "no estilo de [artista]" levanta questões reais de direitos autorais.</p></div>
+          </div>
+          <div class="check-row">
+            <svg class="check-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path class="tick" d="M7 12.5l3 3 7-7" style="animation-delay:1.0s"/></svg>
+            <div><h3>Reflita sobre representação</h3><p>Modelos de imagem podem repetir estereótipos presentes nos dados usados no treino.</p></div>
+          </div>
+        </div>
+      </div>
+    `
+  },
+  {
+    id: 'audio-intro',
+    transition: 'slide',
+    render: () => `
+      <div class="stagger">
+        <div class="eyebrow">Também dá pra ouvir</div>
+        <h1>IA que cria <span class="hl">música e voz</span></h1>
+        <p class="subtitle">Do mesmo jeito que gera texto e imagem, a IA também compõe música e narra com voz sintética.</p>
+        <div class="content-grid">
+          <div class="card">
+            <div class="icon" style="color:var(--cyan)"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></div>
+            <h3>MusicFX (Google)</h3>
+            <p>Cria trilhas curtas a partir de uma descrição em texto.</p>
+          </div>
+          <div class="card">
+            <div class="icon" style="color:var(--cyan)"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 00-3 3v6a3 3 0 006 0V5a3 3 0 00-3-3z"/><path d="M19 11a7 7 0 01-14 0M12 18v4M9 22h6"/></svg></div>
+            <h3>Vozes sintéticas</h3>
+            <p>Narra qualquer texto com uma voz realista, quase indistinguível de uma pessoa.</p>
+          </div>
+        </div>
+      </div>
+    `
+  },
+  {
+    id: 'elevenlabs',
+    transition: 'fade',
+    render: () => `
+      <div class="stagger">
+        <div class="eyebrow">Ferramenta de mercado</div>
+        <h1><span class="hl">ElevenLabs</span>, um exemplo real</h1>
+        <p class="subtitle">Transforma texto em narração com voz muito realista — usada em dublagem, audiobooks e podcasts gerados por IA.</p>
+        <div class="waveform">
+          <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+        </div>
+      </div>
+    `
+  },
+  {
+    id: 'audio-exemplo-uso',
+    transition: 'zoom',
+    render: () => `
+      <div class="stagger">
+        <div class="eyebrow">Onde você já ouviu</div>
+        <h1>Aplicações do <span class="hl">áudio gerado</span></h1>
+        <div class="content-grid">
+          <div class="card">
+            <div class="icon" style="color:var(--cyan)"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14v-2a8 8 0 0116 0v2"/><rect x="2" y="14" width="5" height="7" rx="2"/><rect x="17" y="14" width="5" height="7" rx="2"/></svg></div>
+            <h3>Dublagem de vídeos</h3>
+            <p>Traduz e narra vídeos em outro idioma automaticamente.</p>
+          </div>
+          <div class="card">
+            <div class="icon" style="color:var(--cyan)"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20V4a2 2 0 00-2-2H6.5A2.5 2.5 0 004 4.5v15z"/><path d="M4 19.5A2.5 2.5 0 006.5 22H20"/></svg></div>
+            <h3>Audiobooks</h3>
+            <p>Transforma livros e textos longos em narração pra ouvir.</p>
+          </div>
+          <div class="card">
+            <div class="icon" style="color:var(--cyan)"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 00-3 3v6a3 3 0 006 0V5a3 3 0 00-3-3z"/><path d="M19 11a7 7 0 01-14 0M12 18v4M9 22h6"/></svg></div>
+            <h3>Assistentes de voz</h3>
+            <p>Respondem falando, com entonação natural.</p>
+          </div>
+        </div>
+      </div>
+    `
+  },
+  {
+    id: 'quiz-aula6',
     transition: 'zoom',
     render: () => `
       <div class="stagger quiz-box">
         <div class="eyebrow">Checkpoint</div>
-        <h1>O que você aprendeu sobre o <span class="hl">Gemini Notebook</span>?</h1>
-        <p class="quiz-q">Qual a principal vantagem do Gemini Notebook em relação a um chat de IA comum?</p>
+        <h1>Revisão: Skills, MCP e mídia</h1>
+        <p class="quiz-q">O que é necessário pra uma IA atualizar uma planilha real sozinha?</p>
         <div class="options" id="opts">
-          <div class="opt" data-correct="true" onclick="answer(this)">Ele só responde com base nos documentos que você enviou, com citação pra cada resposta</div>
-          <div class="opt" data-correct="false" onclick="answer(this)">Ele nunca comete erros nem se engana</div>
-          <div class="opt" data-correct="false" onclick="answer(this)">Ele é mais rápido pra gerar imagens e vídeos</div>
-          <div class="opt" data-correct="false" onclick="answer(this)">Ele funciona sem precisar de internet</div>
+          <div class="opt" data-correct="false" onclick="answer(this)">Apenas um prompt bem escrito</div>
+          <div class="opt" data-correct="true" onclick="answer(this)">Uma conexão via MCP com a ferramenta</div>
+          <div class="opt" data-correct="false" onclick="answer(this)">Uma Skill configurada</div>
+          <div class="opt" data-correct="false" onclick="answer(this)">Nada, ela já faz isso por padrão</div>
         </div>
         <div class="feedback" id="feedback"></div>
+      </div>
+    `
+  },
+  {
+    id: 'negocio-intro',
+    transition: 'zoom',
+    render: () => `
+      <div class="stagger">
+        <div class="eyebrow">Hora de aplicar</div>
+        <h1>Do conceito à <span class="hl">aplicação</span></h1>
+        <p class="subtitle">Vamos juntar tudo — texto e imagem — pra criar algo real: a identidade visual de um negócio.</p>
+      </div>
+    `
+  },
+  {
+    id: 'orientacao-compra',
+    transition: 'slide',
+    render: () => `
+      <div class="stagger">
+        <div class="eyebrow">Antes de começar</div>
+        <h1>O que você vai <span class="hl">precisar</span></h1>
+        <div class="checklist" style="max-width: 480px;">
+          <div class="check-row">
+            <svg class="check-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path class="tick" d="M7 12.5l3 3 7-7" style="animation-delay:0.2s"/></svg>
+            <div><h3>ChatGPT Plus</h3><p>Conta paga, com a ajuda de um responsável pra assinar.</p></div>
+          </div>
+          <div class="check-row">
+            <svg class="check-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path class="tick" d="M7 12.5l3 3 7-7" style="animation-delay:0.6s"/></svg>
+            <div><h3>Lovable</h3><p>Vamos usar na próxima etapa — tem desconto de estudante.</p></div>
+          </div>
+        </div>
+      </div>
+    `
+  },
+  {
+    id: 'criando-logo',
+    transition: 'fade',
+    render: () => `
+      <div class="stagger">
+        <div class="eyebrow">Passo 1</div>
+        <h1>Criando um <span class="hl">logo</span> com IA</h1>
+        <div class="flow-row">
+          <div class="flow-track"><div class="flow-pulse"></div></div>
+          <div class="flow-box b1"><div class="icon" style="color:var(--cyan)"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 01-8.4 8.4 8.4 8.4 0 01-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 01-.9-3.8A8.4 8.4 0 0112.5 3h.1a8.4 8.4 0 018.4 8.4z"/></svg></div><h3>Ideia do negócio</h3><p>Qual é o nome e o estilo que combina com ele</p></div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-box b2"><div class="icon" style="color:var(--cyan)"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 15c-2 2-2 4-4 5 1-2-1-4 1-6zM19 3c1 1 1 3 0 4L11 15l-3-3L16 4c1-1 2-1 3-1z"/></svg></div><h3>Prompt com persona</h3><p>"Aja como designer" + estilo + cores</p></div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-box b3"><div class="icon" style="color:var(--cyan)"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="1.8"/><path d="M21 16l-5.5-5.5a2 2 0 00-2.8 0L4 19"/></svg></div><h3>Logo gerado</h3><p>Pronto pra usar ou refinar</p></div>
+        </div>
+      </div>
+    `
+  },
+  {
+    id: 'gerando-post-instagram',
+    transition: 'zoom',
+    render: () => `
+      <div class="stagger">
+        <div class="eyebrow">Passo 2</div>
+        <h1>Gerando um <span class="hl">post pra Instagram</span></h1>
+        <div class="flow-row">
+          <div class="flow-track"><div class="flow-pulse"></div></div>
+          <div class="flow-box b1"><div class="icon" style="color:var(--cyan)"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 01-8.4 8.4 8.4 8.4 0 01-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 01-.9-3.8A8.4 8.4 0 0112.5 3h.1a8.4 8.4 0 018.4 8.4z"/></svg></div><h3>Copy</h3><p>Texto do post, gerado pelo LLM</p></div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-box b2"><div class="icon" style="color:var(--cyan)"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="1.8"/><path d="M21 16l-5.5-5.5a2 2 0 00-2.8 0L4 19"/></svg></div><h3>Imagem</h3><p>Gerada com GPT Image, combinando com a marca</p></div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-box b3"><div class="icon" style="color:var(--cyan)"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="12" cy="12" r="3.5"/><circle cx="17" cy="7" r="0.8" fill="currentColor" stroke="none"/></svg></div><h3>Post pronto</h3><p>Texto + imagem juntos, prontos pra publicar</p></div>
+        </div>
+      </div>
+    `
+  },
+  {
+    id: 'pratica-negocio',
+    transition: 'slide',
+    render: () => `
+      <div class="stagger">
+        <div class="eyebrow">Mão na massa, junto</div>
+        <h1>Vamos criar o seu, passo a passo</h1>
+        <div class="checklist" style="max-width: 480px;">
+          <div class="step-row"><span class="step-num">1</span><div><h3>Descreva seu negócio</h3><p>Nome, área de atuação e estilo visual que combina.</p></div></div>
+          <div class="step-row"><span class="step-num">2</span><div><h3>Gere o logo</h3><p>Use persona de designer + os detalhes do passo 1.</p></div></div>
+          <div class="step-row"><span class="step-num">3</span><div><h3>Gere o post</h3><p>Copy + imagem combinando com o logo criado.</p></div></div>
+          <div class="step-row"><span class="step-num">4</span><div><h3>Compare com a turma</h3><p>Veja como o mesmo processo gerou resultados diferentes.</p></div></div>
+        </div>
+      </div>
+    `
+  },
+  {
+    id: 'exemplos-apps-simples',
+    transition: 'fade',
+    render: () => `
+      <div class="stagger">
+        <div class="eyebrow">Pra inspirar</div>
+        <h1>Ideias de <span class="hl">apps simples</span></h1>
+        <div class="content-grid">
+          <div class="card">
+            <div class="icon" style="color:var(--cyan)"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="14" height="10" rx="2"/><rect x="7" y="9" width="14" height="10" rx="2"/></svg></div>
+            <h3>Lista de tarefas</h3>
+            <p>Adicionar, marcar como feito e organizar por prioridade.</p>
+          </div>
+          <div class="card">
+            <div class="icon" style="color:var(--cyan)"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M8 6h8M8 10h.01M12 10h.01M16 10h.01M8 14h.01M12 14h.01M16 14h.01"/></svg></div>
+            <h3>Calculadora de gorjeta</h3>
+            <p>Digita o valor da conta, escolhe a porcentagem, divide entre amigos.</p>
+          </div>
+          <div class="card">
+            <div class="icon" style="color:var(--cyan)"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 22h4M12 2a7 7 0 00-4 12.7c.6.5 1 1.2 1 2.3h6c0-1.1.4-1.8 1-2.3A7 7 0 0012 2z"/></svg></div>
+            <h3>Quiz personalizado</h3>
+            <p>Perguntas e respostas sobre um tema que você escolher.</p>
+          </div>
+          <div class="card">
+            <div class="icon" style="color:var(--cyan)"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20V4a2 2 0 00-2-2H6.5A2.5 2.5 0 004 4.5v15z"/><path d="M4 19.5A2.5 2.5 0 006.5 22H20"/></svg></div>
+            <h3>Cardápio digital</h3>
+            <p>Lista de produtos com preço, foto e descrição.</p>
+          </div>
+        </div>
+      </div>
+    `
+  },
+  {
+    id: 'lovable-intro',
+    transition: 'zoom',
+    render: () => `
+      <div class="stagger">
+        <div class="eyebrow">A cereja do bolo</div>
+        <h1>Conheça o <span class="hl">Lovable</span></h1>
+        <p class="subtitle">Uma IA que constrói um aplicativo completo a partir de uma descrição em texto.</p>
+        <div class="icon" style="color:var(--cyan); margin-top:8px;">
+          <svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="4" width="18" height="16" rx="2"/>
+            <path d="M3 8h18"/>
+            <circle cx="6.2" cy="6" r="0.6" fill="currentColor" stroke="none"/>
+            <circle cx="8.6" cy="6" r="0.6" fill="currentColor" stroke="none"/>
+            <path d="M9 15l2 2 4-4"/>
+          </svg>
+        </div>
+      </div>
+    `
+  },
+  {
+    id: 'como-lovable-funciona',
+    transition: 'slide',
+    render: () => `
+      <div class="stagger">
+        <div class="eyebrow">Como funciona</div>
+        <h1>De uma <span class="hl">descrição a um app</span></h1>
+        <div class="flow-row">
+          <div class="flow-track"><div class="flow-pulse"></div></div>
+          <div class="flow-box b1"><div class="icon" style="color:var(--cyan)"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 01-8.4 8.4 8.4 8.4 0 01-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 01-.9-3.8A8.4 8.4 0 0112.5 3h.1a8.4 8.4 0 018.4 8.4z"/></svg></div><h3>Você descreve</h3><p>Explica o app que quer, em linguagem simples</p></div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-box b2"><div class="icon" style="color:var(--cyan)"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.2"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/></svg></div><h3>IA constrói o código</h3><p>Monta as telas e a lógica por trás delas</p></div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-box b3"><div class="icon" style="color:var(--cyan)"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 8h18"/><circle cx="6.2" cy="6" r="0.6" fill="currentColor" stroke="none"/><circle cx="8.6" cy="6" r="0.6" fill="currentColor" stroke="none"/></svg></div><h3>App funcionando</h3><p>Já pode clicar, testar e usar</p></div>
+        </div>
+      </div>
+    `
+  },
+  {
+    id: 'pratica-criar-app',
+    transition: 'fade',
+    render: () => `
+      <div class="stagger">
+        <div class="eyebrow">Mão na massa</div>
+        <h1>Crie o seu primeiro app</h1>
+        <div class="checklist" style="max-width: 480px;">
+          <div class="step-row"><span class="step-num">1</span><div><h3>Abra o Lovable</h3><p>Com a conta orientada na aula anterior.</p></div></div>
+          <div class="step-row"><span class="step-num">2</span><div><h3>Descreva seu app</h3><p>Pode ser ligado ao negócio que você criou na aula passada.</p></div></div>
+          <div class="step-row"><span class="step-num">3</span><div><h3>Veja a IA construir</h3><p>Em tempo real, na tela, sem escrever código.</p></div></div>
+          <div class="step-row"><span class="step-num">4</span><div><h3>Ajuste pedindo mudanças</h3><p>Se algo não ficou como queria, é só pedir de novo.</p></div></div>
+        </div>
+      </div>
+    `
+  },
+  {
+    id: 'quiz-aula7',
+    transition: 'zoom',
+    render: () => `
+      <div class="stagger quiz-box">
+        <div class="eyebrow">Checkpoint</div>
+        <h1>Revisão: negócio e Lovable</h1>
+        <p class="quiz-q">Qual a vantagem de usar uma persona (ex: "aja como designer") ao pedir um logo?</p>
+        <div class="options" id="opts">
+          <div class="opt" data-correct="false" onclick="answer(this)">Deixa o prompt mais longo</div>
+          <div class="opt" data-correct="true" onclick="answer(this)">A IA direciona o resultado pro estilo e critério certo</div>
+          <div class="opt" data-correct="false" onclick="answer(this)">Não faz diferença nenhuma</div>
+          <div class="opt" data-correct="false" onclick="answer(this)">Só funciona pra texto, não pra imagem</div>
+        </div>
+        <div class="feedback" id="feedback"></div>
+      </div>
+    `
+  },
+  {
+    id: 'revisao-rapida-lovable',
+    transition: 'zoom',
+    render: () => `
+      <div class="stagger">
+        <div class="eyebrow">Continuando</div>
+        <h1>De onde paramos</h1>
+        <p class="subtitle">Na aula passada, cada um criou o esqueleto do seu app no Lovable. Hoje: publicar de verdade, pro mundo ver.</p>
+      </div>
+    `
+  },
+  {
+    id: 'publicando-app',
+    transition: 'slide',
+    render: () => `
+      <div class="stagger">
+        <div class="eyebrow">Passo final</div>
+        <h1>Publicando e <span class="hl">hospedando</span></h1>
+        <div class="flow-row">
+          <div class="flow-track"><div class="flow-pulse"></div></div>
+          <div class="flow-box b1"><div class="icon" style="color:var(--cyan)"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 8h18"/><circle cx="6.2" cy="6" r="0.6" fill="currentColor" stroke="none"/><circle cx="8.6" cy="6" r="0.6" fill="currentColor" stroke="none"/></svg></div><h3>App pronto</h3><p>Funcionando só no seu editor</p></div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-box b2"><div class="icon" style="color:var(--cyan)"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2c3 2 4 6 4 10 0 2-1 4-1 4H9s-1-2-1-4c0-4 1-8 4-10z"/><path d="M9 14l-3 3v3l3-2M15 14l3 3v3l-3-2"/><circle cx="12" cy="9" r="1.5"/></svg></div><h3>Clique em publicar</h3><p>Um botão só, sem configuração complicada</p></div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-box b3"><div class="icon" style="color:var(--cyan)"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 010 18M12 3a15 15 0 000 18"/></svg></div><h3>URL ao vivo</h3><p>Acessível por qualquer pessoa, em qualquer lugar</p></div>
+        </div>
+      </div>
+    `
+  },
+  {
+    id: 'checklist-antes-publicar',
+    transition: 'fade',
+    render: () => `
+      <div class="stagger">
+        <div class="eyebrow">Antes de publicar</div>
+        <h1>Checklist final</h1>
+        <div class="checklist" style="max-width: 480px;">
+          <div class="check-row">
+            <svg class="check-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path class="tick" d="M7 12.5l3 3 7-7" style="animation-delay:0.2s"/></svg>
+            <div><h3>Teste todas as funções</h3><p>Clique em cada botão e tela antes de publicar.</p></div>
+          </div>
+          <div class="check-row">
+            <svg class="check-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path class="tick" d="M7 12.5l3 3 7-7" style="animation-delay:0.6s"/></svg>
+            <div><h3>Confira dados sensíveis</h3><p>Nada de senha, endereço ou informação pessoal exposta.</p></div>
+          </div>
+          <div class="check-row">
+            <svg class="check-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path class="tick" d="M7 12.5l3 3 7-7" style="animation-delay:1.0s"/></svg>
+            <div><h3>Escolha um nome</h3><p>É o que vai aparecer no link do seu app.</p></div>
+          </div>
+          <div class="check-row">
+            <svg class="check-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path class="tick" d="M7 12.5l3 3 7-7" style="animation-delay:1.4s"/></svg>
+            <div><h3>Compartilhe com a turma</h3><p>Envie o link pra todo mundo testar o seu.</p></div>
+          </div>
+        </div>
+      </div>
+    `
+  },
+  {
+    id: 'pratica-publicar',
+    transition: 'slide',
+    render: () => `
+      <div class="stagger">
+        <div class="eyebrow">Mão na massa</div>
+        <h1>Publique agora</h1>
+        <div class="checklist" style="max-width: 480px;">
+          <div class="step-row"><span class="step-num">1</span><div><h3>Clique em "Publish"</h3><p>No canto superior direito do editor.</p></div></div>
+          <div class="step-row"><span class="step-num">2</span><div><h3>Aguarde o build</h3><p>Leva de 30 segundos a 2 minutos.</p></div></div>
+          <div class="step-row"><span class="step-num">3</span><div><h3>Copie o link gerado</h3><p>É o endereço do seu app publicado.</p></div></div>
+          <div class="step-row"><span class="step-num">4</span><div><h3>Abra numa aba anônima</h3><p>Pra testar como um visitante real veria.</p></div></div>
+        </div>
+      </div>
+    `
+  },
+  {
+    id: 'e-se-der-erro',
+    transition: 'fade',
+    render: () => `
+      <div class="stagger">
+        <div class="eyebrow">Se algo não funcionar</div>
+        <h1>E se der <span class="hl">erro</span>?</h1>
+        <div class="content-grid">
+          <div class="card">
+            <div class="icon" style="color:var(--magenta)"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 11-9-9c2.5 0 4.7 1 6.3 2.7M21 4v5h-5"/></svg></div>
+            <h3>Build falhou</h3>
+            <p>Tente publicar de novo — às vezes é só uma falha temporária.</p>
+          </div>
+          <div class="card">
+            <div class="icon" style="color:var(--magenta)"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M8 11h6"/></svg></div>
+            <h3>Link não abre</h3>
+            <p>Confira se o nome do app não tem espaço ou caractere especial.</p>
+          </div>
+          <div class="card">
+            <div class="icon" style="color:var(--magenta)"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg></div>
+            <h3>App lento pra carregar</h3>
+            <p>Aguarde mais alguns segundos — a primeira vez é mais demorada.</p>
+          </div>
+        </div>
+      </div>
+    `
+  },
+  {
+    id: 'galeria-da-turma',
+    transition: 'zoom',
+    render: () => `
+      <div class="stagger">
+        <div class="eyebrow">Agora, explorem juntos</div>
+        <h1>Galeria da <span class="hl">turma</span></h1>
+        <p class="subtitle">Compartilhe seu link e explore o que os colegas construíram.</p>
+        <div class="icon" style="color:var(--cyan); margin-top:8px;">
+          <svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="6" cy="6" r="2.4"/><circle cx="18" cy="6" r="2.4"/><circle cx="12" cy="18" r="2.4"/>
+            <path d="M8 7.4L10.5 15.4M16 7.4L13.5 15.4M8.4 6H15.6"/>
+          </svg>
+        </div>
+      </div>
+    `
+  },
+  {
+    id: 'reflexao-final',
+    transition: 'fade',
+    render: () => `
+      <div class="stagger">
+        <div class="eyebrow">Antes de fechar</div>
+        <h1>O que você leva daqui?</h1>
+        <p class="subtitle">Pense: o que mais te surpreendeu nesse ciclo? O que você quer aprofundar no próximo?</p>
+      </div>
+    `
+  },
+  {
+    id: 'encerramento-ciclo',
+    transition: 'zoom',
+    extraClass: 'slide-invert',
+    render: () => `
+      ${Array.from({length:12}).map((_,i)=>`<div class="particle" style="left:${5+i*8}%; animation-delay:${(i*0.4).toFixed(1)}s;"></div>`).join('')}
+      <div class="stagger" style="position:relative; z-index:2;">
+        <div class="eyebrow">Fim do 1º Ciclo</div>
+        <h1>Você construiu um <span class="hl">app do zero!</span></h1>
+        <p class="subtitle">De "o que é IA" até um aplicativo publicado — parabéns pela jornada.</p>
+        <div class="hero-icon-pop">
+          <svg viewBox="0 0 24 24" width="56" height="56" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M8 4h8v5a4 4 0 01-8 0V4z"/>
+            <path d="M8 5H5a2 2 0 002 4M16 5h3a2 2 0 01-2 4"/>
+            <path d="M12 13v3M9 20h6M10 20v-2h4v2"/>
+          </svg>
+        </div>
       </div>
     `
   }
