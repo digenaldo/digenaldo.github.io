@@ -1,34 +1,48 @@
 .body {
-  max-width: var(--article);
+  width: 100%;
 }
 
 .body :is(h2, h3, h4) {
   letter-spacing: -0.03em;
-  line-height: 1.2;
-  margin: 2.2rem 0 0.8rem;
+  line-height: 1.22;
+  margin: 2.4rem 0 0.85rem;
+  font-weight: 600;
 }
 
 .body h2 {
-  font-size: 1.55rem;
+  font-size: 1.5rem;
+}
+
+.body h3 {
+  font-size: 1.2rem;
 }
 
 .body p,
 .body li {
-  font-size: 1.05rem;
-  line-height: 1.7;
+  font-size: 1.06rem;
+  line-height: 1.72;
+  color: var(--ink-2);
 }
 
 .body a {
   color: var(--accent);
+  text-decoration-color: color-mix(in srgb, var(--accent) 35%, transparent);
+}
+
+.body a:hover {
+  text-decoration-color: var(--accent);
 }
 
 .body pre {
   overflow-x: auto;
   padding: 1rem 1.1rem;
-  background: var(--ink);
-  color: var(--on-ink);
-  font-size: 0.86rem;
-  margin: 1.4rem 0;
+  background: var(--paper-2);
+  color: var(--ink);
+  border: 1px solid var(--line);
+  font-size: 0.84rem;
+  line-height: 1.55;
+  margin: 1.5rem 0;
+  border-radius: 2px;
 }
 
 .body code {
@@ -38,16 +52,21 @@
 
 .body :not(pre) > code {
   background: var(--paper-2);
-  padding: 0.1em 0.35em;
+  color: var(--ink);
+  padding: 0.12em 0.35em;
 }
 
 .body img {
-  margin: 1.5rem 0;
+  margin: 1.6rem 0 0.6rem;
   border: 1px solid var(--line);
 }
 
+.body em:has(+ *) {
+  color: var(--muted);
+}
+
 .body blockquote {
-  margin: 1.4rem 0;
+  margin: 1.5rem 0;
   padding: 0 0 0 1rem;
   border-left: 2px solid var(--accent);
   color: var(--ink-2);
@@ -57,4 +76,53 @@
   border: 0;
   border-top: 1px solid var(--line);
   margin: 2.4rem 0;
+}
+
+.body table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  font-size: 0.92rem;
+}
+
+.body th,
+.body td {
+  border-bottom: 1px solid var(--line);
+  padding: 0.55rem 0.7rem 0.55rem 0;
+  text-align: left;
+  vertical-align: top;
+}
+
+.body th {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 500;
+}
+
+.body :global(.hljs-keyword),
+.body :global(.hljs-selector-tag),
+.body :global(.hljs-built_in) {
+  color: #f2c4c0;
+}
+
+.body :global(.hljs-string),
+.body :global(.hljs-attr) {
+  color: #d7d7d7;
+}
+
+.body :global(.hljs-comment) {
+  color: #8a8a8a;
+}
+
+.body :global(.hljs-number),
+.body :global(.hljs-literal) {
+  color: #e8e8e8;
+}
+
+.body :global(.hljs-title),
+.body :global(.hljs-section) {
+  color: #ffffff;
 }

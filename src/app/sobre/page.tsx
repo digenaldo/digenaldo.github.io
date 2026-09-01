@@ -1,73 +1,76 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { PageMast } from "@/components/PageMast";
-import { Reveal } from "@/components/Reveal";
-import { site } from "@/lib/site";
 import styles from "../page.module.css";
 import local from "./page.module.css";
 
 export const metadata: Metadata = {
   title: "Sobre",
   description:
-    "Digenaldo Neto, professor, Security Engineer e Software Engineer.",
+    "Digenaldo Neto, Cybersecurity Engineer e Software Engineer. Escreve, pesquisa e ensina a partir da prática.",
   alternates: { canonical: "/sobre/" },
 };
 
 export default function SobrePage() {
   return (
-    <div className={styles.sheet}>
+    <div className={`container ${styles.page}`}>
       <PageMast
-        index="05 / Sobre"
+        kicker="About / profile"
         title="Sobre"
-        lede="Professor, Security Engineer e Software Engineer, com mais de dez anos de experiência em desenvolvimento, arquitetura e sistemas distribuídos. Hoje, meu trabalho se concentra em engenharia de segurança aplicada a software e infraestrutura."
+        lede="Engenheiro de segurança e de software. João Pessoa, Brasil."
       />
 
       <div className={local.layout}>
         <figure className={local.portrait}>
-          <img
+          <Image
             src="/images/digenaldo-neto.png"
             alt="Digenaldo Neto, de braços cruzados, camiseta preta e óculos, sorrindo."
             width={1086}
             height={1448}
+            unoptimized
           />
         </figure>
 
         <div className={local.body}>
-          <Reveal>
-            <div className={local.stack}>
-              <section>
-                <h2>Trajetória</h2>
-                <p>
-                  Sou formado em Sistemas de Informação pela UFPB e mestre em
-                  Tecnologia da Informação pelo IFPB. No mestrado, pesquisei
-                  detecção de ataques DDoS na camada de aplicação utilizando
-                  machine learning e Big Data.
-                </p>
-              </section>
-              <section>
-                <h2>Trabalho</h2>
-                <p>
-                  Atuo na construção e proteção de sistemas escaláveis, com foco
-                  em segurança de aplicações, arquitetura distribuída, cloud e
-                  resiliência.
-                </p>
-              </section>
-              <section>
-                <h2>Este site</h2>
-                <p>
-                  Este site reúne artigos, experimentos e materiais sobre
-                  segurança, engenharia de software, inteligência artificial e
-                  ensino, sempre com foco em aplicação prática.
-                </p>
-              </section>
-              <section>
-                <h2>Contato</h2>
-                <p className={local.links}>
-                  <a href={site.social.linkedin}>LinkedIn</a>
-                  <a href={site.social.github}>GitHub</a>
-                </p>
-              </section>
-            </div>
-          </Reveal>
+          <p>
+            Sou o Digenaldo. Trabalho com cybersecurity e engenharia de
+            software. Na prática, isso significa passar bastante tempo entre
+            código, arquitetura e as falhas que só aparecem quando o sistema
+            está no ar.
+          </p>
+          <p>
+            Formei-me em Sistemas de Informação na UFPB e fiz mestrado em
+            Tecnologia da Informação no IFPB. A pesquisa de mestrado foi sobre
+            detecção de ataques DDoS na camada de aplicação, com machine
+            learning e Big Data. Essa pergunta ainda me interessa: como
+            perceber um sistema sob ataque sem transformar tudo em alarme.
+          </p>
+          <p>
+            Nos últimos anos concentrei o trabalho em engenharia de segurança
+            aplicada a software e infraestrutura: aplicações, ambientes
+            distribuídos, cloud e, cada vez mais, os problemas novos que a
+            inteligência artificial introduz.
+          </p>
+          <p>
+            Também ensino. Parte do que estudo vira aula ou material, não
+            porque eu tenha um produto educacional, mas porque escrever e
+            explicar é uma forma de entender o problema até o fim.
+          </p>
+          <p>
+            Este site é o lugar onde deixo isso público. Artigos em inglês
+            permanecem em inglês. O chrome da página está em português porque
+            é o idioma em que vivo.
+          </p>
+
+          <section className={local.block}>
+            <h2>Tecnologias</h2>
+            <p>
+              Python, Go, Java, JavaScript. Segurança de aplicações,
+              sistemas distribuídos, observabilidade, aprendizado de máquina
+              aplicado a tráfego e, recentemente, segurança de LLMs e
+              agentes.
+            </p>
+          </section>
         </div>
       </div>
     </div>

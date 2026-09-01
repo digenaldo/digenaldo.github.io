@@ -1,17 +1,15 @@
 ---
-description: Regras de motion GSAP e acessibilidade de animação
-globs: src/**/*.{tsx,css}
+description: Regras de motion e acessibilidade de animação
+globs: src/**/*.{tsx,css,scss}
 alwaysApply: false
 ---
 
 # Motion
 
-- Biblioteca: GSAP + ScrollTrigger. Importar só em Client Components.
-- Não carregar GSAP em páginas de artigo na v1.
+- CSS e JavaScript nativo. Sem GSAP, Lenis, Three.js ou bibliotecas pesadas para fade/underline.
 - Tokens: micro 120ms, UI 240ms, seção 600ms, hero ≤ 1200ms e interruptível.
 - Animar `transform` e `opacity`. Evitar width/height/top/left contínuos.
-- Sem scroll hijack, splash, cursor custom, partículas, Three.js, Lenis.
+- Sem scroll hijack, splash, cursor custom, partículas.
 - `prefers-reduced-motion: reduce`: conteúdo estático imediato, sem pin/scrub.
 - Pointer-dependent (magnetic, preview no cursor): só com `(pointer: fine)`.
 - View Transitions nativas se ajudar; não inventar SPA router extra.
-- Remotion não entra no critical path da home. Pipeline separado, depois.

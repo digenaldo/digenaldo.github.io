@@ -15,6 +15,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { category } = await params;
   return {
     title: `Categoria: ${category}`,
+    description: `Artigos na categoria ${category}.`,
     alternates: { canonical: `/categories/${category}/` },
   };
 }
@@ -25,8 +26,12 @@ export default async function CategoryPage({ params }: Props) {
   if (posts.length === 0) notFound();
 
   return (
-    <div className={styles.page}>
-      <PageMast index="Categoria" title={category} />
+    <div className={`container ${styles.page}`}>
+      <PageMast
+        kicker="Categoria"
+        title={category}
+        lede={`${posts.length} artigo(s).`}
+      />
       <PostList posts={posts} />
     </div>
   );

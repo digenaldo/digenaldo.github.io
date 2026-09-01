@@ -1,19 +1,21 @@
 ---
 description: Tokens visuais e o que o site não pode parecer
-globs: src/**/*.{css,tsx}
+globs: src/**/*.{css,scss,tsx}
 alwaysApply: false
 ---
 
 # Design system
 
 Tokens obrigatórios: `src/styles/tokens.css`.
+Layout: Bulma (container, columns, section) + CSS Modules / SCSS próprio.
 
-- Fundo branco `#FFFFFF`, tinta `#0A0A0A`, assinatura cobalto `#0C3B8C` (~10%).
-- Geist + Geist Mono. Mono só em meta, datas, índices, código.
-- CSS Modules. Sem Tailwind. Sem styled-components.
+- Fundo preto `#0A0A0A`, tinta `#F2F2F2`, accent vermelho `#E23B2F` (pouco).
+- Instrument Sans + IBM Plex Mono. Mono só em meta, datas, labels, código.
+- Sem Tailwind. Sem Bootstrap. Sem styled-components.
 - Radius ≤ 2px. Sem sombra grande, glass, cards em grade, gradient text.
-- Proibido: Matrix, terminal verde, cadeado, HUD, cyberpunk, template SaaS.
-- Home e listas: tipografia + linhas + whitespace. Não card grid.
-- Artigo: coluna 680–760px; figuras podem estourar a coluna.
-- Sem toggle de dark mode. Seção preta = bloco editorial.
-- Copy de chrome em pt-BR (Início, Artigos, Ensino, Pesquisa, Sobre).
+- Proibido: Matrix, terminal verde, cadeado, HUD, cyberpunk, template SaaS, landing de produto de segurança.
+- Home e listas: tipografia + linhas + whitespace. Texto usa a largura da tela, alinhado à esquerda, sem coluna estreita e sem bloco centralizado.
+- Sem navbar. A home concentra a navegação. Cabeçalho só com o nome.
+- GitHub, LinkedIn e Instagram só no rodapé.
+- Sem toggle de dark mode. O site é preto por padrão.
+- Copy de chrome em pt-BR (Artigos, Projetos, Ensino, Pesquisa, Sobre).

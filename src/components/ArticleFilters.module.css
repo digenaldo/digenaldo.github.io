@@ -1,0 +1,47 @@
+.bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem 0.2rem;
+  margin: 1.4rem 0 0.4rem;
+}
+
+.chip,
+.active {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.45rem 0.7rem;
+  cursor: pointer;
+  border-bottom: 1px solid transparent;
+}
+
+.chip:hover {
+  color: var(--ink);
+}
+
+.active {
+  color: var(--ink);
+  border-bottom-color: var(--accent);
+}
+
+.empty {
+  margin: 1.5rem 0;
+  color: var(--muted);
+}
+
+.reset {
+  appearance: none;
+  border: 0;
+  background: none;
+  padding: 0;
+  color: var(--accent);
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+  font: inherit;
+}

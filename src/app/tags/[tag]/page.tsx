@@ -15,6 +15,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { tag } = await params;
   return {
     title: `Tag: ${tag}`,
+    description: `Artigos com a tag ${tag}.`,
     alternates: { canonical: `/tags/${tag}/` },
   };
 }
@@ -25,8 +26,8 @@ export default async function TagPage({ params }: Props) {
   if (posts.length === 0) notFound();
 
   return (
-    <div className={styles.page}>
-      <PageMast index="Tag" title={tag} />
+    <div className={`container ${styles.page}`}>
+      <PageMast kicker="Tag" title={tag} lede={`${posts.length} artigo(s).`} />
       <PostList posts={posts} />
     </div>
   );

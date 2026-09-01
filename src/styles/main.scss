@@ -1,0 +1,215 @@
+@use "bulma/sass/utilities" with (
+  $scheme-h: 0,
+  $scheme-s: 0%,
+  $black: hsl(0, 0%, 7%),
+  $white: hsl(0, 0%, 100%),
+  $red: hsl(5, 78%, 40%),
+  $family-sans-serif: var(--font-sans),
+  $family-monospace: var(--font-mono),
+  $radius-small: 0,
+  $radius: 2px,
+  $radius-medium: 2px,
+  $radius-large: 2px,
+  $duration: 240ms,
+  $easing: cubic-bezier(0.2, 0.7, 0.2, 1)
+);
+
+@use "bulma/sass/base";
+@use "bulma/sass/grid";
+@use "bulma/sass/layout";
+@use "bulma/sass/components/navbar";
+@use "bulma/sass/helpers";
+@use "bulma/sass/themes/light";
+@use "bulma/sass/themes/setup";
+
+:root {
+  @include light.light-theme;
+  @include setup.setup-theme;
+
+  --bulma-primary-h: 5;
+  --bulma-primary-s: 78%;
+  --bulma-primary-l: 40%;
+  --bulma-link-h: 5;
+  --bulma-link-s: 78%;
+  --bulma-link-l: 40%;
+  --bulma-family-primary: var(--font-sans);
+  --bulma-family-secondary: var(--font-sans);
+  --bulma-family-code: var(--font-mono);
+  --bulma-body-family: var(--font-sans);
+  --bulma-body-size: 17px;
+  --bulma-body-line-height: 1.55;
+  --bulma-body-background-color: var(--paper);
+  --bulma-body-color: var(--ink);
+  --bulma-text: var(--ink-2);
+  --bulma-text-strong: var(--ink);
+  --bulma-text-weak: var(--muted);
+  --bulma-link: var(--accent);
+  --bulma-link-hover: var(--accent-deep);
+  --bulma-link-text: var(--ink);
+  --bulma-link-text-hover: var(--accent);
+  --bulma-radius: 2px;
+  --bulma-radius-small: 0;
+  --bulma-radius-large: 2px;
+  --bulma-scheme-h: 0;
+  --bulma-scheme-s: 0%;
+  --bulma-scheme-main: var(--paper);
+  --bulma-scheme-main-l: 4%;
+  --bulma-border: var(--line);
+  --bulma-background: var(--paper);
+  --bulma-code: var(--accent);
+  --bulma-code-background: var(--paper-2);
+  --bulma-shadow: none;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  color-scheme: dark;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 17px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+a {
+  color: inherit;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+  text-decoration-color: transparent;
+  transition:
+    color var(--t-ui) var(--ease),
+    text-decoration-color var(--t-ui) var(--ease);
+}
+
+a:hover {
+  color: var(--accent);
+  text-decoration-color: var(--accent);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.skip {
+  position: absolute;
+  left: var(--pad);
+  top: -5rem;
+  background: var(--ink);
+  color: var(--on-ink);
+  padding: 0.5rem 0.85rem;
+  z-index: 100;
+}
+
+.skip:focus {
+  top: 0.5rem;
+}
+
+.container {
+  max-width: none;
+  width: 100%;
+  margin-left: 0;
+  margin-right: 0;
+  --bulma-container-padding-inline: 0;
+}
+
+.section {
+  padding: 3.25rem 0;
+}
+
+.navbar {
+  background: var(--paper);
+  min-height: var(--header);
+  border-bottom: 1px solid var(--line);
+  box-shadow: none;
+}
+
+.navbar.has-shadow {
+  box-shadow: none;
+}
+
+.footer {
+  background: var(--paper);
+  padding: 0;
+}
+
+.meta-label {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.meta-accent {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.link-arrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--ink);
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 0.12rem;
+}
+
+.link-arrow:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}

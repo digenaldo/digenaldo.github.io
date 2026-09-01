@@ -9,6 +9,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const pages = [
     "",
     "artigos/",
+    "projetos/",
     "ensino/",
     "cursos/ia-na-pratica.html",
     "pesquisa/",

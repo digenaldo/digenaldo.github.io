@@ -1,105 +1,23 @@
 :root {
-  --paper: #ffffff;
-  --paper-2: #f4f4f4;
-  --ink: #0a0a0a;
-  --ink-2: #2a2a2a;
-  --muted: #5a5a5a;
-  --line: #e5e5e5;
-  --accent: #0c3b8c;
-  --accent-deep: #082a66;
-  --on-ink: #ffffff;
+  --paper: #0a0a0a;
+  --paper-2: #161616;
+  --ink: #f2f2f2;
+  --ink-2: #c8c8c8;
+  --muted: #8a8a8a;
+  --line: #2a2a2a;
+  --accent: #e23b2f;
+  --accent-deep: #ff6b5e;
+  --on-ink: #0a0a0a;
 
-  --font-sans: var(--font-geist), "Helvetica Neue", Helvetica, Arial, sans-serif;
-  --font-mono: var(--font-geist-mono), ui-monospace, "SF Mono", Menlo, monospace;
+  --font-sans: var(--font-instrument), "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-mono: var(--font-ibm-plex-mono), ui-monospace, "SF Mono", Menlo, monospace;
 
-  --max: 1240px;
-  --article: 720px;
-  --pad: clamp(1.25rem, 4vw, 3.5rem);
-  --header: 4.25rem;
+  --max: none;
+  --pad: clamp(1.5rem, 5vw, 4.5rem);
+  --header: 4rem;
 
   --t-micro: 120ms;
   --t-ui: 240ms;
+  --t-section: 600ms;
   --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
-}
-
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
-html,
-body {
-  margin: 0;
-  padding: 0;
-  background: var(--paper);
-  color: var(--ink);
-  font-family: var(--font-sans);
-  font-size: 17px;
-  line-height: 1.55;
-  -webkit-font-smoothing: antialiased;
-}
-
-body {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
-
-a {
-  color: inherit;
-  text-decoration-thickness: 1px;
-  text-underline-offset: 0.18em;
-}
-
-a:hover {
-  color: var(--accent);
-}
-
-img {
-  max-width: 100%;
-  height: auto;
-  display: block;
-}
-
-button,
-input,
-select {
-  font: inherit;
-}
-
-:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 3px;
-}
-
-.skip {
-  position: absolute;
-  left: var(--pad);
-  top: -5rem;
-  background: var(--ink);
-  color: var(--on-ink);
-  padding: 0.5rem 0.85rem;
-  z-index: 100;
-}
-
-.skip:focus {
-  top: 0.5rem;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-
-  *,
-  *::before,
-  *::after {
-    animation: none !important;
-    transition: none !important;
-  }
 }

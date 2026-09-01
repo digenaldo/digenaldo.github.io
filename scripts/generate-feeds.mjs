@@ -85,7 +85,7 @@ const xml = `<?xml version="1.0" encoding="UTF-8"?>
   <channel>
     <title>Digenaldo Neto</title>
     <link>${SITE}/</link>
-    <description>Pesquisa, engenharia e ensino.</description>
+    <description>Cybersecurity Engineer e Software Engineer. Escrevo sobre segurança de aplicações, inteligência artificial, arquitetura e sistemas distribuídos.</description>
     <language>pt-BR</language>
 ${items}
   </channel>

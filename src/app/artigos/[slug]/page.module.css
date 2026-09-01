@@ -1,18 +1,18 @@
 .article {
-  width: min(var(--article), 100%);
-  margin-inline: auto;
+  width: 100%;
+  padding: 2.2rem var(--pad) 4.5rem;
 }
 
 .header {
   margin-bottom: 2.4rem;
-  padding-bottom: 1.6rem;
+  padding-bottom: 1.7rem;
   border-bottom: 1px solid var(--line);
 }
 
 .kicker {
   margin: 0 0 1rem;
   font-family: var(--font-mono);
-  font-size: 0.72rem;
+  font-size: 0.68rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--accent);
@@ -20,20 +20,51 @@
 
 .header h1 {
   margin: 0;
-  font-size: clamp(2rem, 6vw, 3.3rem);
-  letter-spacing: -0.05em;
-  line-height: 1.05;
+  font-size: clamp(1.9rem, 5.4vw, 3.1rem);
+  letter-spacing: -0.045em;
+  line-height: 1.08;
+  font-weight: 600;
 }
 
 .desc {
+  margin: 1rem 0 0;
   color: var(--ink-2);
   font-size: 1.08rem;
+  line-height: 1.6;
 }
 
 .meta {
+  margin: 1.1rem 0 0;
   font-family: var(--font-mono);
-  font-size: 0.72rem;
-  letter-spacing: 0.08em;
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--muted);
+}
+
+.more {
+  margin-top: 3.2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--line);
+}
+
+.more ul {
+  list-style: none;
+  margin: 0.7rem 0 0;
+  padding: 0;
+}
+
+.more li + li {
+  margin-top: 0.55rem;
+}
+
+.more a {
+  text-decoration: none;
+  letter-spacing: -0.02em;
+  font-weight: 600;
+}
+
+.more a:hover {
+  text-decoration: underline;
+  text-decoration-color: var(--accent);
 }

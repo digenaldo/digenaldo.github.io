@@ -1,21 +1,24 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { IBM_Plex_Mono, Instrument_Sans } from "next/font/google";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
 import { site } from "@/lib/site";
 import "@/styles/tokens.css";
+import "@/styles/main.scss";
 import styles from "./shell.module.css";
 
-const geist = Geist({
+const sans = Instrument_Sans({
   subsets: ["latin"],
-  variable: "--font-geist",
+  variable: "--font-instrument",
   display: "swap",
+  weight: ["400", "500", "600", "700"],
 });
 
-const geistMono = Geist_Mono({
+const mono = IBM_Plex_Mono({
   subsets: ["latin"],
-  variable: "--font-geist-mono",
+  variable: "--font-ibm-plex-mono",
   display: "swap",
+  weight: ["400", "500"],
 });
 
 export const metadata: Metadata = {
@@ -35,14 +38,32 @@ export const metadata: Metadata = {
   },
 };
 
+const personJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: site.name,
+  jobTitle: "Cybersecurity Engineer",
+  url: site.url,
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "João Pessoa",
+    addressCountry: "BR",
+  },
+  sameAs: [site.social.github, site.social.linkedin, site.social.instagram],
+};
+
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
-    <html lang="pt-BR" className={`${geist.variable} ${geistMono.variable}`}>
+    <html lang="pt-BR" className={`${sans.variable} ${mono.variable}`}>
       <body>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
+        />
         <a className="skip" href="#conteudo">
           Ir ao conteúdo
         </a>

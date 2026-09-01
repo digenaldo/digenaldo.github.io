@@ -8,7 +8,7 @@ Não usar `deploy.sh` (force-push em `gh-pages`). Deploy: `npm run build` e `fir
 
 ## Posicionamento
 
-Pesquisa. Engenharia. Ensino.
+Pesquisa. Engenharia. Ensino. Cybersecurity como linguagem profissional principal.
 
 Chrome da interface: **pt-BR**.
 Artigos existentes: **inglês**, sem traduzir título nem corpo.
@@ -22,7 +22,7 @@ content/*.md  →  Next.js build (output: 'export')  →  out/  →  Firebase Ho
 - Sem App Hosting, Functions, Auth, Firestore.
 - Sem servidor Node em produção. Redirects e headers vivem em `firebase.json`.
 - Imagens em `public/images/`. Markdown em `content/`.
-- GSAP só em client components, nunca no critical path de artigo.
+- GSAP não entra no critical path. Motion: CSS + JavaScript nativo, discreto.
 - Curso em HTML estático em `public/cursos/`. Não envolver o layout do site.
 
 ## Rotas canônicas (v1)
@@ -32,6 +32,7 @@ content/*.md  →  Next.js build (output: 'export')  →  out/  →  Firebase Ho
 | `/` | Home |
 | `/artigos/` | Lista |
 | `/artigos/[slug]/` | Artigo (EN) |
+| `/projetos/` | Projetos e experimentos |
 | `/ensino/` | Ensino |
 | `/cursos/ia-na-pratica.html` | Curso em slides (público, sem gate) |
 | `/pesquisa/` | Pesquisa (só fatos do Sobre + links) |
@@ -44,14 +45,14 @@ content/*.md  →  Next.js build (output: 'export')  →  out/  →  Firebase Ho
 
 ## Design
 
-Editorial técnico. Branco + preto + cobalto ~10%. Sem aesthetic de SOC, Matrix, SaaS, template Tailwind ou tema Hugo.
-Tokens em `src/styles/tokens.css`. Estilo: **CSS Modules**. Sem Tailwind.
-Tipo: Geist (display/body) + Geist Mono (meta). Self-hosted via `next/font`.
-Radius 0–2px. Artigo 680–760px. Sem dark-mode toggle na v1; seções pretas são narrativa, não tema.
+Editorial técnico. Fundo preto `#0A0A0A`, tinta clara, vermelho `#E23B2F` como accent (pouco). Sem aesthetic de SOC, Matrix, SaaS, template Tailwind, tema Hugo ou landing de produto.
+Layout: **Bulma** (grid, container) + CSS Modules / SCSS próprio. Sem Tailwind.
+Tipo: Instrument Sans (display/body) + IBM Plex Mono (meta). Self-hosted via `next/font`.
+Radius 0–2px. Sem navbar. Home concentra a navegação. GitHub/LinkedIn só no rodapé.
 
 ## Motion
 
-GSAP + ScrollTrigger. View Transitions nativas se existirem. Sem scroll hijack, cursor fake, splash, Three.js.
+CSS e JavaScript nativo. View Transitions nativas se existirem. Sem scroll hijack, cursor fake, splash, Three.js, GSAP no critical path.
 Respeitar `prefers-reduced-motion: reduce`.
 Artigos: motion mínimo. Home: o lugar da identidade.
 

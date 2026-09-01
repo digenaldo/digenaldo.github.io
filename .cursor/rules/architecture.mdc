@@ -14,5 +14,6 @@ Este site é **Next.js App Router** com `output: 'export'` e Firebase Hosting es
 - Redirects 301 só em `firebase.json` (static export não aplica `next.config` redirects).
 - Preservar slugs dos 5 posts. Lista nova é `/artigos/[slug]/`.
 - Tags em `/tags/[tag]/`. Categorias em `/categories/[category]/`.
+- Projetos em `/projetos/`.
 - RSS canônico: `/index.xml`.
 - Dúvida de produto: perguntar. Não assumir.

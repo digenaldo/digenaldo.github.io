@@ -1,5 +1,9 @@
 import { readdirSync, readFileSync } from "node:fs";
 import path from "node:path";
+import type { ArticleTopic } from "@/lib/site";
+
+export type { ArticleTopic };
+export { formatDate, formatFieldDate, getTopic } from "@/lib/post-meta";
 
 export type Post = {
   slug: string;
@@ -46,15 +50,6 @@ export function postsByCategory(category: string): Post[] {
   return getPosts().filter((post) =>
     post.categories.map((item) => slugify(item)).includes(slugify(category)),
   );
-}
-
-export function formatDate(iso: string, locale: string = "pt-BR"): string {
-  const date = new Date(`${iso}T00:00:00`);
-  return new Intl.DateTimeFormat(locale, {
-    day: "2-digit",
-    month: "short",
-    year: "numeric",
-  }).format(date);
 }
 
 export function slugify(value: string): string {

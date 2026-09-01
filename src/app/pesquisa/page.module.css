@@ -1,55 +1,56 @@
-.grid {
+.layout {
   display: grid;
-  grid-template-columns: minmax(0, 5fr) minmax(0, 4fr) minmax(0, 3fr);
-  gap: 2.4rem 2.5rem;
-  align-items: start;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 2.2rem 2.4rem;
+  padding-top: 2.2rem;
 }
 
-.grid > * {
-  min-width: 0;
-}
-
-.grid h2 {
+.layout h2 {
   margin: 0 0 0.7rem;
-  font-size: 0.74rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 500;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  font-family: var(--font-mono);
   color: var(--accent);
 }
 
-.grid p {
+.layout p,
+.topics {
   margin: 0;
   color: var(--ink-2);
   line-height: 1.65;
-  max-width: 36rem;
-  overflow-wrap: break-word;
+}
+
+.topics {
+  padding: 0;
+  list-style: none;
+}
+
+.topics li + li {
+  margin-top: 0.45rem;
 }
 
 .links {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 0.45rem;
+  gap: 0.5rem;
+  margin-top: 1rem;
 }
 
 .links a {
   text-decoration: none;
   border-bottom: 1px solid var(--line);
   padding-bottom: 0.12rem;
-  transition:
-    color var(--t-ui) var(--ease),
-    border-color var(--t-ui) var(--ease);
 }
 
 .links a:hover {
-  color: var(--accent);
   border-color: var(--accent);
 }
 
-@media (max-width: 900px) {
-  .grid {
+@media (max-width: 860px) {
+  .layout {
     grid-template-columns: 1fr;
-    gap: 2rem;
   }
 }

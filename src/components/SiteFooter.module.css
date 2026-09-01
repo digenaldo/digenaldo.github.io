@@ -4,28 +4,19 @@
 }
 
 .inner {
-  width: min(var(--max), 100%);
-  margin: 0 auto;
-  padding: 2.5rem var(--pad) 2.75rem;
   display: grid;
   grid-template-columns: 1fr auto;
-  gap: 0.45rem 2rem;
-  align-items: end;
+  gap: 0.85rem 2rem;
+  padding: 2.4rem var(--pad) 2.6rem;
   color: var(--muted);
   font-size: 0.88rem;
 }
 
-.brand {
-  display: grid;
-  gap: 0.4rem;
-}
-
-.meta {
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  margin: 0;
+.name {
+  margin: 0 0 0.35rem;
+  color: var(--ink);
+  font-weight: 600;
+  letter-spacing: -0.02em;
 }
 
 .links {
@@ -34,10 +25,24 @@
   justify-content: flex-end;
   gap: 0.9rem;
   margin: 0;
+  align-self: start;
 }
 
 .links a {
   text-decoration: none;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.meta {
+  grid-column: 1 / -1;
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
 }
 
 @media (max-width: 720px) {
