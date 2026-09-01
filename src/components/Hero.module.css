@@ -1,6 +1,26 @@
 .hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(14rem, 22rem);
+  gap: clamp(1.5rem, 5vw, 4.5rem);
+  align-items: start;
   padding: 3.4rem 0 2.6rem;
   border-bottom: 1px solid var(--line);
+}
+
+.copy {
+  min-width: 0;
+}
+
+.portrait {
+  margin: 0;
+  width: 100%;
+  border-bottom: 2px solid var(--accent);
+}
+
+.portrait img {
+  width: 100%;
+  height: auto;
+  display: block;
 }
 
 .status {
@@ -90,7 +110,12 @@
 
 @media (max-width: 860px) {
   .hero {
+    grid-template-columns: 1fr;
     padding-top: 2.4rem;
+  }
+
+  .portrait {
+    max-width: 16rem;
   }
 }
 

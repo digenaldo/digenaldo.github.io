@@ -21,7 +21,6 @@ export const nav = [
   { href: "/artigos/", label: "Artigos" },
   { href: "/projetos/", label: "Projetos" },
   { href: "/pesquisa/", label: "Pesquisa" },
-  { href: "/sobre/", label: "Sobre" },
 ] as const;
 
 export const interests = [
