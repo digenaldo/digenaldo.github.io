@@ -32,7 +32,7 @@ const BLINK_TAIL = 30 * FPS;
 type Step = { cmdStart: number; outStart: number; end: number };
 
 function timeline(blocks: TerminalBlock[]): { steps: Step[]; end: number } {
-  let t = 10;
+  let t = 0;
   const steps = blocks.map((block) => {
     const cmdStart = t;
     const outStart = cmdStart + block.cmd.length * CHAR + PAUSE_AFTER_CMD;

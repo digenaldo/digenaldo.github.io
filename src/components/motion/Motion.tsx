@@ -5,7 +5,8 @@ import { useCallback, useEffect, useRef, useState, type ReactNode } from "react"
 import type { CompositionId } from "@/remotion/registry";
 import { useReducedMotion } from "./useReducedMotion";
 
-const PlayerCore = dynamic(() => import("./PlayerCore"), { ssr: false });
+const loadPlayer = () => import("./PlayerCore");
+const PlayerCore = dynamic(loadPlayer, { ssr: false });
 
 type Props = {
   id: CompositionId;
@@ -38,13 +39,17 @@ export function Motion({
   const onReady = useCallback(() => setReady(true), []);
 
   useEffect(() => {
+    if (reduced === false) loadPlayer();
+  }, [reduced]);
+
+  useEffect(() => {
     const el = box.current;
     if (!el || reduced !== false || seen) return;
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) setSeen(true);
       },
-      { rootMargin: "120px" },
+      { rootMargin: "400px 0px" },
     );
     observer.observe(el);
     return () => observer.disconnect();

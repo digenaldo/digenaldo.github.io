@@ -43,20 +43,35 @@ export default function PlayerCore({
     const node = wrap.current;
     if (!node) return;
 
+    let visible = false;
+    let raf = 0;
+    // The imperative ref can attach after the first observer callback; retry until it exists.
+    const apply = () => {
+      const player = ref.current;
+      if (!player) {
+        raf = requestAnimationFrame(apply);
+        return;
+      }
+      if (!visible) {
+        player.pause();
+      } else if (loop || player.getCurrentFrame() < frames - 1) {
+        player.play();
+      }
+    };
+
     const observer = new IntersectionObserver(
       ([entry]) => {
-        const player = ref.current;
-        if (!player) return;
-        if (!entry.isIntersecting) {
-          player.pause();
-        } else if (loop || player.getCurrentFrame() < frames - 1) {
-          player.play();
-        }
+        visible = entry.isIntersecting;
+        cancelAnimationFrame(raf);
+        apply();
       },
       { threshold: 0 },
     );
     observer.observe(node);
-    return () => observer.disconnect();
+    return () => {
+      cancelAnimationFrame(raf);
+      observer.disconnect();
+    };
   }, [controlled, loop, frames]);
 
   useEffect(() => {
@@ -75,7 +90,6 @@ export default function PlayerCore({
         compositionWidth={width}
         compositionHeight={height}
         loop={loop}
-        autoPlay={!controlled}
         controls={false}
         clickToPlay={false}
         doubleClickToFullscreen={false}

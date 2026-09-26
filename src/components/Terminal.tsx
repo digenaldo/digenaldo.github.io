@@ -48,13 +48,11 @@ function StaticTerminal({
             ))}
           </div>
         ))}
-        {blocks.length > 0 ? (
-          <div>
-            <span className="text-signal">{shellUser}</span>
-            <span className="text-muted">:~$ </span>
-            <span className="inline-block h-[1.1em] w-[0.6em] translate-y-[3px] bg-signal" />
-          </div>
-        ) : null}
+        <div>
+          <span className="text-signal">{shellUser}</span>
+          <span className="text-muted">:~$ </span>
+          <span className="inline-block h-[1.1em] w-[0.6em] translate-y-[3px] bg-signal" />
+        </div>
       </div>
     </div>
   );
