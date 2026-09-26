@@ -10,8 +10,7 @@
       { "source": "/posts/:slug", "destination": "/artigos/:slug/", "type": 301 },
       { "source": "/posts/:slug/", "destination": "/artigos/:slug/", "type": 301 },
       { "source": "/cursos", "destination": "/ensino/", "type": 301 },
-      { "source": "/cursos/", "destination": "/ensino/", "type": 301 },
-      { "source": "/sobre", "destination": "/sobre/", "type": 301 }
+      { "source": "/cursos/", "destination": "/ensino/", "type": 301 }
     ],
     "headers": [
       {
