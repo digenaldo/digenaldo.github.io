@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { ArticleFilters } from "@/components/ArticleFilters";
 import { PageMast } from "@/components/PageMast";
 import { getPosts } from "@/lib/posts";
-import styles from "../page.module.css";
 
 export const metadata: Metadata = {
   title: "Artigos",
@@ -12,16 +11,18 @@ export const metadata: Metadata = {
 };
 
 export default function ArtigosPage() {
-  const posts = getPosts();
+  const posts = getPosts().map(({ body: _body, ...card }) => card);
 
   return (
-    <div className={`container ${styles.page}`}>
+    <div className="shell">
       <PageMast
-        kicker="Index / articles"
+        command="ls -lt ~/artigos"
         title="Artigos"
         lede="Escrevo principalmente sobre segurança, sistemas distribuídos e inteligência artificial. Os textos em inglês permanecem no original."
       />
-      <ArticleFilters posts={posts} />
+      <div className="pt-10">
+        <ArticleFilters posts={posts} />
+      </div>
     </div>
   );
 }

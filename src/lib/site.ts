@@ -17,11 +17,37 @@ export const site = {
   },
 };
 
+export const shellUser = "digenaldo@sec";
+
 export const nav = [
   { href: "/artigos/", label: "Artigos" },
   { href: "/projetos/", label: "Projetos" },
   { href: "/pesquisa/", label: "Pesquisa" },
+  { href: "/ensino/", label: "Ensino" },
+  { href: "/sobre/", label: "Sobre" },
 ] as const;
+
+export const terminalBlocks = [
+  {
+    cmd: "whoami",
+    out: ["digenaldo neto — cybersecurity engineer & software engineer"],
+  },
+  {
+    cmd: "cat ~/focus.txt",
+    out: [
+      "application security · ai security · security architecture",
+      "distributed systems · software engineering",
+    ],
+  },
+  {
+    cmd: "ls ~/research",
+    out: ["ddos-detection/  malicious-traffic-ml/  llm-security/"],
+  },
+  {
+    cmd: "echo $STATUS",
+    out: ["exploring: AI Security"],
+  },
+];
 
 export const interests = [
   {

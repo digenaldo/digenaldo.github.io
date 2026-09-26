@@ -1,0 +1,105 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+@theme {
+  --color-bg: #0a0b0a;
+  --color-panel: #0f1311;
+  --color-panel-2: #141a17;
+  --color-line: #1e2723;
+  --color-line-2: #2b3832;
+  --color-ink: #e6ede9;
+  --color-ink-2: #b4c2bb;
+  --color-muted: #7f918a;
+  --color-signal: #4ade80;
+  --color-signal-dim: #1f6f43;
+  --color-cyan: #67e8f9;
+  --color-alert: #ff5f56;
+  --color-warn: #fbbf24;
+}
+
+@theme inline {
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, "SF Mono", Menlo, monospace;
+}
+
+@layer base {
+  html {
+    color-scheme: dark;
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body {
+    @apply bg-bg text-ink font-sans min-h-screen flex flex-col;
+  }
+
+  ::selection {
+    @apply bg-signal text-bg;
+  }
+
+  :focus-visible {
+    @apply outline-2 outline-offset-4 outline-signal;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      transition: none !important;
+    }
+  }
+}
+
+@layer components {
+  .shell {
+    @apply mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8;
+  }
+
+  .kicker {
+    @apply font-mono text-xs uppercase tracking-[0.14em] text-muted;
+  }
+
+  .link-cmd {
+    @apply inline-flex items-center gap-2 font-mono text-sm text-ink underline decoration-line-2 underline-offset-4 transition-colors hover:text-signal hover:decoration-signal;
+  }
+
+  .scanlines {
+    background-image: repeating-linear-gradient(
+      to bottom,
+      transparent 0,
+      transparent 2px,
+      rgb(255 255 255 / 0.018) 2px,
+      rgb(255 255 255 / 0.018) 3px
+    );
+  }
+}
+
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-built_in {
+  color: #4ade80;
+}
+
+.hljs-string,
+.hljs-attr {
+  color: #a5f3c4;
+}
+
+.hljs-comment {
+  color: #7f918a;
+  font-style: italic;
+}
+
+.hljs-number,
+.hljs-literal {
+  color: #67e8f9;
+}
+
+.hljs-title,
+.hljs-section {
+  color: #e6ede9;
+}

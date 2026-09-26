@@ -1,15 +1,18 @@
 ---
-description: Regras de motion e acessibilidade de animação
-globs: src/**/*.{tsx,css,scss}
+description: Regras de motion (Remotion) e acessibilidade de animação
+globs: src/**/*.{tsx,css}
 alwaysApply: false
 ---
 
 # Motion
 
-- CSS e JavaScript nativo. Sem GSAP, Lenis, Three.js ou bibliotecas pesadas para fade/underline.
-- Tokens: micro 120ms, UI 240ms, seção 600ms, hero ≤ 1200ms e interruptível.
-- Animar `transform` e `opacity`. Evitar width/height/top/left contínuos.
-- Sem scroll hijack, splash, cursor custom, partículas.
-- `prefers-reduced-motion: reduce`: conteúdo estático imediato, sem pin/scrub.
-- Pointer-dependent (magnetic, preview no cursor): só com `(pointer: fine)`.
-- View Transitions nativas se ajudar; não inventar SPA router extra.
+- Toda animação autônoma é Remotion. Hover/foco podem usar `transition` CSS.
+- Nova animação = nova composição em `src/remotion/compositions/` + entrada em `src/remotion/registry.ts`.
+- Nas páginas, só via `<Motion id=… />` (`src/components/motion/Motion.tsx`). Não importar `@remotion/player` direto.
+- Composições fluidas: recebem a largura/altura reais do container. Layout em px, fonte adaptada à largura.
+- Dentro de composição: `useCurrentFrame()` + `interpolate()`/`Easing`, estilos inline, `random(seed)` para aleatoriedade determinística. Sem `transition` nem `animate-*`.
+- Animação é decorativa: o texto real vive no HTML.
+- `prefers-reduced-motion: reduce`: não monta o Player; renderiza `fallback` estático.
+- Loops pausam fora da tela. One-shots tocam uma vez e seguram o último frame.
+- Sem scroll hijack, splash, cursor custom, Three.js, GSAP.
+- Testar no Studio: `npm run studio`.

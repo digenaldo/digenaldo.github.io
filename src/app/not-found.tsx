@@ -1,17 +1,24 @@
 import Link from "next/link";
 import { PageMast } from "@/components/PageMast";
-import styles from "./page.module.css";
 
 export default function NotFound() {
   return (
-    <div className={`container ${styles.page}`}>
+    <div className="shell">
       <PageMast
-        kicker="404"
-        title="Página não encontrada"
+        command="cd ./esta-pagina"
+        title="404"
         lede={
           <>
-            Esse endereço não existe. Volte ao <Link href="/">início</Link> ou
-            aos <Link href="/artigos/">artigos</Link>.
+            <span className="font-mono text-alert">No such file or directory.</span>{" "}
+            Volte ao{" "}
+            <Link href="/" className="text-signal underline underline-offset-4">
+              início
+            </Link>{" "}
+            ou aos{" "}
+            <Link href="/artigos/" className="text-signal underline underline-offset-4">
+              artigos
+            </Link>
+            .
           </>
         }
       />

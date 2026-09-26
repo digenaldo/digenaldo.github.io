@@ -61,7 +61,10 @@ export function slugify(value: string): string {
 }
 
 function readPost(slug: string): Post {
-  const raw = readFileSync(path.join(POSTS_DIR, `${slug}.md`), "utf8");
+  const raw = readFileSync(path.join(POSTS_DIR, `${slug}.md`), "utf8").replace(
+    /\r\n/g,
+    "\n",
+  );
   const { data, body } = splitFrontMatter(raw);
   const tags = asStringArray(data.tags);
   const categories = asStringArray(data.categories);

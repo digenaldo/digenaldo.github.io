@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { formatFieldDate, getTopic } from "@/lib/post-meta";
-import styles from "./PostList.module.css";
 
 export type PostCard = {
   slug: string;
@@ -15,28 +14,37 @@ export type PostCard = {
 
 type Props = {
   posts: PostCard[];
-  numbered?: boolean;
 };
 
-export function PostList({ posts, numbered = false }: Props) {
+export function PostList({ posts }: Props) {
   return (
-    <ul className={styles.list}>
-      {posts.map((post, index) => (
+    <ul className="divide-y divide-line border-y border-line">
+      {posts.map((post) => (
         <li key={post.slug}>
-          <Link href={`/artigos/${post.slug}/`} className={styles.item}>
-            {numbered ? (
-              <span className={styles.n}>
-                {String(index + 1).padStart(2, "0")}
+          <Link
+            href={`/artigos/${post.slug}/`}
+            className="group grid gap-2 border-l-2 border-transparent py-6 pl-4 pr-2 transition-colors hover:border-signal hover:bg-panel sm:grid-cols-[11rem_1fr] sm:gap-6"
+          >
+            <span className="font-mono text-xs leading-6 text-muted">
+              <span className="text-signal">[{getTopic(post)}]</span>
+              <br className="hidden sm:block" />
+              <span className="sm:hidden"> · </span>
+              <time dateTime={post.date}>{formatFieldDate(post.date)}</time>
+              <span> · {post.readingTime} min</span>
+            </span>
+            <span>
+              <span
+                lang={post.language}
+                className="block text-xl font-semibold leading-snug text-ink transition-colors group-hover:text-signal"
+              >
+                {post.title}
               </span>
-            ) : null}
-            <span className={styles.body}>
-              <span className={styles.kicker}>
-                <span>{getTopic(post)}</span>
-                <span aria-hidden="true"> · </span>
-                <time dateTime={post.date}>{formatFieldDate(post.date)}</time>
+              <span
+                lang={post.language}
+                className="mt-2 block max-w-3xl leading-relaxed text-ink-2"
+              >
+                {post.description}
               </span>
-              <span className={styles.title}>{post.title}</span>
-              <span className={styles.desc}>{post.description}</span>
             </span>
           </Link>
         </li>

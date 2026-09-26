@@ -1,21 +1,18 @@
 ---
 description: Tokens visuais e o que o site não pode parecer
-globs: src/**/*.{css,scss,tsx}
+globs: src/**/*.{css,tsx}
 alwaysApply: false
 ---
 
 # Design system
 
-Tokens obrigatórios: `src/styles/tokens.css`.
-Layout: Bulma (container, columns, section) + CSS Modules / SCSS próprio.
+Tokens obrigatórios: `@theme` em `src/app/globals.css`.
+Estilo: Tailwind CSS v4 + `@tailwindcss/typography` (corpo dos artigos). Sem Bulma, SCSS, CSS Modules, styled-components.
 
-- Fundo preto `#0A0A0A`, tinta `#F2F2F2`, accent vermelho `#E23B2F` (pouco).
-- Instrument Sans + IBM Plex Mono. Mono só em meta, datas, labels, código.
-- Sem Tailwind. Sem Bootstrap. Sem styled-components.
-- Radius ≤ 2px. Sem sombra grande, glass, cards em grade, gradient text.
-- Proibido: Matrix, terminal verde, cadeado, HUD, cyberpunk, template SaaS, landing de produto de segurança.
-- Home e listas: tipografia + linhas + whitespace. Texto usa a largura da tela, alinhado à esquerda, sem coluna estreita e sem bloco centralizado.
-- Sem navbar. A home concentra a navegação. Cabeçalho só com o nome.
-- GitHub, LinkedIn e Instagram só no rodapé.
-- Sem toggle de dark mode. O site é preto por padrão.
-- Copy de chrome em pt-BR (Artigos, Projetos, Ensino, Pesquisa, Sobre).
+- Hacker profissional: linguagem de terminal (prompt `digenaldo@sec:~$`, cursor em bloco, `./rotas`, `#tags`, `// comentários`).
+- Fundo `bg-bg`, painéis `bg-panel`, linhas `border-line`, texto `text-ink` / `text-ink-2`, meta `text-muted`, destaque `text-signal`.
+- JetBrains Mono em títulos, meta, botões e código. Inter em texto corrido.
+- Radius 0. Sem glass, gradient text, sombra grande.
+- Proibido: caveira, cadeado, HUD de filme, verde neon em texto longo, template SaaS.
+- Mobile-first. Sem scroll horizontal da página em 375px.
+- Copy de chrome em pt-BR. Artigos em inglês ficam em inglês.

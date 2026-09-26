@@ -1,24 +1,21 @@
 import type { Metadata } from "next";
-import { IBM_Plex_Mono, Instrument_Sans } from "next/font/google";
+import { Inter, JetBrains_Mono } from "next/font/google";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
 import { site } from "@/lib/site";
-import "@/styles/tokens.css";
-import "@/styles/main.scss";
-import styles from "./shell.module.css";
+import "./globals.css";
 
-const sans = Instrument_Sans({
+const sans = Inter({
   subsets: ["latin"],
-  variable: "--font-instrument",
+  variable: "--font-inter",
   display: "swap",
-  weight: ["400", "500", "600", "700"],
 });
 
-const mono = IBM_Plex_Mono({
+const mono = JetBrains_Mono({
   subsets: ["latin"],
-  variable: "--font-ibm-plex-mono",
+  variable: "--font-jetbrains",
   display: "swap",
-  weight: ["400", "500"],
+  weight: ["400", "500", "700"],
 });
 
 export const metadata: Metadata = {
@@ -49,7 +46,12 @@ const personJsonLd = {
     addressLocality: "João Pessoa",
     addressCountry: "BR",
   },
-  sameAs: [site.social.github, site.social.linkedin, site.social.instagram],
+  sameAs: [
+    site.social.github,
+    site.social.linkedin,
+    site.social.instagram,
+    site.social.youtube,
+  ],
 };
 
 export default function RootLayout({
@@ -64,11 +66,14 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
         />
-        <a className="skip" href="#conteudo">
+        <a
+          href="#conteudo"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:bg-signal focus:px-3 focus:py-2 focus:font-mono focus:text-sm focus:text-bg"
+        >
           Ir ao conteúdo
         </a>
         <SiteHeader />
-        <main id="conteudo" className={styles.main}>
+        <main id="conteudo" className="flex-1">
           {children}
         </main>
         <SiteFooter />

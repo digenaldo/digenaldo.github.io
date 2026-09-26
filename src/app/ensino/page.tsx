@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import { PageMast } from "@/components/PageMast";
 import { courses } from "@/lib/site";
-import styles from "../page.module.css";
-import local from "./page.module.css";
 
 export const metadata: Metadata = {
   title: "Ensino",
@@ -13,22 +11,36 @@ export const metadata: Metadata = {
 
 export default function EnsinoPage() {
   return (
-    <div className={`container ${styles.page}`}>
+    <div className="shell">
       <PageMast
-        kicker="Teaching / notes"
+        command="cd ~/ensino"
         title="Ensino"
         lede="Também transformo parte do que estudo e desenvolvo em aulas e materiais. O objetivo é clareza, não um catálogo de cursos."
       />
 
-      {courses.map((course) => (
-        <a key={course.href} className={local.course} href={course.href}>
-          <span className={local.idx}>01</span>
-          <span>
-            <strong>{course.title}</strong>
-            <em>{course.description}</em>
-          </span>
-        </a>
-      ))}
+      <ul className="mt-10 divide-y divide-line border-y border-line">
+        {courses.map((course, i) => (
+          <li key={course.href}>
+            <a
+              href={course.href}
+              className="group grid gap-2 border-l-2 border-transparent py-6 pl-4 transition-colors hover:border-signal hover:bg-panel sm:grid-cols-[4rem_1fr]"
+            >
+              <span className="font-mono text-sm text-signal">
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              <span>
+                <strong className="block text-xl font-semibold text-ink transition-colors group-hover:text-signal">
+                  {course.title}
+                </strong>
+                <span className="mt-2 block text-ink-2">{course.description}</span>
+                <span className="mt-3 block font-mono text-xs text-muted">
+                  ./abrir-slides →
+                </span>
+              </span>
+            </a>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }

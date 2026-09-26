@@ -4,7 +4,8 @@ import path from "node:path";
 const POSTS_DIR = path.join(process.cwd(), "content", "posts");
 const SITE = "https://digenaldo.com";
 
-function splitFrontMatter(raw) {
+function splitFrontMatter(input) {
+  const raw = input.replace(/\r\n/g, "\n");
   const toml = raw.match(/^\+\+\+\n([\s\S]*?)\n\+\+\+\n?([\s\S]*)$/);
   if (toml) return { fm: toml[1], body: toml[2], kind: "toml" };
   const yaml = raw.match(/^---\n([\s\S]*?)\n---\n?([\s\S]*)$/);

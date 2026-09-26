@@ -1,47 +1,74 @@
 import Image from "next/image";
 import Link from "next/link";
-import { nav, site } from "@/lib/site";
-import styles from "./Hero.module.css";
+import { Motion } from "@/components/motion/Motion";
+import { site } from "@/lib/site";
 
 export function Hero() {
   return (
-    <section className={styles.hero} aria-labelledby="nome">
-      <div className={styles.copy}>
-        <p className={styles.status}>
-          <span className={styles.pulse} aria-hidden="true" />
-          currently exploring: {site.exploring}
-        </p>
-        <h1 id="nome" className={styles.name}>
-          {site.name}
-        </h1>
-        <p className={styles.role}>{site.role}</p>
-        <p className={styles.lede}>
-          Trabalho com segurança de aplicações, arquitetura de software, sistemas
-          distribuídos e inteligência artificial.
-        </p>
-        <p className={styles.lede}>
-          Escrevo sobre segurança, engenharia e os problemas que aparecem quando
-          sistemas reais chegam em produção.
-        </p>
-        <p className={styles.place}>{site.location}</p>
-        <p className={styles.links}>
-          {nav.map((item) => (
-            <Link key={item.href} href={item.href}>
-              {item.label}
+    <section
+      aria-labelledby="nome"
+      className="scanlines relative overflow-hidden border-b border-line"
+    >
+      <Motion
+        id="hex-rain"
+        loop
+        className="pointer-events-none absolute inset-0 opacity-25 [mask-image:linear-gradient(to_left,black_10%,transparent_80%)] md:opacity-40"
+      />
+      <div className="shell relative grid gap-12 py-14 md:grid-cols-[1.35fr_1fr] md:items-center md:py-24">
+        <div>
+          <p className="inline-flex items-center gap-2 border border-line bg-panel px-3 py-1 font-mono text-xs text-ink-2">
+            <span aria-hidden="true" className="size-2 rounded-full bg-signal" />
+            currently exploring: <span className="text-signal">{site.exploring}</span>
+          </p>
+          <h1
+            id="nome"
+            className="mt-6 font-mono text-4xl font-bold tracking-tight text-ink sm:text-5xl lg:text-6xl"
+          >
+            {site.name}
+          </h1>
+          <p className="mt-3 font-mono text-sm text-signal sm:text-base">
+            {"> "}
+            {site.role}
+          </p>
+          <div className="mt-8 max-w-2xl space-y-4 text-lg leading-relaxed text-ink-2">
+            <p>
+              Trabalho com segurança de aplicações, arquitetura de software,
+              sistemas distribuídos e inteligência artificial.
+            </p>
+            <p>
+              Escrevo sobre segurança, engenharia e os problemas que aparecem
+              quando sistemas reais chegam em produção.
+            </p>
+          </div>
+          <div className="mt-10 flex flex-wrap gap-3 font-mono text-sm">
+            <Link
+              href="/artigos/"
+              className="border border-signal bg-signal px-4 py-2.5 font-medium text-bg transition-colors hover:bg-transparent hover:text-signal"
+            >
+              ./ler-artigos
             </Link>
-          ))}
-        </p>
+            <Link
+              href="/projetos/"
+              className="border border-line-2 px-4 py-2.5 text-ink transition-colors hover:border-signal hover:text-signal"
+            >
+              ./projetos
+            </Link>
+          </div>
+        </div>
+
+        <figure className="relative mx-auto w-full max-w-sm border border-line bg-panel md:max-w-none">
+          <Image
+            src="/images/digenaldo-neto.png"
+            alt="Digenaldo Neto, de braços cruzados, camiseta preta e óculos, sorrindo."
+            width={1086}
+            height={1448}
+            priority
+            unoptimized
+            className="block h-auto w-full"
+          />
+          <Motion id="portrait-scan" className="absolute inset-0" />
+        </figure>
       </div>
-      <figure className={styles.portrait}>
-        <Image
-          src="/images/digenaldo-neto.png"
-          alt="Digenaldo Neto, de braços cruzados, camiseta preta e óculos, sorrindo."
-          width={1086}
-          height={1448}
-          priority
-          unoptimized
-        />
-      </figure>
     </section>
   );
 }

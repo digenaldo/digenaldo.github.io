@@ -3,7 +3,6 @@ import { notFound } from "next/navigation";
 import { PageMast } from "@/components/PageMast";
 import { PostList } from "@/components/PostList";
 import { getCategories, postsByCategory } from "@/lib/posts";
-import styles from "../../page.module.css";
 
 type Props = { params: Promise<{ category: string }> };
 
@@ -26,13 +25,15 @@ export default async function CategoryPage({ params }: Props) {
   if (posts.length === 0) notFound();
 
   return (
-    <div className={`container ${styles.page}`}>
+    <div className="shell">
       <PageMast
-        kicker="Categoria"
+        command={`ls ~/categorias/${category}`}
         title={category}
         lede={`${posts.length} artigo(s).`}
       />
-      <PostList posts={posts} />
+      <div className="pt-10">
+        <PostList posts={posts} />
+      </div>
     </div>
   );
 }

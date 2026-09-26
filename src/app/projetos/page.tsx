@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { PageMast } from "@/components/PageMast";
 import { ProjectList } from "@/components/ProjectList";
-import styles from "../page.module.css";
 
 export const metadata: Metadata = {
   title: "Projetos",
@@ -12,13 +11,15 @@ export const metadata: Metadata = {
 
 export default function ProjetosPage() {
   return (
-    <div className={`container ${styles.page}`}>
+    <div className="shell">
       <PageMast
-        kicker="Lab / experiments"
+        command="ls ~/lab"
         title="Projetos & experimentos"
         lede="Ferramentas, laboratórios e provas de conceito. Nada aqui é um produto comercial. São coisas que construí para estudar um problema de perto."
       />
-      <ProjectList />
+      <div className="pt-10">
+        <ProjectList />
+      </div>
     </div>
   );
 }

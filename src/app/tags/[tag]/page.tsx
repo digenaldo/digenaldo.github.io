@@ -3,7 +3,6 @@ import { notFound } from "next/navigation";
 import { PageMast } from "@/components/PageMast";
 import { PostList } from "@/components/PostList";
 import { getTags, postsByTag } from "@/lib/posts";
-import styles from "../../page.module.css";
 
 type Props = { params: Promise<{ tag: string }> };
 
@@ -26,9 +25,11 @@ export default async function TagPage({ params }: Props) {
   if (posts.length === 0) notFound();
 
   return (
-    <div className={`container ${styles.page}`}>
-      <PageMast kicker="Tag" title={tag} lede={`${posts.length} artigo(s).`} />
-      <PostList posts={posts} />
+    <div className="shell">
+      <PageMast command={`grep -r "#${tag}"`} title={`#${tag}`} lede={`${posts.length} artigo(s).`} />
+      <div className="pt-10">
+        <PostList posts={posts} />
+      </div>
     </div>
   );
 }

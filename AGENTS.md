@@ -22,7 +22,7 @@ content/*.md  →  Next.js build (output: 'export')  →  out/  →  Firebase Ho
 - Sem App Hosting, Functions, Auth, Firestore.
 - Sem servidor Node em produção. Redirects e headers vivem em `firebase.json`.
 - Imagens em `public/images/`. Markdown em `content/`.
-- GSAP não entra no critical path. Motion: CSS + JavaScript nativo, discreto.
+- Motion: Remotion (`@remotion/player`), carregado sob demanda. Ver seção Motion.
 - Curso em HTML estático em `public/cursos/`. Não envolver o layout do site.
 
 ## Rotas canônicas (v1)
@@ -45,16 +45,20 @@ content/*.md  →  Next.js build (output: 'export')  →  out/  →  Firebase Ho
 
 ## Design
 
-Editorial técnico. Fundo preto `#0A0A0A`, tinta clara, vermelho `#E23B2F` como accent (pouco). Sem aesthetic de SOC, Matrix, SaaS, template Tailwind, tema Hugo ou landing de produto.
-Layout: **Bulma** (grid, container) + CSS Modules / SCSS próprio. Sem Tailwind.
-Tipo: Instrument Sans (display/body) + IBM Plex Mono (meta). Self-hosted via `next/font`.
-Radius 0–2px. Sem navbar. Home concentra a navegação. GitHub/LinkedIn só no rodapé.
+Hacker profissional: terminal/CLI como linguagem visual (prompt, cursor, mono, `./links`), legível e sóbrio. Alinhado ao Instagram @digenaldo.neto, sem virar caricatura (nada de caveira, cadeado, HUD de filme).
+Estilo: **Tailwind CSS v4** apenas. Tokens em `src/app/globals.css` (`@theme`). Sem Bulma, SCSS, CSS Modules.
+Paleta: fundo `#0A0B0A`, painel `#0F1311`, tinta `#E6EDE9`, sinal verde `#4ADE80`, ciano `#67E8F9` pontual. Contraste WCAG AA verificado por par.
+Tipo: JetBrains Mono (títulos, meta, UI) + Inter (texto corrido). Self-hosted via `next/font`.
+Radius 0. Header com prompt + navegação `./rota`. Texto real (h1, parágrafos) sempre em HTML, nunca só dentro de animação.
 
 ## Motion
 
-CSS e JavaScript nativo. View Transitions nativas se existirem. Sem scroll hijack, cursor fake, splash, Three.js, GSAP no critical path.
-Respeitar `prefers-reduced-motion: reduce`.
-Artigos: motion mínimo. Home: o lugar da identidade.
+Toda animação autônoma do site é Remotion. Hover/foco podem usar `transition` CSS.
+- Composições em `src/remotion/compositions/`, registradas em `src/remotion/registry.ts` (site) e `src/remotion/Root.tsx` (Studio: `npm run studio`).
+- Nas páginas, use sempre `<Motion id=… />` (`src/components/motion/Motion.tsx`): mede o container (composição fluida, sem escala), só monta o Player ao entrar na tela, pausa fora dela, e com `prefers-reduced-motion: reduce` não baixa o Remotion e mostra `fallback` estático.
+- Animação é decorativa (`aria-hidden`, `inert`). Informação equivalente fica no HTML.
+- Dentro das composições: `useCurrentFrame()` + `interpolate()`, estilos inline. Nada de `transition`/`animate-*`.
+- Sem scroll hijack, cursor fake, splash, Three.js, GSAP.
 
 ## Conteúdo
 
