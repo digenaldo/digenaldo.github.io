@@ -4,9 +4,10 @@ export const site = {
   url: "https://digenaldo.com",
   title: "Digenaldo Neto | Cybersecurity Engineer",
   description:
-    "Cybersecurity Engineer e Software Engineer. Escrevo sobre segurança de aplicações, inteligência artificial, arquitetura e sistemas distribuídos.",
+    "Cybersecurity Engineer e Software Engineer. Escrevo sobre AI security, hacking, segurança de aplicações e sistemas distribuídos.",
   locale: "pt-BR",
   location: "João Pessoa, Brasil",
+  email: "digenaldo.rangel@gmail.com",
   role: "Cybersecurity Engineer & Software Engineer",
   exploring: "AI Security",
   social: {
@@ -51,32 +52,39 @@ export const terminalBlocks = [
 
 export const interests = [
   {
-    name: "Application Security",
-    text: "Como aplicações reais falham, e o que dá para prevenir no código, na revisão e na arquitetura.",
+    name: "AI Security",
+    text: "Como atacar e proteger modelos e agentes quando a IA entra em produção.",
   },
   {
-    name: "AI Security",
-    text: "Modelos, agentes e as novas superfícies de confiança quando a inteligência artificial entra em produção.",
+    name: "Application Security",
+    text: "Como aplicações reais falham e o que dá para evitar ainda no código e na revisão.",
   },
   {
     name: "Security Architecture",
-    text: "Decisões de desenho que permanecem quando o sistema cresce, se distribui e precisa ser operado.",
+    text: "Decisões de desenho que continuam valendo quando o sistema cresce e se distribui.",
   },
   {
     name: "Distributed Systems",
-    text: "Consistência, falha, latência e o que acontece quando várias partes do sistema discordam.",
+    text: "O que acontece quando partes do sistema discordam, falham ou demoram a responder.",
   },
   {
     name: "Software Engineering",
-    text: "Construir software que dá para manter: clareza, limites e responsabilidade nas interfaces.",
+    text: "Software que dá para manter, com interfaces claras e responsabilidades bem definidas.",
   },
   {
     name: "Security Research",
-    text: "Investigar ataques, hipóteses e evidências, em especial no cruzamento entre segurança e aprendizado de máquina.",
+    text: "Investigar ataques com hipótese e evidência, principalmente onde segurança e machine learning se cruzam.",
   },
 ] as const;
 
 export const projects = [
+  {
+    name: "h4kfi",
+    description:
+      "Framework de pentest wireless feito para agentes de IA. Scan, captura de handshake e PMKID, ataques WPS e cracking ficam expostos via MCP, e o agente conduz o teste autorizado a partir de um pedido em linguagem natural.",
+    stack: ["Python", "MCP", "AI Agents", "aircrack-ng"],
+    href: "https://github.com/digenaldo/h4kfi",
+  },
   {
     name: "ArgusScan",
     description:

@@ -15,7 +15,7 @@ export default function ProjetosPage() {
       <PageMast
         command="ls ~/lab"
         title="Projetos & experimentos"
-        lede="Ferramentas, laboratórios e provas de conceito. Nada aqui é um produto comercial. São coisas que construí para estudar um problema de perto."
+        lede="Ferramentas, laboratórios e provas de conceito que construí para estudar problemas de perto. São projetos pessoais, sem fins comerciais."
       />
       <div className="pt-10">
         <ProjectList />

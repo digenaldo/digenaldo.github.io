@@ -17,7 +17,7 @@ export default function PesquisaPage() {
       <PageMast
         command="cat ~/research/README"
         title="Pesquisa"
-        lede="A pesquisa entra na minha trajetória como engenharia com pergunta: o que o sistema faz quando é pressionado, e como perceber isso a tempo."
+        lede="Pesquiso detecção de ataques. Comecei no mestrado, com DDoS na camada de aplicação, e hoje estudo também a segurança de modelos de linguagem e agentes."
       />
 
       <div className="mt-10 grid gap-px border border-line bg-line lg:grid-cols-3">
@@ -52,9 +52,7 @@ export default function PesquisaPage() {
         <section className={panel}>
           <h2 className={heading}>## Experimentos</h2>
           <p className="mt-4 leading-relaxed text-ink-2">
-            Parte desse trabalho está em repositórios abertos, como o simulador
-            de detecção de DDoS e o sistema de tráfego malicioso. Não listo
-            papers que não publiquei.
+            Os experimentos da pesquisa estão em repositórios abertos:
           </p>
           <ul className="mt-6 space-y-2 font-mono text-sm">
             <li>

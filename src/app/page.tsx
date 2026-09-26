@@ -51,14 +51,20 @@ export default function HomePage() {
             </h2>
             <div className="mt-6 space-y-4 text-lg leading-relaxed text-ink-2">
               <p>
-                Sou engenheiro de segurança e de software. Meu trabalho fica na
-                interseção entre cybersecurity, aplicações, sistemas
-                distribuídos e inteligência artificial.
+                Sou engenheiro de segurança e de software. Pesquiso, escrevo e
+                ensino a partir de problemas que encontrei no trabalho.
               </p>
               <p>
-                Também pesquiso, escrevo e ensino a partir dos problemas que
-                encontro pelo caminho, sobretudo quando a teoria encontra um
-                sistema em produção.
+                No Instagram{" "}
+                <a
+                  className="text-signal underline underline-offset-4"
+                  href={site.social.instagram}
+                  rel="noopener noreferrer"
+                >
+                  @digenaldo.neto
+                </a>{" "}
+                falo de hacking e de IA, principalmente AI security. Aqui ficam
+                os artigos completos e os projetos.
               </p>
             </div>
           </div>
@@ -128,8 +134,8 @@ export default function HomePage() {
             <p className="kicker text-signal">teaching</p>
             <h2 className="mt-2 font-mono text-2xl font-bold text-ink">Ensino</h2>
             <p className="mt-4 leading-relaxed text-ink-2">
-              Também transformo parte do que estudo e desenvolvo em aulas e
-              materiais. O que está publicado aqui é público, sem cadastro.
+              Parte do que estudo vira aula ou material. Tudo aqui é público e
+              não pede cadastro.
             </p>
             <a className="link-cmd mt-6" href={courses[0].href}>
               {courses[0].title} →
@@ -139,17 +145,50 @@ export default function HomePage() {
 
         <section aria-labelledby="contato" className="py-16 md:py-24">
           <SectionHead id="contato" index="04" title="Contato" />
-          <p className="max-w-2xl text-lg leading-relaxed text-ink-2">
-            {site.location}. Você me encontra no{" "}
-            <a className="text-signal underline underline-offset-4" href={site.social.linkedin} rel="noopener noreferrer">
-              LinkedIn
-            </a>{" "}
-            ou no{" "}
-            <a className="text-signal underline underline-offset-4" href={site.social.instagram} rel="noopener noreferrer">
-              Instagram @digenaldo.neto
-            </a>
-            .
-          </p>
+          <div className="grid gap-10 lg:grid-cols-[1fr_1.2fr] lg:items-start">
+            <div>
+              <p className="max-w-xl text-lg leading-relaxed text-ink-2">
+                Para falar sobre AI security, pentest ou aulas, mande um
+                e-mail. Conteúdo sobre hacking e IA sai no Instagram
+                @digenaldo.neto.
+              </p>
+              <a
+                href={`mailto:${site.email}`}
+                className="mt-8 inline-block border border-signal bg-signal px-4 py-2.5 font-mono text-sm font-medium text-bg transition-colors hover:bg-transparent hover:text-signal"
+              >
+                ./enviar-email
+              </a>
+              <p className="mt-6 font-mono text-xs text-muted">{site.location}</p>
+            </div>
+
+            <div className="border border-line bg-panel font-mono text-sm">
+              <p className="border-b border-line px-4 py-2.5 text-xs text-muted">
+                <span className="text-signal">$</span> cat ~/contato
+              </p>
+              <dl className="divide-y divide-line">
+                {[
+                  { key: "email", label: site.email, href: `mailto:${site.email}` },
+                  { key: "instagram", label: "@digenaldo.neto", href: site.social.instagram },
+                  { key: "linkedin", label: "in/digenaldo", href: site.social.linkedin },
+                  { key: "github", label: "digenaldo", href: site.social.github },
+                  { key: "youtube", label: "@digenaldoneto", href: site.social.youtube },
+                ].map((row) => (
+                  <div key={row.key} className="grid grid-cols-[6.5rem_1fr] gap-3 px-4 py-3 sm:grid-cols-[8rem_1fr]">
+                    <dt className="text-muted">{row.key}</dt>
+                    <dd className="min-w-0">
+                      <a
+                        href={row.href}
+                        rel={row.key === "email" ? undefined : "noopener noreferrer"}
+                        className="break-all text-ink transition-colors hover:text-signal"
+                      >
+                        {row.label}
+                      </a>
+                    </dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
+          </div>
         </section>
       </div>
     </>

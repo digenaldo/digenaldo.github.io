@@ -15,7 +15,7 @@ export default function EnsinoPage() {
       <PageMast
         command="cd ~/ensino"
         title="Ensino"
-        lede="Também transformo parte do que estudo e desenvolvo em aulas e materiais. O objetivo é clareza, não um catálogo de cursos."
+        lede="Parte do que estudo vira aula ou material, hoje com foco em IA. Tudo aqui é público e não pede cadastro."
       />
 
       <ul className="mt-10 divide-y divide-line border-y border-line">

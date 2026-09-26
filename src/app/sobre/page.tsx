@@ -36,9 +36,7 @@ export default function SobrePage() {
         <div className="max-w-3xl space-y-5 text-lg leading-relaxed text-ink-2">
           <p>
             Sou o Digenaldo. Trabalho com cybersecurity e engenharia de
-            software. Na prática, isso significa passar bastante tempo entre
-            código, arquitetura e as falhas que só aparecem quando o sistema
-            está no ar.
+            software, quase sempre entre código e arquitetura.
           </p>
           <p>
             Formei-me em Sistemas de Informação na UFPB e fiz mestrado em
@@ -50,18 +48,17 @@ export default function SobrePage() {
           <p>
             Nos últimos anos concentrei o trabalho em engenharia de segurança
             aplicada a software e infraestrutura: aplicações, ambientes
-            distribuídos, cloud e, cada vez mais, os problemas novos que a
-            inteligência artificial introduz.
+            distribuídos, cloud e, cada vez mais, AI security, os problemas
+            novos que modelos e agentes trazem.
           </p>
           <p>
-            Também ensino. Parte do que estudo vira aula ou material, não
-            porque eu tenha um produto educacional, mas porque escrever e
-            explicar é uma forma de entender o problema até o fim.
+            Também ensino. Explicar um assunto é como eu termino de entendê-lo,
+            então parte do que estudo vira aula ou material.
           </p>
           <p>
-            Este site é o lugar onde deixo isso público. Artigos em inglês
-            permanecem em inglês. O chrome da página está em português porque
-            é o idioma em que vivo.
+            No Instagram @digenaldo.neto falo de hacking e de IA. Aqui deixo os
+            textos longos: os artigos em inglês ficam no original, e o resto
+            do site está em português.
           </p>
 
           <section className="mt-10 border border-line bg-panel p-6">

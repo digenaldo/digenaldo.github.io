@@ -36,8 +36,8 @@ export function Hero() {
               sistemas distribuídos e inteligência artificial.
             </p>
             <p>
-              Escrevo sobre segurança, engenharia e os problemas que aparecem
-              quando sistemas reais chegam em produção.
+              Escrevo sobre AI security, hacking e as falhas de engenharia que
+              só aparecem com o sistema no ar.
             </p>
           </div>
           <div className="mt-10 flex flex-wrap gap-3 font-mono text-sm">

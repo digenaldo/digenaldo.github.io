@@ -1,6 +1,7 @@
 import { site } from "@/lib/site";
 
 const links = [
+  { label: "E-mail", href: `mailto:${site.email}` },
   { label: "GitHub", href: site.social.github },
   { label: "LinkedIn", href: site.social.linkedin },
   { label: "Instagram", href: site.social.instagram },
