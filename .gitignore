@@ -16,3 +16,7 @@ out/
 
 # Debug
 npm-debug.log*
+
+# Caches locais
+.firebase/
+tsconfig.tsbuildinfo
