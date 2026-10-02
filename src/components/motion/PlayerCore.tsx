@@ -96,6 +96,8 @@ export default function PlayerCore({
         spaceKeyToPlayOrPause={false}
         moveToBeginningWhenEnded={false}
         numberOfSharedAudioTags={0}
+        // Unmuted playback waits for the AudioContext, which browsers block until a user gesture.
+        initiallyMuted
         acknowledgeRemotionLicense
         style={{ width: "100%", height: "100%", background: "transparent" }}
       />
