@@ -1,11 +1,14 @@
 import type { Metadata } from "next";
 import { PageMast } from "@/components/PageMast";
+import { pick } from "@/lib/i18n";
 import { courses } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Ensino",
-  description:
+  title: pick("Ensino", "Teaching"),
+  description: pick(
     "Aulas e materiais de Digenaldo Neto sobre inteligência artificial, segurança e engenharia.",
+    "Classes and material by Digenaldo Neto on artificial intelligence, security, and engineering.",
+  ),
   alternates: { canonical: "/ensino/" },
 };
 
@@ -14,8 +17,11 @@ export default function EnsinoPage() {
     <div className="shell">
       <PageMast
         command="cd ~/ensino"
-        title="Ensino"
-        lede="Parte do que estudo vira aula ou material, hoje com foco em IA. Tudo aqui é público e não pede cadastro."
+        title={pick("Ensino", "Teaching")}
+        lede={pick(
+          "Parte do que estudo vira aula ou material, hoje com foco em IA. Tudo aqui é público e não pede cadastro.",
+          "Some of what I study turns into classes or material, lately focused on AI. Everything here is public and needs no sign-up.",
+        )}
       />
 
       <ul className="mt-10 divide-y divide-line border-y border-line">
@@ -34,7 +40,7 @@ export default function EnsinoPage() {
                 </strong>
                 <span className="mt-2 block text-ink-2">{course.description}</span>
                 <span className="mt-3 block font-mono text-xs text-muted">
-                  ./abrir-slides →
+                  {pick("./abrir-slides", "./open-slides")} →
                 </span>
               </span>
             </a>

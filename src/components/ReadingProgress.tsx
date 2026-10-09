@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Motion } from "@/components/motion/Motion";
+import { pick } from "@/lib/i18n";
 
 export function ReadingProgress() {
   const [progress, setProgress] = useState(0);
@@ -30,7 +31,7 @@ export function ReadingProgress() {
   return (
     <div
       role="progressbar"
-      aria-label="Progresso de leitura"
+      aria-label={pick("Progresso de leitura", "Reading progress")}
       aria-valuemin={0}
       aria-valuemax={100}
       aria-valuenow={pct}

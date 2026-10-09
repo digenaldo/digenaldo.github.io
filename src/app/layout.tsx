@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
+import { htmlLang, ogLocale, pick } from "@/lib/i18n";
 import { site } from "@/lib/site";
 import "./globals.css";
 
@@ -28,7 +29,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/" },
   openGraph: {
     type: "website",
-    locale: "pt_BR",
+    locale: ogLocale,
     siteName: site.name,
     title: site.title,
     description: site.description,
@@ -60,7 +61,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="pt-BR" className={`${sans.variable} ${mono.variable}`}>
+    <html lang={htmlLang} className={`${sans.variable} ${mono.variable}`}>
       <body>
         <script
           type="application/ld+json"
@@ -70,7 +71,7 @@ export default function RootLayout({
           href="#conteudo"
           className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:bg-signal focus:px-3 focus:py-2 focus:font-mono focus:text-sm focus:text-bg"
         >
-          Ir ao conteúdo
+          {pick("Ir ao conteúdo", "Skip to content")}
         </a>
         <SiteHeader />
         <main id="conteudo" className="flex-1">

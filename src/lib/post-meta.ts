@@ -1,3 +1,4 @@
+import { pick } from "@/lib/i18n";
 import type { ArticleTopic } from "@/lib/site";
 
 export function formatDate(iso: string, locale: string = "pt-BR"): string {
@@ -9,25 +10,15 @@ export function formatDate(iso: string, locale: string = "pt-BR"): string {
   }).format(date);
 }
 
-const MONTHS_PT = [
-  "JAN",
-  "FEV",
-  "MAR",
-  "ABR",
-  "MAI",
-  "JUN",
-  "JUL",
-  "AGO",
-  "SET",
-  "OUT",
-  "NOV",
-  "DEZ",
-];
+const MONTHS = pick(
+  ["JAN", "FEV", "MAR", "ABR", "MAI", "JUN", "JUL", "AGO", "SET", "OUT", "NOV", "DEZ"],
+  ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"],
+);
 
 export function formatFieldDate(iso: string): string {
   const date = new Date(`${iso}T00:00:00`);
   const day = String(date.getDate()).padStart(2, "0");
-  return `${day} ${MONTHS_PT[date.getMonth()]} ${date.getFullYear()}`;
+  return `${day} ${MONTHS[date.getMonth()]} ${date.getFullYear()}`;
 }
 
 export function getTopic(post: {

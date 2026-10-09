@@ -5,7 +5,8 @@
   "scripts": {
     "prebuild": "node scripts/generate-feeds.mjs",
     "dev": "next dev",
-    "build": "next build",
+    "build": "node scripts/build-i18n.mjs",
+    "build:next": "next build",
     "start": "npx serve out",
     "lint": "next lint",
     "studio": "remotion studio src/remotion/index.ts"

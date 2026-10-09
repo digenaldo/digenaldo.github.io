@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { PostList, type PostCard } from "@/components/PostList";
+import { pick } from "@/lib/i18n";
 import { getTopic } from "@/lib/post-meta";
 import { articleTopics } from "@/lib/site";
 
@@ -16,7 +17,7 @@ export function ArticleFilters({ posts }: { posts: PostCard[] }) {
   }, [posts, topic]);
 
   const options: { value: Topic; label: string }[] = [
-    { value: "all", label: "Todos" },
+    { value: "all", label: pick("Todos", "All") },
     ...articleTopics.map((item) => ({ value: item, label: item })),
   ];
 
@@ -24,7 +25,7 @@ export function ArticleFilters({ posts }: { posts: PostCard[] }) {
     <div>
       <div
         role="toolbar"
-        aria-label="Filtrar por assunto"
+        aria-label={pick("Filtrar por assunto", "Filter by topic")}
         className="mb-8 flex flex-wrap gap-2 font-mono text-sm"
       >
         <span className="self-center pr-1 text-muted">grep --topic</span>
@@ -51,13 +52,13 @@ export function ArticleFilters({ posts }: { posts: PostCard[] }) {
         <PostList posts={filtered} />
       ) : (
         <p className="font-mono text-ink-2">
-          0 resultados.{" "}
+          {pick("0 resultados.", "0 results.")}{" "}
           <button
             type="button"
             onClick={() => setTopic("all")}
             className="text-signal underline underline-offset-4"
           >
-            Ver todos
+            {pick("Ver todos", "Show all")}
           </button>
         </p>
       )}

@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Motion } from "@/components/motion/Motion";
+import { pick } from "@/lib/i18n";
 import { site } from "@/lib/site";
 
 export function Hero() {
@@ -32,12 +33,16 @@ export function Hero() {
           </p>
           <div className="mt-8 max-w-2xl space-y-4 text-lg leading-relaxed text-ink-2">
             <p>
-              Trabalho com segurança de aplicações, arquitetura de software,
-              sistemas distribuídos e inteligência artificial.
+              {pick(
+                "Trabalho com segurança de aplicações, arquitetura de software, sistemas distribuídos e inteligência artificial.",
+                "I work with application security, software architecture, distributed systems, and artificial intelligence.",
+              )}
             </p>
             <p>
-              Escrevo sobre AI security, hacking e as falhas de engenharia que
-              só aparecem com o sistema no ar.
+              {pick(
+                "Escrevo sobre AI security, hacking e as falhas de engenharia que só aparecem com o sistema no ar.",
+                "I write about AI security, hacking, and the engineering failures that only show up once the system is live.",
+              )}
             </p>
           </div>
           <div className="mt-10 flex flex-wrap gap-3 font-mono text-sm">
@@ -45,13 +50,13 @@ export function Hero() {
               href="/artigos/"
               className="border border-signal bg-signal px-4 py-2.5 font-medium text-bg transition-colors hover:bg-transparent hover:text-signal"
             >
-              ./ler-artigos
+              {pick("./ler-artigos", "./read-articles")}
             </Link>
             <Link
               href="/projetos/"
               className="border border-line-2 px-4 py-2.5 text-ink transition-colors hover:border-signal hover:text-signal"
             >
-              ./projetos
+              {pick("./projetos", "./projects")}
             </Link>
           </div>
         </div>
@@ -59,7 +64,10 @@ export function Hero() {
         <figure className="relative mx-auto w-full max-w-sm border border-line bg-panel md:max-w-none">
           <Image
             src="/images/digenaldo-neto.png"
-            alt="Digenaldo Neto, de braços cruzados, camiseta preta e óculos, sorrindo."
+            alt={pick(
+              "Digenaldo Neto, de braços cruzados, camiseta preta e óculos, sorrindo.",
+              "Digenaldo Neto, arms crossed, wearing a black t-shirt and glasses, smiling.",
+            )}
             width={1086}
             height={1448}
             priority

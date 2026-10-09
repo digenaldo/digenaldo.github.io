@@ -1,6 +1,7 @@
 {
   "hosting": {
     "public": "out",
+    "i18n": { "root": "/i18n" },
     "cleanUrls": true,
     "trailingSlash": true,
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],

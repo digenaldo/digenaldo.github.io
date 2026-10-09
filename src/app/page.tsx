@@ -4,6 +4,7 @@ import { Hero } from "@/components/Hero";
 import { PostList } from "@/components/PostList";
 import { ProjectList } from "@/components/ProjectList";
 import { Terminal } from "@/components/Terminal";
+import { pick } from "@/lib/i18n";
 import { getPosts } from "@/lib/posts";
 import { courses, interests, site, terminalBlocks } from "@/lib/site";
 
@@ -47,15 +48,17 @@ export default function HomePage() {
               <span className="text-signal">00</span> {"//"} field notes
             </p>
             <h2 id="sessao" className="mt-2 font-mono text-2xl font-bold tracking-tight text-ink sm:text-3xl">
-              Apresentação
+              {pick("Apresentação", "Intro")}
             </h2>
             <div className="mt-6 space-y-4 text-lg leading-relaxed text-ink-2">
               <p>
-                Sou engenheiro de segurança e de software. Pesquiso, escrevo e
-                ensino a partir de problemas que encontrei no trabalho.
+                {pick(
+                  "Sou engenheiro de segurança e de software. Pesquiso, escrevo e ensino a partir de problemas que encontrei no trabalho.",
+                  "I'm a security and software engineer. I research, write, and teach from problems I ran into at work.",
+                )}
               </p>
               <p>
-                No Instagram{" "}
+                {pick("No Instagram ", "On Instagram ")}
                 <a
                   className="text-signal underline underline-offset-4"
                   href={site.social.instagram}
@@ -63,8 +66,10 @@ export default function HomePage() {
                 >
                   @digenaldo.neto
                 </a>{" "}
-                falo de hacking e de IA, principalmente AI security. Aqui ficam
-                os artigos completos e os projetos.
+                {pick(
+                  "falo de hacking e de IA, principalmente AI security. Aqui ficam os artigos completos e os projetos.",
+                  "I talk about hacking and AI, mostly AI security. The full articles and projects live here.",
+                )}
               </p>
             </div>
           </div>
@@ -75,7 +80,7 @@ export default function HomePage() {
           <SectionHead
             id="artigos"
             index="01"
-            title="Últimos artigos"
+            title={pick("Últimos artigos", "Latest articles")}
             action={
               <Link className="link-cmd" href="/artigos/">
                 ls ~/artigos →
@@ -86,7 +91,11 @@ export default function HomePage() {
         </section>
 
         <section aria-labelledby="interesses" className="py-12 md:py-16">
-          <SectionHead id="interesses" index="02" title="O que tenho estudado" />
+          <SectionHead
+            id="interesses"
+            index="02"
+            title={pick("O que tenho estudado", "What I've been studying")}
+          />
           <ul className="grid gap-px border border-line bg-line sm:grid-cols-2 lg:grid-cols-3">
             {interests.map((item, i) => (
               <li key={item.name} className="bg-bg p-6 transition-colors hover:bg-panel">
@@ -104,7 +113,7 @@ export default function HomePage() {
           <SectionHead
             id="projetos"
             index="03"
-            title="Projetos & experimentos"
+            title={pick("Projetos & experimentos", "Projects & experiments")}
             action={
               <Link className="link-cmd" href="/projetos/">
                 ls ~/projetos →
@@ -115,16 +124,19 @@ export default function HomePage() {
         </section>
 
         <section
-          aria-label="Pesquisa e ensino"
+          aria-label={pick("Pesquisa e ensino", "Research and teaching")}
           className="grid gap-px border border-line bg-line md:grid-cols-2"
         >
           <div className="bg-bg p-8">
             <p className="kicker text-signal">research</p>
-            <h2 className="mt-2 font-mono text-2xl font-bold text-ink">Pesquisa</h2>
+            <h2 className="mt-2 font-mono text-2xl font-bold text-ink">
+              {pick("Pesquisa", "Research")}
+            </h2>
             <p className="mt-4 leading-relaxed text-ink-2">
-              No mestrado, investiguei detecção de ataques DDoS na camada de
-              aplicação com machine learning e Big Data. Continuo nessa linha,
-              agora também no cruzamento com inteligência artificial.
+              {pick(
+                "No mestrado, investiguei detecção de ataques DDoS na camada de aplicação com machine learning e Big Data. Continuo nessa linha, agora também no cruzamento com inteligência artificial.",
+                "In my master's, I studied DDoS detection at the application layer with machine learning and Big Data. I keep working on it, now also where it meets artificial intelligence.",
+              )}
             </p>
             <Link className="link-cmd mt-6" href="/pesquisa/">
               cat notas-de-pesquisa →
@@ -132,10 +144,14 @@ export default function HomePage() {
           </div>
           <div className="bg-bg p-8">
             <p className="kicker text-signal">teaching</p>
-            <h2 className="mt-2 font-mono text-2xl font-bold text-ink">Ensino</h2>
+            <h2 className="mt-2 font-mono text-2xl font-bold text-ink">
+              {pick("Ensino", "Teaching")}
+            </h2>
             <p className="mt-4 leading-relaxed text-ink-2">
-              Parte do que estudo vira aula ou material. Tudo aqui é público e
-              não pede cadastro.
+              {pick(
+                "Parte do que estudo vira aula ou material. Tudo aqui é público e não pede cadastro.",
+                "Some of what I study turns into classes or material. Everything here is public and needs no sign-up.",
+              )}
             </p>
             <a className="link-cmd mt-6" href={courses[0].href}>
               {courses[0].title} →
@@ -144,19 +160,20 @@ export default function HomePage() {
         </section>
 
         <section aria-labelledby="contato" className="py-16 md:py-24">
-          <SectionHead id="contato" index="04" title="Contato" />
+          <SectionHead id="contato" index="04" title={pick("Contato", "Contact")} />
           <div className="grid gap-10 lg:grid-cols-[1fr_1.2fr] lg:items-start">
             <div>
               <p className="max-w-xl text-lg leading-relaxed text-ink-2">
-                Para falar sobre AI security, pentest ou aulas, mande um
-                e-mail. Conteúdo sobre hacking e IA sai no Instagram
-                @digenaldo.neto.
+                {pick(
+                  "Para falar sobre AI security, pentest ou aulas, mande um e-mail. Conteúdo sobre hacking e IA sai no Instagram @digenaldo.neto.",
+                  "To talk about AI security, pentest, or classes, send an email. Hacking and AI content goes out on Instagram @digenaldo.neto.",
+                )}
               </p>
               <a
                 href={`mailto:${site.email}`}
                 className="mt-8 inline-block border border-signal bg-signal px-4 py-2.5 font-mono text-sm font-medium text-bg transition-colors hover:bg-transparent hover:text-signal"
               >
-                ./enviar-email
+                {pick("./enviar-email", "./send-email")}
               </a>
               <p className="mt-6 font-mono text-xs text-muted">{site.location}</p>
             </div>

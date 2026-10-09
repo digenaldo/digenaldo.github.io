@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { MarkdownBody } from "@/components/MarkdownBody";
 import { Motion } from "@/components/motion/Motion";
 import { ReadingProgress } from "@/components/ReadingProgress";
+import { htmlLang, pick } from "@/lib/i18n";
 import { formatFieldDate, getPost, getPosts, getTopic, slugify } from "@/lib/posts";
 import { shellUser, site } from "@/lib/site";
 
@@ -62,7 +63,7 @@ export default async function ArtigoPage({ params }: Props) {
             placeholder={prompt("")}
             fallback={prompt(command)}
           />
-          <p lang="pt-BR" className="mt-8 font-mono text-xs text-muted">
+          <p lang={htmlLang} className="mt-8 font-mono text-xs text-muted">
             <span className="text-signal">[{getTopic(post)}]</span>{" "}
             <time dateTime={post.date}>{formatFieldDate(post.date)}</time>
             {" · "}
@@ -91,9 +92,10 @@ export default async function ArtigoPage({ params }: Props) {
         </div>
 
         {related.length > 0 ? (
-          <aside lang="pt-BR" className="mx-auto mt-20 max-w-3xl border-t border-line pt-8">
+          <aside lang={htmlLang} className="mx-auto mt-20 max-w-3xl border-t border-line pt-8">
             <p className="kicker">
-              <span className="text-signal">$</span> ls ../outros-artigos
+              <span className="text-signal">$</span> ls{" "}
+              {pick("../outros-artigos", "../other-articles")}
             </p>
             <ul className="mt-4 space-y-3">
               {related.map((item) => (
